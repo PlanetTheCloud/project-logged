@@ -1,0 +1,6 @@
+# Core
+Options -MultiViews
+RewriteEngine on
+
+# Authentication
+RewriteRule ^auth/(.*)?$ /sys-auth/$1 [NC,L]
