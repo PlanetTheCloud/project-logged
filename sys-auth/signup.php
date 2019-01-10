@@ -75,7 +75,7 @@ require APP.'/app/config.php';
 						        <i class="material-icons">lock</i>
 						        </span> 
 						        <div class="form-line">
-						        	<input type="text" class="form-control" name="number" placeholder="Captcha" id="lg=captcha">
+						        	<input type="text" class="form-control" name="number" placeholder="Captcha" id="lg-captcha">
 						        </div>
 						        <small class="col-pink i8bEK" id="warn_captcha">{{WARNING}}</small>
 						    </div>
@@ -124,6 +124,10 @@ require APP.'/app/config.php';
                         	function submitHandler(){
                         		var r = true;
 
+                        		// Domain checker
+                        		(function(){
+
+                        		})();
                         		// Email checker
                         		(function(){
                         			let x = z('lg-email'),
@@ -201,14 +205,26 @@ require APP.'/app/config.php';
                         			y.style.display = 'none';
 									u.remove('error');
 									u.add('success');
-									u.add('focused')
+									u.add('focused');
                         		})();
                         		// Captcha checker
                         		(function(){
                         			let x = z('lg-captcha'),
                         				y = z('warn_captcha'),
                         				u = x.parentElement.classList;
-                        			
+                        			if(x.value.length !== 5){
+                        				y.innerHTML = 'Captcha must be 5 characters';
+										y.style.display = 'block';
+										u.remove('success');
+										u.add('error');
+										u.add('focused');
+										r = false;
+										return;
+                        			}
+                        			y.style.display = 'none';
+									u.remove('error');
+									u.add('success');
+									u.add('focused');
                         		})();
                         		
                         		// TEST
