@@ -62,7 +62,7 @@ $config = [
 ];
 
 /**
- * STOP EDITTING BELOW THIS LINE
+ * STOP EDITING BELOW THIS LINE
  * - - - - - - - - - - - - - - - - - - - - 
  * Below are the codes that built the site.
  * Modify the code below at your own risk.
