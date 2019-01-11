@@ -32,7 +32,7 @@ require APP.'/app/config.php';
 						    <i class="material-icons">person</i>
 						    </span>
 						    <div class="form-line">
-						    	<input type="text" name="uname" class="form-control" placeholder="your-name.<?=$final['placeholders']['signup']['subdomain'];?>" onkeyup="domainInfo(this.value)" id="lg-username" autocomplete="off">
+						    	<input type="text" name="username" class="form-control" placeholder="your-name.<?=$final['placeholders']['signup']['subdomain'];?>" onkeyup="domainInfo(this.value)" onblur="domainInfo(this.value, true)" id="lg-username" autocomplete="off">
 						    </div>
 						    <small class="col-blue i8bEK" id="sub_info">{{MESSAGE}}</small>
 						    <small class="col-pink i8bEK" id="warn_username">{{WARNING}}</small>
@@ -80,9 +80,8 @@ require APP.'/app/config.php';
 						        <small class="col-pink i8bEK" id="warn_captcha">{{WARNING}}</small>
 						    </div>
 						</div>
-
 						<p>By signing up, you accept and agree to our <a href="<?=$final['base'];?>/terms.php">terms of service</a> and <a href="<?=$final['base'];?>/privacy.php">privacy policies</a>.</p>
-
+						<input type="hidden" name="submit" value="Register">
                         <div class="row">
                             <div class="col-xs-12">
                                 <button class="btn btn-block bg-<?=$final['color'];?> waves-effect">SIGN UP</button>
@@ -96,37 +95,67 @@ require APP.'/app/config.php';
                         	function z(o){
                         		return document.getElementById(o);
                         	}
-                        	function domainInfo(x){
-                        		let e = z('sub_info'),
-                        			w = z('warn_username');
+                        	function ok(y, u){
+                        		y.style.display = 'none';
+								u.remove('error');
+								u.add('success');
+								u.add('focused');
+                        	}
+                        	function warn(y, u){
+                        		y.style.display = 'block';
+								u.remove('success');
+								u.add('error');
+								u.add('focused');
+                        	}
+                        	function domainInfo(sub, check=false){
+                        		let x = z('lg-username'),
+                        			y = z('warn_username'),
+                        			e = z('sub_info'),
+                        			u = x.parentElement.classList;
                         		e.style.display = 'none';
-                        		w.style.display = 'none';
-                        		if(x.length === 0){
+                        		y.style.display = 'none';
+                        		if(check){
+                        			if(sub.length !== 0 && sub.length < 4){
+                        				y.innerHTML = 'Subdomain is too short! Atleast 4 characters is required';
+										warn(y, u);
+										return false;
+                        			}
+                        		}
+                        		if(sub.length === 0){
                         			e.innerHTML = '';
+                        			if(check){
+                        				y.innerHTML = 'Please choose a subdomain';
+                        				warn(y, u);
+                        			}
                         			return false;
                         		}
-                        		if(x.length > 16){
-                        			w.innerHTML = 'Subdomain is too long! 16 characters max';
-									w.style.display = 'block';
+                        		if(sub.length < 4){
 									return false;
                         		}
-                        		if(/^[A-Za-z0-9-]+$(?<!-)/.test(x)){
-	                        		e.innerHTML = `The domain will be ${x}.${LOGGED_DOM}`;
+                        		if(sub.length > 16){
+                        			y.innerHTML = 'Subdomain is too long! 16 characters max';
+									warn(y, u);
+									return false;
+                        		}
+                        		if(/^[A-Za-z0-9-]+$(?<!-)/.test(sub)){
+	                        		e.innerHTML = `The domain will be ${sub}.${LOGGED_DOM}`;
 	                        		e.style.display = 'block';
+	                        		ok(y, u);
 	                        		return true;
 								}else{
-									w.innerHTML = 'Only alphanumeric and "-" characters are allowed.<br/>Note: "-" at the end is not allowed';
-									w.style.display = 'block';
+									y.innerHTML = 'Only alphanumeric and "-" characters are allowed.<br/>Note: "-" at the end is not allowed';
+									warn(y, u);
 									return false;
 								}
                         	}
-                        	
                         	function submitHandler(){
                         		var r = true;
 
                         		// Domain checker
                         		(function(){
-
+                        			if(!domainInfo(z('lg-username').value, true)){
+                        				r = false;
+                        			}
                         		})();
                         		// Email checker
                         		(function(){
@@ -135,26 +164,17 @@ require APP.'/app/config.php';
                         				u = x.parentElement.classList;
                         			if(z('lg-email').value.length === 0){
                         				y.innerHTML = 'Email cannot be empty';
-										y.style.display = 'block';
-										u.remove('success');
-										u.add('error');
-										u.add('focused');
+										warn(y, u);
 										r = false;
 										return;
                         			}
                         			if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(String(z('lg-email').value).toLowerCase()) === false){
                         				y.innerHTML = 'Please enter a valid email address';
-										y.style.display = 'block';
-										u.remove('success');
-										u.add('error');
-										u.add('focused');
+										warn(y, u);
                         				r = false;
                         				return;
                         			}
-                        			y.style.display = 'none';
-									u.remove('error');
-									u.add('success');
-									u.add('focused');
+                        			ok(y, u);
                         		})();
                         		// Password checker
                         		(function(){
@@ -163,26 +183,17 @@ require APP.'/app/config.php';
                         				u = x.parentElement.classList;
                         			if(x.value.length > 20){
                         				y.innerHTML = 'Password is too long! 20 characters max';
-										y.style.display = 'block';
-										u.remove('success');
-										u.add('error');
-										u.add('focused');
+										warn(y, u);
 										r = false;
 										return;
                         			}
                         			if(x.value.length < 6){
                         				y.innerHTML = 'Password is too short! 6 characters minimum';
-										y.style.display = 'block';
-										u.remove('success');
-										u.add('error');
-										u.add('focused');
+										warn(y, u);
 										r = false;
 										return;
                         			}
-                        			y.style.display = 'none';
-									u.remove('error');
-									u.add('success');
-									u.add('focused');
+                        			ok(y, u);
                         		})();
                         		// Confirm password checker
                         		(function(){
@@ -195,17 +206,11 @@ require APP.'/app/config.php';
                         			}
                         			if(x.value !== o.value){
                         				y.innerHTML = 'Password does not match!';
-										y.style.display = 'block';
-										u.remove('success');
-										u.add('error');
-										u.add('focused');
+										warn(y, u);
 										r = false;
 										return;
                         			}
-                        			y.style.display = 'none';
-									u.remove('error');
-									u.add('success');
-									u.add('focused');
+                        			ok(y, u);
                         		})();
                         		// Captcha checker
                         		(function(){
@@ -214,21 +219,14 @@ require APP.'/app/config.php';
                         				u = x.parentElement.classList;
                         			if(x.value.length !== 5){
                         				y.innerHTML = 'Captcha must be 5 characters';
-										y.style.display = 'block';
-										u.remove('success');
-										u.add('error');
-										u.add('focused');
+										warn(y, u);
 										r = false;
 										return;
                         			}
-                        			y.style.display = 'none';
-									u.remove('error');
-									u.add('success');
-									u.add('focused');
+                        			ok(y, u);
                         		})();
                         		
                         		// TEST
-                        		return false;
 								return r;
                         	}
                         </script>

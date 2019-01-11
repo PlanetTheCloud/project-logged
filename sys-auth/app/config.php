@@ -46,13 +46,15 @@ $config = [
 	# You can define page titles here
 	'titles' => [
 		'login_page' => 'Login to your account',
-		'signup_page' => 'Register an account'
+		'signup_page' => 'Register an account',
+		'terms_page' => 'Terms of Service'
 	],
 
 	# You can define page message (Shown below logo) here
 	'message' => [
 		'login_page' => 'Login to your account',
-		'signup_page' => 'Register an account'
+		'signup_page' => 'Register an account',
+		'terms_page' => 'Terms of Service'
 	],
 
 	# This script assumes the cPanel is on the same domain where this script is installed.
@@ -68,7 +70,7 @@ $config = [
  * Modify the code below at your own risk.
  * No support will be provided.
  */
-if(explode('/', $_SERVER['REQUEST_URI'])[1] === 'sys-auth'){
+if(!defined('APP') OR explode('/', $_SERVER['REQUEST_URI'])[1] === 'sys-auth'){
 	die(header("HTTP/1.1 403 Forbidden"));
 }
 $x = [
@@ -102,10 +104,12 @@ $final = [
 	'title' => [
 		'login' => $config['titles']['login_page'],
 		'signup' => $config['titles']['signup_page'],
+		'terms' => $config['titles']['terms_page']
 	],
 	'msg' => [
 		'login' => $config['message']['login_page'],
 		'signup' => $config['message']['signup_page'],
+		'terms' => $config['message']['terms_page']
 	],
 	'color' => $config['site_theme_color']
 ];

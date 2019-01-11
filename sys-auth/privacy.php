@@ -1,5 +1,8 @@
 <?php
-include 'login-config.php'; //DO NOT REMOVE OR MODIFY THIS!
+
+define('APP', dirname(__FILE__));
+require APP.'/app/config.php';
+
 ?>
 <!DOCTYPE html>
 <html>
