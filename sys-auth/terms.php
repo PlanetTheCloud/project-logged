@@ -129,6 +129,24 @@ require APP.'/app/config.php';
                     <p>{$c} offers large web space and bandwidth with hosting accounts. By this, we mean space for legitimate web site content and bandwidth for visitors to view it. All files on a domain must be part of the active website and linked to the site. Sites should not contain any backups, downloads, or other non-web based content. We will treat all password protected archive (e.g. zip and rar) files as unacceptable. Multimedia content such as audio and video is acceptable provided it is streamed to the user, links to HTTP download of this content is not acceptable.</p>
                     <p>Archives of movie files, audio files, zips, rars or any large volumes of files used for downloading / sharing is not allowed.</p>
 
+                    <br/>
+
+                    <h4>12. RIGHT TO SUSPEND / TERMINATE HOSTING SERVICES</h4>
+                    <p>We reserve the right to suspend or terminate any hosting services if a website/hosting service consumes excessive server resources or effects other websites / hosting services on a shared or clustered hosting server. Excessive resource usage can constitute any form of server usage calculated and determined at the discretion of {$c}. {$c} reserves the right to suspend service at any time without prior notice if or when the health or normal running / performance of a service is effected / degraded by a website or hosting service.</p>
+                    <p>You acknowledge that {$c} may or may not pre-screen Content, but that {$c} and its designees shall have the right (but not the obligation) in their sole discretion to pre-screen, refuse, or remove any Content that is available via the Service. Without limiting the foregoing, {$c} and its designees shall have the right to remove any Content that violates the TOS or is otherwise objectionable. You agree that you must evaluate, and bear all risks associated with, the use of any Content, including any reliance on the accuracy, completeness, or usefulness of such Content. In this regard, you acknowledge that you may not rely on any Content created by {$c} or submitted to {$c}, including without limitation information in {$c} Message Boards and in all other parts of the Service.</p>
+                    <p>You acknowledge, consent and agree that {$c} may access, preserve and disclose your account information and Content if required to do so by law or in a good faith belief that such access preservation or disclosure is reasonably necessary to:</p>
+                    <ol>
+                        <li>comply with legal process;
+                        <li>enforce the TOS;</li>
+                        <li>respond to claims that any Content violates the rights of third parties;</li>
+                        <li>respond to your requests for customer service; or</li>
+                        <li>protect the rights, property or personal safety of {$c}, its users and the public.</li>
+                    </ol>
+                    <p>You understand that the technical processing and transmission of the Service, including your Content, may involve</p>
+                    <li>transmissions over various networks; and</li>
+                    <li>changes to conform and adapt to technical requirements of connecting networks or devices.</li>
+                    <p>You understand that the Service and software embodied within the Service may include security components that permit digital materials to be protected, and that use of these materials is subject to usage rules set by {$c} and/or content providers who provide content to the Service. You may not attempt to override or circumvent any of the usage rules embedded into the Service. Any unauthorized reproduction, publication, further distribution or public exhibition of the materials provided on the Service, in whole or in part, is strictly prohibited.</p>
+
                     <script src="/auth/assets/material.js"></script>
                 </div>
             </div>
