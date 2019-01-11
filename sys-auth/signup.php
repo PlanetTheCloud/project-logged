@@ -84,7 +84,7 @@ require APP.'/app/config.php';
 						<input type="hidden" name="submit" value="Register">
                         <div class="row">
                             <div class="col-xs-12">
-                                <button class="btn btn-block bg-<?=$final['color'];?> waves-effect">SIGN UP</button>
+                                <button class="btn btn-block bg-<?=$final['color'];?> waves-effect"><?=$final['btn']['register'];?></button>
                             </div>
                             <div class="m-t-25 m-b--5 align-center">
 							    <a href="<?=$final['base'];?>/login.php">Registered User? Click here to Login!</a>

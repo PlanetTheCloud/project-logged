@@ -57,6 +57,12 @@ $config = [
 		'terms_page' => 'Terms of Service'
 	],
 
+	# You can define text on buttons
+	'buttons' => [
+		'login_button' => 'SIGN IN',
+		'register_button' => 'SIGN UP'
+	],
+
 	# This script assumes the cPanel is on the same domain where this script is installed.
 	# The cPanel URL must not include the "cpanel" subdomain. Example : xyz.com
 	# Please uncomment the line below to define the cPanel URL
@@ -110,6 +116,10 @@ $final = [
 		'login' => $config['message']['login_page'],
 		'signup' => $config['message']['signup_page'],
 		'terms' => $config['message']['terms_page']
+	],
+	'btn' => [
+		'login' => $config['buttons']['login_button'],
+		'register' => $config['buttons']['register_button'],
 	],
 	'color' => $config['site_theme_color']
 ];

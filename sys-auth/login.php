@@ -157,7 +157,7 @@ require APP.'/app/config.php';
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <button class="btn btn-block bg-<?=$final['color'];?> waves-effect">SIGN IN</button>
+                                <button class="btn btn-block bg-<?=$final['color'];?> waves-effect"><?=$final['btn']['login'];?></button>
                             </div>
                         </div>
                         <div class="row m-t-15 m-b--20">
@@ -198,9 +198,9 @@ require APP.'/app/config.php';
 								}
 								
 								if(v.value.length < 6){
-									w.innerHTML = 'Password is too short';
-									p = true;
-								}
+                                    w.innerHTML = 'Password is too short';
+                                    p = true;
+                                }
 								if(v.value.length === 0){
 									w.innerHTML = 'Password cannot be empty';
 									p = true;
