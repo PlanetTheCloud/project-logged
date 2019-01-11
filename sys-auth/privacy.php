@@ -3,6 +3,9 @@
 define('APP', dirname(__FILE__));
 require APP.'/app/config.php';
 
+# NOT READY FOR PRODUCTION
+die;
+
 ?>
 <!DOCTYPE html>
 <html>
