@@ -123,5 +123,8 @@ $final = [
 	],
 	'color' => $config['site_theme_color']
 ];
+if(defined('LOGGED_LANGUAGE_PACK')){
+	$x = lang('/app/lang/en.php');
+}
 
 ?>
