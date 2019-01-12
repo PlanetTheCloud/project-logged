@@ -1,0 +1,51 @@
+function z(o){
+	return document.getElementById(o);
+}
+function submitHandler(){
+	var x = z('lg-username'),
+		y = z('warn_username'),
+		v = z('lg-password'),
+		w = z('warn_password'),
+		p = false,
+		r = true;
+
+	if(/^[a-zA-Z0-9]{1,6}_[0-9]{8}$/.test(x.value)){
+		y.style.display = 'none';
+		let u = x.parentElement.classList;
+		u.remove('error');
+		u.add('success');
+		u.add('focused');
+	}else{
+		y.innerHTML = 'Invalid username';
+		y.style.display = 'block';
+		let u = x.parentElement.classList;
+		u.remove('success');
+		u.add('error');
+		u.add('focused');
+		r = false;
+	}
+	
+	if(v.value.length < 6){
+        w.innerHTML = 'Password is too short';
+        p = true;
+    }
+	if(v.value.length === 0){
+		w.innerHTML = 'Password cannot be empty';
+		p = true;
+	}
+	if(p){
+		w.style.display = 'block';
+		let u = v.parentElement.classList;
+		u.remove('success');
+		u.add('error');
+		u.add('focused');
+		r = false;
+	}else{
+		w.style.display = 'none';
+		let u = v.parentElement.classList;
+		u.remove('error');
+		u.add('success');
+		u.add('focused');
+	}
+	return r;
+}

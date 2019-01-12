@@ -28,17 +28,17 @@ $config = [
 	'dl_install_path' => '/auth',
 
 	# Enter your company name
-	'company_name' => 'TestHost',
+	'company_name' => 'Your company name',
 	# Set to "true" if your site has a valid SSL certificate. Use "false" otherwise
 	'use_https' => false,
 	# Enter your Logo URL. Relative URL is possible
 	'logo' => 'https://image.ibb.co/hj4W7G/logo.png',
 	# Where to send abuse email?
-	'abuse_email' => 'abuse@testhost.com',
+	'abuse_email' => 'abuse@email.com',
 	# Where to send contact email?
-	'contact_email' => 'contact@testhost.com',
+	'contact_email' => 'contact@email.com',
 	# Main site URL with protocol
-	'main_site' => 'http://testhost.com',
+	'main_site' => 'Main Site URL',
 
 	# What colors to use for elements like Buttons?
 	'site_theme_color' => 'blue',
@@ -85,7 +85,6 @@ $x = [
 ];
 $x[] = (isset($config['cpanel_url'])) ? "cpanel.{$config['cpanel_url']}" : "cpanel.{$x[0]}";
 $x[] = (isset($config['cpanel_url'])) ? "order.{$config['cpanel_url']}" : "order.{$x[0]}";
-$x[] = "{$_SERVER['REQUEST_SCHEME']}://{$x[0]}";
 $final = [
 	'base' => $config['dl_install_path'],
 	'company_name' => $config['company_name'],
@@ -98,8 +97,6 @@ $final = [
 	],
 	'links' => [
 		'reset_pwd' => "https://{$x[2]}/lostpassword.php",
-		'privacy' => "{$config['dl_install_path']}/privacy.php",
-		'terms' => "{$config['dl_install_path']}/terms.php",
 	],
 	'submit' => [
 		'login' => "https://{$x[2]}/login.php",

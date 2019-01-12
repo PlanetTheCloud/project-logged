@@ -1,0 +1,129 @@
+function z(o) {
+    return document.getElementById(o)
+}
+function ok(y, u) {
+    y.style.display = 'none';
+    u.remove('error');
+    u.add('success');
+    u.add('focused')
+}
+function warn(y, u) {
+    y.style.display = 'block';
+    u.remove('success');
+    u.add('error');
+    u.add('focused')
+}
+function domainInfo(sub, check = !1) {
+    let x = z('lg-username'),
+        y = z('warn_username'),
+        e = z('sub_info'),
+        u = x.parentElement.classList;
+    e.style.display = 'none';
+    y.style.display = 'none';
+    if (check) {
+        if (sub.length !== 0 && sub.length < 4) {
+            y.innerHTML = 'Subdomain is too short! Atleast 4 characters is required';
+            warn(y, u);
+            return !1
+        }
+    }
+    if (sub.length === 0) {
+        e.innerHTML = '';
+        if (check) {
+            y.innerHTML = 'Please choose a subdomain';
+            warn(y, u)
+        }
+        return !1
+    }
+    if (sub.length < 4) {
+        return !1
+    }
+    if (sub.length > 16) {
+        y.innerHTML = 'Subdomain is too long! 16 characters max';
+        warn(y, u);
+        return !1
+    }
+    if (/^[A-Za-z0-9-]+$(?<!-)/.test(sub)) {
+        e.innerHTML = `The domain will be ${sub}.${LOGGED_DOM}`;
+        e.style.display = 'block';
+        ok(y, u);
+        return !0
+    } else {
+        y.innerHTML = 'Only alphanumeric and "-" characters are allowed.<br/>Note: "-" at the end is not allowed';
+        warn(y, u);
+        return !1
+    }
+}
+function submitHandler() {
+    var r = !0;
+    (function() {
+        if (!domainInfo(z('lg-username').value, !0)) {
+            r = !1
+        }
+    })();
+    (function() {
+        let x = z('lg-email'),
+            y = z('warn_email'),
+            u = x.parentElement.classList;
+        if (z('lg-email').value.length === 0) {
+            y.innerHTML = 'Email cannot be empty';
+            warn(y, u);
+            r = !1;
+            return
+        }
+        if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(String(z('lg-email').value).toLowerCase()) === !1) {
+            y.innerHTML = 'Please enter a valid email address';
+            warn(y, u);
+            r = !1;
+            return
+        }
+        ok(y, u)
+    })();
+    (function() {
+        let x = z('lg-password'),
+            y = z('warn_password'),
+            u = x.parentElement.classList;
+        if (x.value.length > 20) {
+            y.innerHTML = 'Password is too long! 20 characters max';
+            warn(y, u);
+            r = !1;
+            return
+        }
+        if (x.value.length < 6) {
+            y.innerHTML = 'Password is too short! 6 characters minimum';
+            warn(y, u);
+            r = !1;
+            return
+        }
+        ok(y, u)
+    })();
+    (function() {
+        let x = z('lg-password-confirm'),
+            y = z('warn_password_confirm'),
+            u = x.parentElement.classList,
+            o = z('lg-password');
+        if (o.value.length === 0) {
+            return
+        }
+        if (x.value !== o.value) {
+            y.innerHTML = 'Password does not match!';
+            warn(y, u);
+            r = !1;
+            return
+        }
+        ok(y, u)
+    })();
+    (function() {
+        let x = z('lg-captcha'),
+            y = z('warn_captcha'),
+            u = x.parentElement.classList;
+        if (x.value.length !== 5) {
+            y.innerHTML = 'Captcha must be 5 characters';
+            warn(y, u);
+            r = !1;
+            return
+        }
+        ok(y, u)
+    })();
+    return r
+}
