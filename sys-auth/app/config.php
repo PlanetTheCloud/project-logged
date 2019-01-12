@@ -28,17 +28,17 @@ $config = [
 	'dl_install_path' => '/auth',
 
 	# Enter your company name
-	'company_name' => 'TestHost',
+	'company_name' => 'COMPANY_NAME',
 	# Set to "true" if your site has a valid SSL certificate. Use "false" otherwise
 	'use_https' => false,
 	# Enter your Logo URL. Relative URL is possible
-	'logo' => 'https://image.ibb.co/hj4W7G/logo.png',
+	'logo' => 'LOGO_URL',
 	# Where to send abuse email?
-	'abuse_email' => 'abuse@testhost.com',
+	'abuse_email' => 'ABUSE_EMAIL',
 	# Where to send contact email? NOTE : THIS EMAIL MUST BE ACTIVELY MONITORED ACCORDING TO THE PRIVACY POLICY.
-	'contact_email' => 'contact@testhost.com',
+	'contact_email' => 'CONTACT_EMAIL',
 	# Main site URL with protocol
-	'main_site' => 'http://testhost.com',
+	'main_site' => 'MAIN_SITE_URL',
 
 	# What colors to use for elements like Buttons?
 	'site_theme_color' => 'blue',
@@ -68,7 +68,7 @@ $config = [
 	# This script assumes the cPanel is on the same domain where this script is installed.
 	# The cPanel URL must not include the "cpanel" subdomain. Example : xyz.com
 	# Please uncomment the line below to define the cPanel URL
-	//'cpanel_url' => 'lightspace.cf',
+	//'cpanel_url' => 'CPANEL_URL',
 ];
 
 /**
