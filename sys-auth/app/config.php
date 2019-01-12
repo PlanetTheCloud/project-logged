@@ -35,7 +35,7 @@ $config = [
 	'logo' => 'https://image.ibb.co/hj4W7G/logo.png',
 	# Where to send abuse email?
 	'abuse_email' => 'abuse@testhost.com',
-	# Where to send contact email?
+	# Where to send contact email? NOTE : THIS EMAIL MUST BE ACTIVELY MONITORED ACCORDING TO THE PRIVACY POLICY.
 	'contact_email' => 'contact@testhost.com',
 	# Main site URL with protocol
 	'main_site' => 'http://testhost.com',
@@ -47,14 +47,16 @@ $config = [
 	'titles' => [
 		'login_page' => 'Login to your account',
 		'signup_page' => 'Register an account',
-		'terms_page' => 'Terms of Service'
+		'terms_page' => 'Terms of Service',
+		'privacy_page' => 'Privacy Policy'
 	],
 
 	# You can define page message (Shown below logo) here
 	'message' => [
 		'login_page' => 'Login to your account',
 		'signup_page' => 'Register an account',
-		'terms_page' => 'Terms of Service'
+		'terms_page' => 'Terms of Service',
+		'privacy_page' => 'Privacy Policy'
 	],
 
 	# You can define text on buttons
@@ -113,12 +115,14 @@ $final = [
 	'title' => [
 		'login' => $config['titles']['login_page'],
 		'signup' => $config['titles']['signup_page'],
-		'terms' => $config['titles']['terms_page']
+		'terms' => $config['titles']['terms_page'],
+		'privacy' => $config['titles']['privacy_page']
 	],
 	'msg' => [
 		'login' => $config['message']['login_page'],
 		'signup' => $config['message']['signup_page'],
-		'terms' => $config['message']['terms_page']
+		'terms' => $config['message']['terms_page'],
+		'privacy' => $config['message']['privacy_page']
 	],
 	'btn' => [
 		'login' => $config['buttons']['login_button'],
