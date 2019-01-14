@@ -2,6 +2,11 @@
 
 define('APP', dirname(__FILE__));
 require APP.'/app/config.php';
+require APP.'/app/csrf.class.php';
+
+session_start();
+$csrf = new Csrf;
+$csrf->createToken('register');
 
 ?>
 <!DOCTYPE html>
@@ -26,7 +31,18 @@ require APP.'/app/config.php';
             <div class="card">
                 <div class="body">
                     <div class="msg"><?=$final['msg']['signup'];?></div>
-                    <form action="<?=$final['submit']['signup'];?>" onsubmit="return submitHandler()" method="post">
+                    <?php
+
+                    if(isset($_SESSION['gMsg'])){
+                    	if($_SESSION['gMsg'] && is_array($_SESSION['gMsg'])){
+                    		foreach ($_SESSION['gMsg'] as $key => $value) {
+                    			echo "<div class=\"alert alert-{$value['type']}\">{$value['msg']}</div>".PHP_EOL;
+                    		}
+                    		$_SESSION['gMsg'] = [];
+                    	}
+                    }
+
+                    ?><form action="/signup.php" onsubmit="return submitHandler()" method="post">
                     	<div class="input-group">
 						    <span class="input-group-addon">
 						    <i class="material-icons">person</i>
@@ -82,6 +98,7 @@ require APP.'/app/config.php';
 						</div>
 						<p>By signing up, you accept and agree to our <a href="<?=$final['links']['terms'];?>">terms of service</a> and <a href="<?=$final['links']['privacy'];?>">privacy policies</a>.</p>
 						<input type="hidden" name="submit" value="Register">
+						<input type="hidden" name="token" value="<?=$csrf->getToken('register');?>">
                         <div class="row">
                             <div class="col-xs-12">
                                 <button class="btn btn-block bg-<?=$final['color'];?> waves-effect"><?=$final['btn']['register'];?></button>

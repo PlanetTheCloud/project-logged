@@ -38,7 +38,7 @@ $config = [
 	# Where to send contact email? NOTE : THIS EMAIL MUST BE ACTIVELY MONITORED ACCORDING TO THE PRIVACY POLICY.
 	'contact_email' => 'CONTACT_EMAIL',
 	# Main site URL with protocol
-	'main_site' => 'MAIN_SITE_URL',
+	'main_site' => 'MAIN_SITE',
 
 	# What colors to use for elements like Buttons?
 	'site_theme_color' => 'blue',
@@ -48,7 +48,8 @@ $config = [
 		'login_page' => 'Login to your account',
 		'signup_page' => 'Register an account',
 		'terms_page' => 'Terms of Service',
-		'privacy_page' => 'Privacy Policy'
+		'privacy_page' => 'Privacy Policy',
+		'creating_account_page' => 'Creating your account, Please wait...'
 	],
 
 	# You can define page message (Shown below logo) here
@@ -56,7 +57,8 @@ $config = [
 		'login_page' => 'Login to your account',
 		'signup_page' => 'Register an account',
 		'terms_page' => 'Terms of Service',
-		'privacy_page' => 'Privacy Policy'
+		'privacy_page' => 'Privacy Policy',
+		'creating_account_page' => 'Creating your account...'
 	],
 
 	# You can define text on buttons
@@ -116,13 +118,15 @@ $final = [
 		'login' => $config['titles']['login_page'],
 		'signup' => $config['titles']['signup_page'],
 		'terms' => $config['titles']['terms_page'],
-		'privacy' => $config['titles']['privacy_page']
+		'privacy' => $config['titles']['privacy_page'],
+		'creating_account' => $config['titles']['creating_account_page']
 	],
 	'msg' => [
 		'login' => $config['message']['login_page'],
 		'signup' => $config['message']['signup_page'],
 		'terms' => $config['message']['terms_page'],
-		'privacy' => $config['message']['privacy_page']
+		'privacy' => $config['message']['privacy_page'],
+		'creating_account' => $config['message']['creating_account_page']
 	],
 	'btn' => [
 		'login' => $config['buttons']['login_button'],

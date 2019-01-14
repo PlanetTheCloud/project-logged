@@ -1,6 +1,9 @@
 # MyOwnFreeHost Project LOGGED
 A Free and OpenSource Material Based Design Login, Sign up and Terms Template created by PlanetCloud.
 
+##### IMPORTANT :  
+Please read the license.   
+
 ##### VERSIONS :
 - 1.6b (Latest Release)
 - 1.6r (Current Master)
