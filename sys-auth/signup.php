@@ -97,7 +97,6 @@ $csrf->createToken('register');
 						    </div>
 						</div>
 						<p>By signing up, you accept and agree to our <a href="<?=$final['links']['terms'];?>">terms of service</a> and <a href="<?=$final['links']['privacy'];?>">privacy policies</a>.</p>
-						<input type="hidden" name="submit" value="Register">
 						<input type="hidden" name="token" value="<?=$csrf->getToken('register');?>">
                         <div class="row">
                             <div class="col-xs-12">

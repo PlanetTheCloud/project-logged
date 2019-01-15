@@ -65,7 +65,7 @@ class Csrf
 	public function verifyToken(String $name, String $token){
 		$this->checkSession();
 		if(isset($_SESSION['csrf_token'][$name])){
-			if(hash_equals($_SESSION['csrf_token'][$name]['token']), $token){
+			if(hash_equals($_SESSION['csrf_token'][$name]['token'], $token)){
 				return true;
 			}
 		}

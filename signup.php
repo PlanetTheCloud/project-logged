@@ -7,6 +7,7 @@ require ROOT.'/sys-auth/app/config.php';
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 	session_start();
 	require ROOT.'/sys-auth/app/csrf.class.php';
+	$csrf = new Csrf;
 
 	function kick(Bool $addMsg=false){
 		if($addMsg){
@@ -19,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 		die;
 	}
 
-	$required = ['username','email','password','password_confirm','id','number','submit','token'];
+	$required = ['username','email','password','password_confirm','id','number','token'];
 	foreach ($required as $key => $value) {
 		if(!isset($_POST[$value])){
 			kick(true);
@@ -73,12 +74,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 						<input type="hidden" name="password_confirm" value="<?=$_POST['password_confirm'];?>">
 						<input type="hidden" name="id" value="<?=$_POST['id'];?>">
 						<input type="hidden" name="number" value="<?=$_POST['number'];?>">
-						<input type="hidden" name="submit" value="<?=$_POST['submit'];?>">
+						<input type="hidden" name="submit" value="Register">
 						<div>
 							<button type="submit" class="btn btn-success btn-block" id="signup">Click here if nothing happens</button>
 						</div>
 					</form>
-					<script type="text/javascript">document.getElementById('signup').click();</script>
+					<script type="text/javascript">document.getElementById('signups').click();</script>
                 </div>
             </div>
         </div>
