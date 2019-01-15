@@ -79,7 +79,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 							<button type="submit" class="btn btn-success btn-block" id="signup">Click here if nothing happens</button>
 						</div>
 					</form>
-					<script type="text/javascript">document.getElementById('signups').click();</script>
+					<script type="text/javascript">document.getElementById('signup').click();</script>
                 </div>
             </div>
         </div>
