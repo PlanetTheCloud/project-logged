@@ -61,6 +61,17 @@ class Csrf
 		return $_SESSION['csrf_token'][$name];
 	}
 
+	# Verify CSRF Token
+	public function verifyToken(String $name, String $token){
+		$this->checkSession();
+		if(isset($_SESSION['csrf_token'][$name])){
+			if(hash_equals($_SESSION['csrf_token'][$name]['token']), $token){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	# Check if token is expired
 	public function isExpired(String $name){
 		if($this->time > $_SESSION['csrf_token'][$name]['expire']){

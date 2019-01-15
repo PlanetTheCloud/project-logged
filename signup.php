@@ -39,6 +39,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 		}
 		$_POST[$value] = htmlspecialchars($_POST[$value]);
 	}
+	if(!$csrf->verifyToken('register', $_POST['token'])){
+		kick(true);
+	}
 }else{
 	header("Location: {$final['base']}/signup.php");
 	die;
