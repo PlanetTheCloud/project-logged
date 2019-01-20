@@ -28,17 +28,17 @@ $config = [
 	'dl_install_path' => '/auth',
 
 	# Enter your company name
-	'company_name' => 'COMPANY_NAME',
+	'company_name' => 'Planet Cloud Hosting',
 	# Set to "true" if your site has a valid SSL certificate. Use "false" otherwise
 	'use_https' => false,
 	# Enter your Logo URL. Relative URL is possible
-	'logo' => 'LOGO_URL',
+	'logo' => 'https://image.ibb.co/hj4W7G/logo.png',
 	# Where to send abuse email?
-	'abuse_email' => 'ABUSE_EMAIL',
+	'abuse_email' => 'planet.devnetwork@gmail.com',
 	# Where to send contact email? NOTE : THIS EMAIL MUST BE ACTIVELY MONITORED ACCORDING TO THE PRIVACY POLICY.
-	'contact_email' => 'CONTACT_EMAIL',
+	'contact_email' => 'planet.devnetwork@gmail.com',
 	# Main site URL with protocol
-	'main_site' => 'MAIN_SITE',
+	'main_site' => 'http://planetcloudhosting.cf',
 
 	# What colors to use for elements like Buttons?
 	'site_theme_color' => 'blue',
@@ -69,8 +69,10 @@ $config = [
 
 	# This script assumes the cPanel is on the same domain where this script is installed.
 	# The cPanel URL must not include the "cpanel" subdomain. Example : xyz.com
+    # IMPORTANT NOTICE : THIS WILL ONLY APPLY TO THE LOGIN PAGE. 
+    # SIGNUP MUST BE TO THE SAME DOMAIN WHERE THIS IS INSTALLED (Requirements by MOFH).
 	# Please uncomment the line below to define the cPanel URL
-	//'cpanel_url' => 'CPANEL_URL',
+	'login_cpanel_url' => 'planetcloudhosting.cf',
 ];
 
 /**
@@ -87,8 +89,8 @@ $x = [
 	strtolower(preg_replace('/^www\./' , '' , $_SERVER['HTTP_HOST'])),
 	md5(rand(6000, PHP_INT_MAX)),
 ];
-$x[] = (isset($config['cpanel_url'])) ? "cpanel.{$config['cpanel_url']}" : "cpanel.{$x[0]}";
-$x[] = (isset($config['cpanel_url'])) ? "order.{$config['cpanel_url']}" : "order.{$x[0]}";
+$x[] = (isset($config['login_cpanel_url'])) ? "cpanel.{$config['login_cpanel_url']}" : "cpanel.{$x[0]}";
+$x[] = (isset($config['login_cpanel_url'])) ? "order.{$config['login_cpanel_url']}" : "order.{$x[0]}";
 $x[] = "{$_SERVER['REQUEST_SCHEME']}://{$x[0]}";
 $final = [
 	'base' => $config['dl_install_path'],
@@ -97,7 +99,7 @@ $final = [
 	'current_site' => $x[0],
 	'placeholders' => [
 		'signup' => [
-			'subdomain' => (isset($config['cpanel_url'])) ? $config['cpanel_url'] : $x[0],
+			'subdomain' => $config['login_cpanel_url'] ?? $x[0],
 		]
 	],
 	'links' => [
@@ -107,7 +109,7 @@ $final = [
 	],
 	'submit' => [
 		'login' => "https://{$x[2]}/login.php",
-		'signup' => ($config['use_https']) ? "https://securesignup.net/register2.php" : "http://{$x[3]}/register2.php"
+		'signup' => ($config['use_https']) ? "https://securesignup.net/register2.php" : "http://{$x[4]}/register2.php"
 	],
 	'logo' => $config['logo'],
 	'email' => [
@@ -137,5 +139,3 @@ $final = [
 if(defined('LOGGED_LANGUAGE_PACK')){
 	$x = lang('/app/lang/en.php');
 }
-
-?>
