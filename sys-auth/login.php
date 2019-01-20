@@ -53,7 +53,7 @@ require APP.'/app/config.php';
                                 <option>Amharic</option>
                                 <option>Arabic</option>
                                 <option>Armenian</option>
-                                <option>Azeerbaijani</option>
+                                <option>Azerbaijani</option>
                                 <option>Basque</option>
                                 <option>Belarusian</option>
                                 <option>Bengali</option>
