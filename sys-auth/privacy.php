@@ -28,7 +28,7 @@ require APP.'/app/config.php';
 
 						<?php
 
-	                    echo str_ireplace(['{$c}', '{$c_caps}', '{$email_contact}', '{$privacy_url}', '{$terms_url}'], [$final['company_name'], strtoupper($final['company_name']), $final['email']['contact'], "{$x[4]}{$final['links']['privacy']}", "{$x[4]}{$final['links']['terms']}"], file_get_contents(APP.'/privacy.content'));
+	                    echo str_ireplace(['{$c}', '{$c_caps}', '{$email_contact}', '{$privacy_url}', '{$terms_url}'], [$final['company_name'], strtoupper($final['company_name']), $final['email']['contact'], "{$x[4]}{$final['links']['privacy']}", "{$x[4]}{$final['links']['terms']}"], file_get_contents(APP.'/app/content/privacy.content'));
 
 	                    ?>
 
