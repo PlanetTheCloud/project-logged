@@ -10,6 +10,12 @@
  */
 
 /**
+ * Please keep the comments as it might come in handy later down the road.
+ */
+
+
+
+/**
  * CONFIG FILE
  * File name : config.php
  * File path : {INSTALL_DIR}/app/config.php
@@ -17,14 +23,16 @@
  * You may edit the $config variable array.
  * Do not change the data type (e.g. String to Bool, String to Array, Array to String, etc.)
  * Read the comments for instruction! They're there for a reason!
- * Confused? Ask them on the forum here : https://www.byet.net/index.php?/topic/2663-free-professional-custom-signup-and-login-template-project-logged/
+ * Confused? Ask the community on the forum here : https://www.byet.net/index.php?/topic/2663-free-professional-custom-signup-and-login-template-project-logged/
+ * Note : Official support has been dropped on 1st February 2019.
+ *		  But the project will still continue on Privately due to lack of interest.
  */
 
 $config = [
 
 	# Domain-Level Install Path
 	# From the URL path (Not folder path), where is the "app" folder located?
-	# Do not include the "app" directory and trailing slash. Example : /auth OR "/path1/path2"
+	# Do not include the "app" directory and trailing slash. Example : "/auth" OR "/path1/path2"
 	'dl_install_path' => '/auth',
 
 	# Enter your company name
@@ -32,13 +40,13 @@ $config = [
 	# Set to "true" if your site has a valid SSL certificate. Use "false" otherwise
 	'use_https' => false,
 	# Enter your Logo URL. Relative URL is possible
-	'logo' => 'LOGO_URL',
+	'logo' => 'https://via.placeholder.com/255x70.png?text=Logo',
 	# Where to send abuse email?
 	'abuse_email' => 'ABUSE_EMAIL',
 	# Where to send contact email? NOTE : THIS EMAIL MUST BE ACTIVELY MONITORED ACCORDING TO THE PRIVACY POLICY.
 	'contact_email' => 'CONTACT_EMAIL',
 	# Main site URL with protocol
-	'main_site' => 'MAIN_SITE',
+	'main_site' => 'MAIN_WEBSITE',
 
 	# What colors to use for elements like Buttons?
 	'site_theme_color' => 'blue',
@@ -67,12 +75,12 @@ $config = [
 		'register_button' => 'SIGN UP'
 	],
 
-	# This script assumes the cPanel is on the same domain where this script is installed.
-	# The cPanel URL must not include the "cpanel" subdomain. Example : xyz.com
-    # IMPORTANT NOTICE : THIS WILL ONLY APPLY TO THE LOGIN PAGE. 
+	# This script assumes the cPanel is located on the same domain where this script is installed.
+	# The cPanel URL must not include the "cpanel" subdomain. Example : "xyz.com"
+    # IMPORTANT : THIS WILL ONLY APPLY TO THE LOGIN PAGE. 
     # SIGNUP MUST BE TO THE SAME DOMAIN WHERE THIS IS INSTALLED (Requirements by MOFH).
 	# Please uncomment the line below to define the cPanel URL
-	//'login_cpanel_url' => 'CPANEL_URL',
+	//'login_cpanel_url' => 'CPANEL_URL_FOR_LOGIN',
 ];
 
 /**
@@ -90,7 +98,6 @@ $x = [
 	md5(rand(6000, PHP_INT_MAX)),
 ];
 $x[] = (isset($config['login_cpanel_url'])) ? "cpanel.{$config['login_cpanel_url']}" : "cpanel.{$x[0]}";
-$x[] = (isset($config['login_cpanel_url'])) ? "order.{$config['login_cpanel_url']}" : "order.{$x[0]}";
 $x[] = "{$_SERVER['REQUEST_SCHEME']}://{$x[0]}";
 $final = [
 	'base' => $config['dl_install_path'],
@@ -99,7 +106,7 @@ $final = [
 	'current_site' => $x[0],
 	'placeholders' => [
 		'signup' => [
-			'subdomain' => $config['login_cpanel_url'] ?? $x[0],
+			'subdomain' => $x[0],
 		]
 	],
 	'links' => [
@@ -109,7 +116,7 @@ $final = [
 	],
 	'submit' => [
 		'login' => "https://{$x[2]}/login.php",
-		'signup' => ($config['use_https']) ? "https://securesignup.net/register2.php" : "http://{$x[4]}/register2.php"
+		'signup' => ($config['use_https']) ? "https://securesignup.net/register2.php" : "http://order.{$x[0]}/register2.php"
 	],
 	'logo' => $config['logo'],
 	'email' => [
@@ -137,5 +144,7 @@ $final = [
 	'color' => $config['site_theme_color']
 ];
 if(defined('LOGGED_LANGUAGE_PACK')){
-	$x = lang('/app/lang/en.php');
+	$lang = new Language;
+	$lang->loadLangFromObj(LOGGED_LANGUAGE_PACK);
+	$lang->mount('all');
 }

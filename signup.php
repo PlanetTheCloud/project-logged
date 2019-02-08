@@ -76,7 +76,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 						<input type="hidden" name="number" value="<?=$_POST['number'];?>">
 						<input type="hidden" name="submit" value="Register">
 						<div>
-							<button type="submit" class="btn btn-success btn-block" id="signup">Click here if nothing happens</button>
+							<button type="submit" class="btn btn-success waves-effect btn-block" id="signup">Click here if nothing happens</button>
 						</div>
 					</form>
 					<script type="text/javascript">document.getElementById('signup').click();</script>
