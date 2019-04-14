@@ -3,6 +3,8 @@ A Free and OpenSource Material Based Design Login, Sign up and Terms Template cr
 
 ##### IMPORTANT :  
 
+# YOU HAD TO CHANGE THE BRANDING TO YOUR OWN COMPANY!
+
 Version 1.6r will be the final version available publicly.  
 More information can be found on our Discord: https://discord.gg/j8xSZRF  
 
