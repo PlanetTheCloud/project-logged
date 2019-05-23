@@ -2,13 +2,13 @@
 A Free and OpenSource Material Based Design Login, Sign up and Terms Template created by PlanetCloud.
 
 ##### IMPORTANT :  
-
-# YOU HAD TO CHANGE THE BRANDING TO YOUR OWN COMPANY!
+**YOU HAD TO CHANGE THE BRANDING TO YOUR OWN COMPANY!**
 
 Version 1.6r will be the final version available publicly.  
+**Version 1.7x, coming in hot for beta testers of LOGGED Project Family.**  
 More information can be found on our Discord: https://discord.gg/j8xSZRF  
 
-> Please read the license.   
+**Please read the license.**
 
 ##### VERSIONS :
 - 1.6r (Current Master)  
