@@ -116,7 +116,7 @@ $final = [
 	],
 	'submit' => [
 		'login' => "https://{$x[2]}/login.php",
-		'signup' => ($config['use_https']) ? "https://securesignup.net/register2.php" : "http://order.{$x[0]}/register2.php"
+		'signup' => ($config['use_https']) ? "https://ifastnet.com/register2.php" : "http://order.{$x[0]}/register2.php"
 	],
 	'logo' => $config['logo'],
 	'email' => [
