@@ -10,7 +10,7 @@ More information can be found on our Discord:
 
 <a href="https://discord.gg/j8xSZRF"><img src="https://discordapp.com/api/guilds/399429466566426635/widget.png?style=banner2" alt="Join our Discord Server" title="Planet Dev Network"></a>
 
-**Please read the license before using any of the code.**
+**Please read [the license](LICENSE.md) before using any of the code.**
 
 ### Versions
 - [1.6r](https://github.com/PlanetGamingGG/project-logged/tree/master) (Current Master)  
