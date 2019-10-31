@@ -1,21 +1,23 @@
 # MyOwnFreeHost Project LOGGED
-A Free and OpenSource Material Based Design Login, Sign up and Terms Template created by PlanetCloud.
+A free and open source Material Design based login, sign up and terms template created by [PlanetCloud](https://www.byet.net/index.php?/profile/528767-planetcloud/).
 
-##### IMPORTANT :  
-**YOU HAD TO CHANGE THE BRANDING TO YOUR OWN COMPANY!**
+### Important  
+**You have to change the branding to your own company's one!**
 
 Version 1.6r will be the final version available publicly.  
 **Version 1.7x, coming in hot for beta testers of LOGGED Project Family.**  
-More information can be found on our Discord: https://discord.gg/j8xSZRF  
+More information can be found on our Discord:  
 
-**Please read the license.**
+<a href="https://discord.gg/j8xSZRF"><img src="https://discordapp.com/api/guilds/399429466566426635/widget.png?style=banner2" alt="Join our Discord Server" title="Planet Dev Network"></a>
 
-##### VERSIONS :
-- 1.6r (Current Master)  
-- 1.6r (Latest Release)
-- 1.6b (https://github.com/PlanetGamingGG/myownfreehost-project-logged/releases/tag/1.6b)
+**Please read [the license](LICENSE.md) before using any of the code.**
 
-Please use the latest release found in https://github.com/PlanetGamingGG/myownfreehost-project-logged/releases as it is more stable than the `master` branch.  
+### Versions
+- [1.6r](https://github.com/PlanetGamingGG/project-logged/tree/master) (Current Master)  
+- [1.6r](https://github.com/PlanetGamingGG/project-logged/releases/tag/1.6r) (Latest Release)
+- [1.6b](https://github.com/PlanetGamingGG/project-logged/releases/tag/1.6b)
 
-##### SETUP INSTRUCTION :
-Please refer to our Wiki https://github.com/PlanetGamingGG/myownfreehost-project-logged/wiki
+Please use [the latest release](https://github.com/PlanetGamingGG/project-logged/releases/latest) as it is more stable than the `master` branch.  
+
+### Setup Instructions
+Please refer to [our Wiki](https://github.com/PlanetGamingGG/project-logged/wiki).
