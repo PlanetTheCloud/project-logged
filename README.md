@@ -1,5 +1,5 @@
 # MyOwnFreeHost Project LOGGED
-A Free and OpenSource Material Based Design Login, Sign up and Terms Template created by [PlanetCloud](https://www.byet.net/index.php?/profile/528767-planetcloud/).
+A free and open source Material Design based login, sign up and terms template created by [PlanetCloud](https://www.byet.net/index.php?/profile/528767-planetcloud/).
 
 ### Important  
 **You have to change the branding to your own company's one!**
