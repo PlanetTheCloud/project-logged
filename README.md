@@ -6,7 +6,8 @@ A Free and OpenSource Material Based Design Login, Sign up and Terms Template cr
 
 Version 1.6r will be the final version available publicly.  
 **Version 1.7x, coming in hot for beta testers of LOGGED Project Family.**  
-More information can be found on our Discord: 
+More information can be found on our Discord:  
+
 <a href="https://discord.gg/j8xSZRF"><img src="https://discordapp.com/api/guilds/399429466566426635/widget.png?style=banner2" alt="Join our Discord Server" title="Planet Dev Network"></a>
 
 **Please read the license before using any of the code.**
