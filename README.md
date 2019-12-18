@@ -13,6 +13,7 @@ More information can be found on our Discord:
 **Please read [the license](LICENSE.md) before using any of the code.**
 
 ### Versions
+- 1.8 (WIP)
 - [1.6r](https://github.com/PlanetGamingGG/project-logged/tree/master) (Current Master)  
 - [1.6r](https://github.com/PlanetGamingGG/project-logged/releases/tag/1.6r) (Latest Release)
 - [1.6b](https://github.com/PlanetGamingGG/project-logged/releases/tag/1.6b)
