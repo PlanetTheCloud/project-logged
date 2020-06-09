@@ -2,5 +2,21 @@
 Options -MultiViews
 RewriteEngine on
 
+# Error Pages
+RewriteRule ^auth/error /error.php [NC,L]
+
+# Errors
+ErrorDocument 400 /auth/error?code=400
+ErrorDocument 401 /auth/error?code=401
+ErrorDocument 403 /auth/error?code=403
+ErrorDocument 404 /auth/error?code=404
+ErrorDocument 500 /auth/error?code=500
+
+# Assets
+RewriteRule ^auth/assets/(.*)?$ /sys-auth/assets/$1 [NC,L]
+
+# API
+RewriteRule ^auth/api/(.*)?$ /sys-auth/api/$1.php [NC,L]
+
 # Authentication
-RewriteRule ^auth/(.*)?$ /sys-auth/$1 [NC,L]
+RewriteRule ^auth/(.*)?$ /sys-auth/$1.php [NC,L]
