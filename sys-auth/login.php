@@ -1,178 +1,102 @@
 <?php
 
-define('APP', dirname(__FILE__));
-require APP.'/app/config.php';
+/**
+ * Project LOGGED v1.8 Login Page
+ * ---
+ * No modifications is necessary in this file.
+ */
+
+define('THIS_DIR', dirname(__FILE__));
+require THIS_DIR.'/app/app.php';
+
+if(!config('sys.enable_login_form')){
+    error('Login has been disabled');
+    die;
+}
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <title><?=$final['title']['login'];?> - <?=$final['company_name'];?></title>
-        <link rel="icon" href="/favicon.ico" type="image/x-icon">
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-        <link href="/auth/assets/style.css" rel="stylesheet">
-    </head>
-    <body class="login-page">
-        <div class="login-box">
-            <a href="<?=$final['main_site'];?>">
-                <p style="text-align:center">
-                	<img src="<?=$final['logo'];?>" alt="<?=$final['company_name'];?> logo"/>
-                </p>
-            </a>
-            <div class="card">
-                <div class="body">
-                    <div class="msg"><?=$final['msg']['login'];?></div>
-                    <form action="<?=$final['submit']['login'];?>" onsubmit="return submitHandler()" method="post">
-                        <div class="input-group form-float">
-                            <span class="input-group-addon">
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title><?=config('page.titles.login').' - '.config('company.name');?></title>
+
+    <link rel="icon" href="<?=config('company.favicon');?>" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet"
+        type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <link href="assets/style.css" rel="stylesheet">
+</head>
+
+<body class="login-page">
+    <div class="login-box">
+        <div class="logo">
+            <?php
+                if(config('company.logo_type') == 'text'){
+                    echo '<a href="'.config('company.main_domain').'">'.config('company.name').'</a>';
+                }else{
+                    echo '<p style="text-align:center"><img src="'.config('company.logo').'" alt="'.config('company.name').' logo"/></p>';
+                }
+            ?>
+            <small><?=config('company.slogan');?></small>
+        </div>
+        <div class="card">
+            <div class="body">
+                <div class="msg"><?=config('page.messages.login');?></div>
+                <form method="post" action="<?=config('sys.form_target.login');?>" onsubmit="return handleSubmit();">
+                    <div class="input-group form-float">
+                        <span class="input-group-addon">
                             <i class="material-icons">person</i>
-                            </span>
-                            <div class="form-line">
-                                <input type="text" name="uname" class="form-control" placeholder="Username" id="lg-username">
-                            </div>
-                            <small class="col-pink i8bEK" id="warn_username">{{WARNING}}</small>
+                        </span>
+                        <div class="form-line">
+                            <input id="input_username" type="text" name="uname" class="form-control" placeholder="Username" required>
                         </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">
+                        <small class="col-pink hidden" id="warn_username">{{WARNING}}</small>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
                             <i class="material-icons">lock</i>
-                            </span>
-                            <div class="form-line">
-                                <input type="password" name="passwd" class="form-control" placeholder="Password" id="lg-password">
-                            </div>
-                            <small class="col-pink i8bEK" id="warn_password">{{WARNING}}</small>
+                        </span>
+                        <div class="form-line">
+                            <input id="input_password" type="password" name="passwd" class="form-control" placeholder="Password" required>
                         </div>
-                        <div id="lang_select" class="form-group">
-                        	<p>Language</p>
-                        	<select class="form-control" data-live-search="true" size="1" name="language">
-                                <option value="English" selected="selected">English</option>
-                                <option>Afrikaans</option>
-                                <option>Albanian</option>
-                                <option>Amharic</option>
-                                <option>Arabic</option>
-                                <option>Armenian</option>
-                                <option>Azerbaijani</option>
-                                <option>Basque</option>
-                                <option>Belarusian</option>
-                                <option>Bengali</option>
-                                <option>Bosnian</option>
-                                <option>Bulgarian</option>
-                                <option>Burmese</option>
-                                <option>Catalan</option>
-                                <option>Cebuano</option>
-                                <option>Chichewa</option>
-                                <option>Chinese_simplified</option>
-                                <option>Chinese_traditional</option>
-                                <option>Corsican</option>
-                                <option>Croatian</option>
-                                <option>Czech</option>
-                                <option>Danish</option>
-                                <option>Dutch</option>
-                                <option>English</option>
-                                <option>Esperanto</option>
-                                <option>Estonian</option>
-                                <option>Farsi</option>
-                                <option>Filipino</option>
-                                <option>Finnish</option>
-                                <option>French</option>
-                                <option>Frisian</option>
-                                <option>Galician</option>
-                                <option>Georgian</option>
-                                <option>German</option>
-                                <option>Greek</option>
-                                <option>Gujarati</option>
-                                <option>Haitian Creole</option>
-                                <option>Hausa</option>
-                                <option>Hawaiian</option>
-                                <option>Hebrew</option>
-                                <option>Hindi</option>
-                                <option>Hmong</option>
-                                <option>Hungarian</option>
-                                <option>Icelandic</option>
-                                <option>Igbo</option>
-                                <option>Indonesian</option>
-                                <option>Irish</option>
-                                <option>Italian</option>
-                                <option>Japanese</option>
-                                <option>Javanese</option>
-                                <option>Kannada</option>
-                                <option>Kazakh</option>
-                                <option>Khmer</option>
-                                <option>Korean</option>
-                                <option>Kurdish</option>
-                                <option>Kyrgyz</option>
-                                <option>Lao</option>
-                                <option>Latin</option>
-                                <option>Latvian</option>
-                                <option>Lithuanian</option>
-                                <option>Luxembourgish</option>
-                                <option>Macedonian</option>
-                                <option>Malagasy</option>
-                                <option>Malay</option>
-                                <option>Malayalam</option>
-                                <option>Maltese</option>
-                                <option>Maori</option>
-                                <option>Marathi</option>
-                                <option>Mongolian</option>
-                                <option>Nepali</option>
-                                <option>Norwegian</option>
-                                <option>Pashto</option>
-                                <option>Persian</option>
-                                <option>Polish</option>
-                                <option>Portuguese</option>
-                                <option>Punjabi</option>
-                                <option>Romanian</option>
-                                <option>Russian</option>
-                                <option>Samoan</option>
-                                <option>Scots Gaelic</option>
-                                <option>Serbian</option>
-                                <option>Sesotho</option>
-                                <option>Shona</option>
-                                <option>Sindhi</option>
-                                <option>Sinhala</option>
-                                <option>Slovak</option>
-                                <option>Slovenian</option>
-                                <option>Somali</option>
-                                <option>Spanish</option>
-                                <option>Sundanese</option>
-                                <option>Swahili</option>
-                                <option>Swedish</option>
-                                <option>Tajik</option>
-                                <option>Tamil</option>
-                                <option>Telugu</option>
-                                <option>Thai</option>
-                                <option>Turkish</option>
-                                <option>Ukrainian</option>
-                                <option>Urdu</option>
-                                <option>Uzbek</option>
-                                <option>Vietnamese</option>
-                                <option>Welsh</option>
-                                <option>Xhosa</option>
-                                <option>Yiddish</option>
-                                <option>Yoruba</option>
-                                <option>Zulu</option>
-                            </select>
+                        <small class="col-pink hidden" id="warn_password">{{WARNING}}</small>
+                    </div>
+                    <?php
+                        if(config('sys.feature.language_selector')){
+                            include 'components/language_selector.login.tpl';
+                        }
+                    ?>
+                    <div class="row">
+                        <div class="col-xs-8 p-t-5">
+                            <?php
+                                if(config('sys.feature.remember_username')){
+                                    include 'components/remember_me.login.tpl';
+                                }
+                            ?>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <button class="btn btn-block bg-<?=$final['color'];?> waves-effect"><?=$final['btn']['login'];?></button>
-                            </div>
+                        <div class="col-xs-4">
+                            <button class="btn btn-block bg-<?=config('sys.color_scheme');?> waves-effect">SIGN IN</button>
                         </div>
-                        <div class="row m-t-15 m-b--20">
-                            <div class="col-xs-6">
-                                <a href="<?=$final['base'].'/signup.php';?>">Register Now!</a>
-                            </div>
-                            <div class="col-xs-6 align-right">
-                                <a href="<?=$final['links']['reset_pwd'];?>">Forgot Password?</a>
-                            </div>
+                    </div>
+                    <div class="row m-t-15 m-b--20">
+                        <div class="col-xs-6">
+                            <a href="signup">Register Now</a>
                         </div>
-                        <script src="/auth/assets/material.js"></script>
-                        <script src="/auth/assets/login.js"></script>
-                    </form>
-                </div>
+                        <div class="col-xs-6 align-right">
+                            <a href="/auth/password/reset">Forgot Password?</a>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </body>
+    </div>
+
+    <script src="assets/material.js"></script>
+    <script src="assets/login.js"></script>
+</body>
+
 </html>
