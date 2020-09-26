@@ -87,7 +87,7 @@ if(!config('sys.enable_login_form')){
                             <a href="signup">Register Now</a>
                         </div>
                         <div class="col-xs-6 align-right">
-                            <a href="/auth/password/reset">Forgot Password?</a>
+                            <a href="http://cpanel.<?=config('sys.cpanel_url');?>/lostpassword.php">Forgot Password?</a>
                         </div>
                     </div>
                 </form>
