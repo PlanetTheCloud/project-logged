@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Project LOGGED v1.8 Terms of Service
+ * Project LOGGED v1.8 Privacy Policy
  * ---
  * No modifications is necessary in this file.
  */
