@@ -2,7 +2,7 @@
 <p style="text-align:center">
     <img style="width: 25%" src="https://i.ibb.co/9r6TvgH/loader.gif">
 </p>
-<form action="<?= Account::getTarget(); ?>" method="post">
+<form action="<?= Account::getTarget(); ?>" method="get">
     <?php
     foreach (Account::getParameters() as $key => $value) {
         echo "<input type=\"hidden\" name=\"{$key}\" value=\"{$value}\">" . PHP_EOL;
