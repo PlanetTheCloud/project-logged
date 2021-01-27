@@ -10,7 +10,7 @@
 # Initialize
 define('THIS_DIR', dirname(__FILE__));
 require THIS_DIR . '/sys-auth/app/app.php';
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+if (@$_GET['submit'] !== 'Register') {
     header("Location: /auth/signup");
     die;
 }
@@ -42,7 +42,7 @@ function reject($msg = false)
 }
 
 # Validate inputs
-$isExternalRequest = (isset($_POST['identifier']) or isset($_POST['signature']) or !isset($_POST['token'])) ? true : false;
+$isExternalRequest = (isset($_GET['identifier']) or isset($_GET['signature']) or !isset($_GET['token']))
 if ($isExternalRequest) {
     $required = ['username', 'email', 'password', 'password_confirm', 'id', 'number', 'signature', 'identifier'];
 } elseif (config('sys.enable_domain_selector')) {
@@ -52,18 +52,18 @@ if ($isExternalRequest) {
 }
 (function () use ($required) {
     foreach ($required as $key => $value) {
-        if (!isset($_POST[$value])) {
+        if (!isset($_GET[$value])) {
             return reject();
         }
-        if (!is_string($_POST[$value])) {
+        if (!is_string($_GET[$value])) {
             return reject();
         }
-        if (empty(trim($_POST[$value]))) {
+        if (empty(trim($_GET[$value]))) {
             return reject("{$value} cannot be empty!");
         }
-        $_POST[$value] = htmlspecialchars($_POST[$value]);
+        $_GET[$value] = htmlspecialchars($_GET[$value]);
     }
-    if ($_POST['password'] !== $_POST['password_confirm']) {
+    if ($_GET['password'] !== $_GET['password_confirm']) {
         return reject('Confirm Password does not match!');
     }
 })();
@@ -72,7 +72,7 @@ if ($isExternalRequest) {
 if (!$isExternalRequest) {
     require APP . '/csrf.class.php';
     $csrf = new Csrf;
-    if (!$csrf->verifyToken('registration', $_POST['token'])) {
+    if (!$csrf->verifyToken('registration', $_GET['token'])) {
         reject();
     }
 }
@@ -87,25 +87,25 @@ if ($isExternalRequest) {
         }
 
         $credentials = require APP . '/api.credentials.php';
-        if (!isset($credentials[$_POST['identifier']])) {
+        if (!isset($credentials[$_GET['identifier']])) {
             return reject();
         }
 
         $known = Signature::create(
             'sha256',
-            base64_encode($_POST['identifier'] . $_POST['username'] . $_POST['email'] . $_POST['password'] . $_POST['id'] . $_POST['number']),
-            $credentials[$_POST['identifier']]['key']
+            base64_encode($_GET['identifier'] . $_GET['username'] . $_GET['email'] . $_GET['password'] . $_GET['id'] . $_GET['number']),
+            $credentials[$_GET['identifier']]['key']
         );
-        if (!Signature::verify($known, $_POST['signature'])) {
+        if (!Signature::verify($known, $_GET['signature'])) {
             return reject();
         }
 
         return Account::create([
-            'username' => $_POST['username'],
-            'email' => $_POST['email'],
-            'password' => $_POST['password'],
-            'id' => $_POST['id'],
-            'number' => $_POST['number']
+            'username' => $_GET['username'],
+            'email' => $_GET['email'],
+            'password' => $_GET['password'],
+            'id' => $_GET['id'],
+            'number' => $_GET['number']
         ]);
     })();
 } else {
@@ -113,44 +113,44 @@ if ($isExternalRequest) {
     if (config('sys.enable_domain_selector')) {
         // With target domain
         (function () use ($cfg) {
-            if (!isset($_POST['domain'])) {
+            if (!isset($_GET['domain'])) {
                 return reject();
             }
-            if (config('sys.current_domain') === $_POST['domain']) {
+            if (config('sys.current_domain') === $_GET['domain']) {
                 return Account::create([
-                    'username' => $_POST['username'],
-                    'email' => $_POST['email'],
-                    'password' => $_POST['password'],
-                    'id' => $_POST['id'],
-                    'number' => $_POST['number']
+                    'username' => $_GET['username'],
+                    'email' => $_GET['email'],
+                    'password' => $_GET['password'],
+                    'id' => $_GET['id'],
+                    'number' => $_GET['number']
                 ]);
             }
-            if (array_search($_POST['domain'], $cfg['sys.domain_selection']) === false) {
+            if (array_search($_GET['domain'], $cfg['sys.domain_selection']) === false) {
                 return reject();
             }
 
             $credentials = require APP . '/target.credentials.php';
-            if (!isset($credentials[$_POST['domain']])) {
+            if (!isset($credentials[$_GET['domain']])) {
                 return reject();
             }
 
-            return Account::createExternal($_POST['domain'], [
-                'username' => $_POST['username'],
-                'email' => $_POST['email'],
-                'password' => $_POST['password'],
-                'id' => $_POST['id'],
-                'number' => $_POST['number']
-            ], $credentials[$_POST['domain']]);
+            return Account::createExternal($_GET['domain'], [
+                'username' => $_GET['username'],
+                'email' => $_GET['email'],
+                'password' => $_GET['password'],
+                'id' => $_GET['id'],
+                'number' => $_GET['number']
+            ], $credentials[$_GET['domain']]);
         })();
     } else {
         // Without target domain
         (function () {
             return Account::create([
-                'username' => $_POST['username'],
-                'email' => $_POST['email'],
-                'password' => $_POST['password'],
-                'id' => $_POST['id'],
-                'number' => $_POST['number']
+                'username' => $_GET['username'],
+                'email' => $_GET['email'],
+                'password' => $_GET['password'],
+                'id' => $_GET['id'],
+                'number' => $_GET['number']
             ]);
         })();
     }
