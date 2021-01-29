@@ -113,6 +113,7 @@ $csrf->createToken('registration');
                     </div>
                     <p>By signing up, you accept and agree to our <a href="/auth/read/tos">terms of service</a> and <a href="/auth/read/privacy">privacy policies</a>.</p>
                     <input type="hidden" name="token" value="<?= $csrf->getToken('registration'); ?>">
+                    <input type="hidden" name="action" value="register">
                     <div class="row">
                         <div class="col-xs-12">
                             <button class="btn btn-block bg-<?= config('sys.color_scheme'); ?> waves-effect">REGISTER</button>

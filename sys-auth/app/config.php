@@ -43,7 +43,7 @@ $config = [
         'main_domain' => 'http://hosting.com',
         'favicon' => '',
         'contact_email' => 'hello@hosting.com',
-        'report_abuse_email' => 'rep@hosting.com'
+        'report_abuse_email' => 'abuse@hosting.com'
     ],
 
     # Page settings

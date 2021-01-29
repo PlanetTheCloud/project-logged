@@ -15,6 +15,7 @@ class Account
 {
     private static $target;
     private static $parameters;
+    private static $method;
 
     /**
      * Create a new account
@@ -26,6 +27,7 @@ class Account
     {
         self::$target = config('sys.form_target.signup');
         self::$parameters = $parameters;
+        self::$method = 'POST';
     }
 
     /**
@@ -45,9 +47,11 @@ class Account
         );
         $parameters['identifier'] = $credentials['identifier'];
         $parameters['password_confirm'] = $parameters['password'];
+        $parameters['action'] = 'register';
 
         self::$target = "{$credentials['protocol']}://{$domain}/signup.php";
         self::$parameters = $parameters;
+        self::$method = 'GET';
     }
 
     /**
@@ -68,5 +72,15 @@ class Account
     public static function getTarget(): string
     {
         return self::$target;
+    }
+
+    /**
+     * Get the method to use
+     *
+     * @return string
+     */
+    public static function getMethod(): string
+    {
+        return self::$method;
     }
 }
