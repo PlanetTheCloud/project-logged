@@ -84,12 +84,12 @@ $csrf->createToken('registration');
                         <div class="form-line">
                             <input id="input_password" type="password" name="password" class="form-control" placeholder="Password">
                         </div>
+                        <small class="col-pink hidden" id="warn_password">{{WARNING}}</small>
                         <div class="input-group-addon">
                             <button onclick="toggleVisibility('input_password')" style="padding-top:0px;padding-bottom:0px" type="button" class="btn btn-sm bg-<?= config('sys.color_scheme'); ?> waves-effect">
                                 <i class="material-icons" id="input_password_icon">visibility</i>
                             </button>
                         </div>
-                        <small class="col-pink hidden" id="warn_password">{{WARNING}}</small>
                     </div>
                     <div class="input-group form-float">
                         <span class="input-group-addon">
@@ -98,12 +98,12 @@ $csrf->createToken('registration');
                         <div class="form-line">
                             <input id="input_confirm_password" type="password" name="password_confirm" class="form-control" placeholder="Confirm password">
                         </div>
+                        <small class="col-pink hidden" id="warn_confirm_password">{{WARNING}}</small>
                         <div class="input-group-addon">
                             <button onclick="toggleVisibility('input_confirm_password')" style="padding-top:0px;padding-bottom:0px" type="button" class="btn btn-sm bg-<?= config('sys.color_scheme'); ?> waves-effect">
                                 <i class="material-icons" id="input_confirm_password_icon">visibility</i>
                             </button>
                         </div>
-                        <small class="col-pink hidden" id="warn_confirm_password">{{WARNING}}</small>
                     </div>
                     <div class="form-line">
                         <input type="hidden" name="id" value="<?= config('sys.captcha_id'); ?>">
