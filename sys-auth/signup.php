@@ -84,6 +84,11 @@ $csrf->createToken('registration');
                         <div class="form-line">
                             <input id="input_password" type="password" name="password" class="form-control" placeholder="Password">
                         </div>
+                        <div class="input-group-addon">
+                            <button onclick="toggleVisibility('input_password')" style="padding-top:0px;padding-bottom:0px" type="button" class="btn btn-sm bg-<?= config('sys.color_scheme'); ?> waves-effect">
+                                <i class="material-icons" id="input_password_icon">visibility</i>
+                            </button>
+                        </div>
                         <small class="col-pink hidden" id="warn_password">{{WARNING}}</small>
                     </div>
                     <div class="input-group form-float">
@@ -92,6 +97,11 @@ $csrf->createToken('registration');
                         </span>
                         <div class="form-line">
                             <input id="input_confirm_password" type="password" name="password_confirm" class="form-control" placeholder="Confirm password">
+                        </div>
+                        <div class="input-group-addon">
+                            <button onclick="toggleVisibility('input_confirm_password')" style="padding-top:0px;padding-bottom:0px" type="button" class="btn btn-sm bg-<?= config('sys.color_scheme'); ?> waves-effect">
+                                <i class="material-icons" id="input_confirm_password_icon">visibility</i>
+                            </button>
                         </div>
                         <small class="col-pink hidden" id="warn_confirm_password">{{WARNING}}</small>
                     </div>
@@ -126,7 +136,15 @@ $csrf->createToken('registration');
             </div>
         </div>
     </div>
-
+    <script type="text/javascript">
+        function toggleVisibility(e) {
+            let x = document.getElementById(e),
+                y = document.getElementById(`${e}_icon`),
+                show = (x.type === "password");
+            (show) ? y.innerText = "visibility_off" : y.innerText = "visibility";
+            (show) ? x.type = "text" : x.type = "password";
+        }
+    </script>
     <script src="assets/material.js"></script>
     <script src="assets/signup.js"></script>
 </body>
