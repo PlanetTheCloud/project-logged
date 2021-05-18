@@ -6,7 +6,7 @@ A free and open-sourced authentication template created. Created by [PlanetCloud
 Check the Wiki [Setup Instruction (1.8)](https://github.com/PlanetTheCloud/project-logged/wiki/Setup-Instruction-(1.8)) to get started.
 
 # Support
-<a href="https://discord.gg/j8xSZRF"><img src="https://discordapp.com/api/guilds/399429466566426635/widget.png?style=banner2" alt="Join our Discord Server" title="Planet Dev Network"></a>
+<a href="https://discord.gg/mmEWpnwB8D"><img src="https://discordapp.com/api/guilds/399429466566426635/widget.png?style=banner2" alt="Join our Discord Server" title="Planet Dev Network"></a>
 
 # Contributions
 All contributions are apreciated. If you want to contribute, please file an issue (for bug report, etc.) or submit a pull request (feature addition or fixing bugs, etc.).
