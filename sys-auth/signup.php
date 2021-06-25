@@ -105,20 +105,10 @@ $csrf->createToken('registration');
                             </button>
                         </div>
                     </div>
-                    <div class="form-line">
+                    <div class="form-line" style="display:none;">
                         <input type="hidden" name="id" value="<?= config('sys.captcha_id'); ?>">
-                        <div>
-                            <img width="100%" src="https://ifastnet.com/image.php?id=<?= config('sys.captcha_id'); ?>">
-                        </div>
-                        <br />
-                        <div class="input-group form-float">
-                            <span class="input-group-addon">
-                                <i class="material-icons">lock</i>
-                            </span>
-                            <div class="form-line">
-                                <input id="input_captcha" type="text" name="number" class="form-control" placeholder="Captcha" autocomplete="off">
-                            </div>
-                            <small class="col-pink hidden" id="warn_captcha">{{WARNING}}</small>
+                        <div class="form-line">
+                            <input id="input_captcha" type="text" name="number" value="D7B9E" class="form-control" placeholder="Captcha" autocomplete="off">
                         </div>
                     </div>
                     <p>By signing up, you accept and agree to our <a href="/auth/read/tos">terms of service</a> and <a href="/auth/read/privacy">privacy policies</a>.</p>
