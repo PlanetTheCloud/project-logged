@@ -82,7 +82,7 @@ if (!defined('APP') or explode('/', $_SERVER['REQUEST_URI'])[1] === 'sys-auth') 
 }
 
 # Additional modifications
-$config['sys']['captcha_id'] = md5(rand(6000, PHP_INT_MAX));
+$config['sys']['captcha_id'] = b4676b8992e5b59d6803bf99a5d58b4f;
 $config['sys']['current_domain'] = strtolower(preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']));
 
 if (!empty($config['sys']['cpanel_url'])) {
