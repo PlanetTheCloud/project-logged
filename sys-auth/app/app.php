@@ -9,12 +9,12 @@
  */
 
 define('APP', dirname(__FILE__));
-
+define('PATH', $_SERVER['DOCUMENT_ROOT'] . '/sys-auth/app/');
 # Require Arr class
-require 'arr.class.php';
+require PATH . 'arr.class.php';
 
 # Setup config related functions
-require 'config.php';
+require PATH . 'config.php';
 $cfg = Arr::dot($config);
 $cfg['sys.domain_selection'] = $config['sys']['domain_selection'];
 
