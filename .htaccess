@@ -19,4 +19,4 @@ RewriteRule ^auth/assets/(.*)?$ /sys-auth/assets/$1 [NC,L]
 RewriteRule ^auth/api/(.*)?$ /sys-auth/api/$1.php [NC,L]
 
 # Authentication
-RewriteRule ^auth/(.*)?$ /sys-auth/$1.php [NC,L]
+RewriteRule ^auth/(.*)?$ /sys-auth/pages/$1.php [NC,L]

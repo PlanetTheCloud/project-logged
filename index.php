@@ -1,0 +1,1 @@
+If you can see this text, that means the index still works
