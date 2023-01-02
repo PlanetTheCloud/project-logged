@@ -33,9 +33,36 @@
                     }
                 }
                 ?>
-                <form method="post" action="/signup.php" onsubmit="return handleSubmit();">
+                <form>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" id="email_address" class="form-control">
+                            <label class="form-label">Email Address</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="password" id="password" class="form-control">
+                            <label class="form-label">Password</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="password" id="password" class="form-control">
+                            <label class="form-label">Confirm Password</label>
+                        </div>
+                    </div>
+
+                    <input type="checkbox" id="remember_me_2" class="filled-in">
+                    <label for="remember_me_2">Remember Me</label>
+                    <br>
+                    <button type="button" class="btn btn-primary m-t-15 waves-effect">LOGIN</button>
+                </form>
+                <!-- <form method="post" action="/signup.php" onsubmit="return handleSubmit();">
                     <div class="row">
-                        <div class="col-sm-7">
+                        <div class="col-sm-6">
                             <div class="input-group form-float" style="margin-bottom: 0px!important;">
                                 <span class="input-group-addon">
                                     <i class="material-icons">person</i>
@@ -46,11 +73,12 @@
                                 <small class="col-pink hidden" id="warn_username">{{WARNING}}</small>
                             </div>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <div class="form-line">
                                 <select id="input_domain" name="domain" class="form-control">
                                     <option selected="selected">OPTION 1</option>
-                                    <option selected="selected">OPTION 2</option>
+                                    <option>OPTION 2</option>
+                                    <option>abcdefghijklmnopqrstuvwxyz.com</option>
                                 </select>
                             </div>
                             <small class="col-pink hidden" id="warn_domain">{{WARNING}}</small>
@@ -120,7 +148,7 @@
                             <a href="/auth/login">Registered User? Click here to Login!</a>
                         </div>
                     </div>
-                </form>
+                </form> -->
             </div>
         </div>
     </div>
@@ -129,8 +157,8 @@
             let x = document.getElementById(e),
                 y = document.getElementById(`${e}_icon`),
                 show = (x.type === "password");
-            (show) ? y.innerText = "visibility_off" : y.innerText = "visibility";
-            (show) ? x.type = "text" : x.type = "password";
+            (show) ? y.innerText = "visibility_off": y.innerText = "visibility";
+            (show) ? x.type = "text": x.type = "password";
         }
     </script>
     <script src="assets/material.js"></script>
