@@ -1,0 +1,30 @@
+.pg_bg-default {
+  background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+  background-attachment: fixed;
+}
+
+.pg_bg-mixmatch {
+  background: linear-gradient(
+    45deg,
+    rgb(96, 8, 165),
+    rgb(225, 102, 119),
+    rgb(164, 26, 155),
+    rgb(76, 69, 233)
+  );
+  background-attachment: fixed;
+}
+
+.pg_bg-sakura {
+  background: linear-gradient(45deg, #fbd3e9, #bb377d);
+  background-attachment: fixed;
+}
+
+.pg_bg-purplefog {
+  background: linear-gradient(45deg, #b993d6, #8ca6db);
+  background-attachment: fixed;
+}
+
+.pg_bg-redcode {
+  background: linear-gradient(45deg, #870000, #190a05);
+  background-attachment: fixed;
+}
