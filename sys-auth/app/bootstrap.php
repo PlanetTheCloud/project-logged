@@ -18,14 +18,6 @@ define('SYSTEM', ROOT . '/sys-auth');
 define('PAGES', SYSTEM . '/pages');
 define('APP', SYSTEM . '/app');
 
-# Custom Error Handler
-function handleProblems($no, $str, $file, $line, $context) {
-    var_dump($no, $str, $line, $file, $context);
-}
-set_error_handler('handleProblems');
-
-throw new Exception('test');
-
 # Load classes
 foreach (glob(SYSTEM . "/app/classes/*.php") as $class) {
     require $class;
@@ -34,6 +26,21 @@ unset($class);
 
 # Load System config
 define('SYSTEM_CONFIG', Arr::dot(require SYSTEM . '/config/system.php'));
+
+# Custom Error Handler
+function loggedErrorHandler($exception)
+{
+    if (SYSTEM_CONFIG['development_mode']) {
+        echo "<b>DEVELOPMENT MODE ACTIVE</b><br><br>";
+        echo "<b>Exception:</b> " . $exception->getMessage();
+        echo "<br>File: " . $exception->getFile();
+        echo "<br>Line: " . $exception->getLine();
+        die;
+    }
+    require PAGES . '/error.php';
+    die;
+}
+set_exception_handler('loggedErrorHandler');
 
 # Prevents entry during maintenance
 if (SYSTEM_CONFIG['maintenance_mode']) {
@@ -44,13 +51,16 @@ if (SYSTEM_CONFIG['maintenance_mode']) {
     echo '<!-- MAINTENANCE MODE IS ACTIVE! REMEMBER TO DISABLE IT -->' . PHP_EOL;
 }
 
-# Load configurations
+# Load configurations and it's accessor
 $config = (SYSTEM_CONFIG['development_mode'])
     ? define('CONFIG', Arr::dot(require SYSTEM . '/config/system.php'))
     : json_decode(file_get_contents(SYSTEM . '/app/cache/config.json'), true);
 if (!$config) {
     require 'config_parser.php';
-    throw new Exception('Something went wrong');
+    throw new Exception('Config is not initialized. Refresh and error should be gone.');
+}
+function config(string $key)
+{
 }
 
 # Start session

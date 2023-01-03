@@ -6,5 +6,9 @@ return [
     'maintenance_key' => 'MAINTENANCE_KEY',
 
     'cpanel_url' => null, // null for auto
-    'enable_multisite' => true, // Implies domain selector enabled
+    'domain_selection' => [
+        'a.com',
+        'b.com'
+    ], // List of domains available for selection
+    'captcha_provider' => 'byet', // Some common captcha provider
 ];

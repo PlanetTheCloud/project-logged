@@ -33,26 +33,42 @@
                     }
                 }
                 ?>
-                <form>
+                <form method="post" action="/signup.php" onsubmit="return handleSubmit();">
+
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" id="email_address" class="form-control">
+                            <input type="email" id="input_email" name="email" class="form-control">
                             <label class="form-label">Email Address</label>
                         </div>
+                        <small class="col-pink hidden" id="warn_email">{{WARNING}}</small>
                     </div>
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="password" id="password" class="form-control">
+                            <input type="password" id="input_password" name="password" class="form-control">
                             <label class="form-label">Password</label>
                         </div>
+                        <small class="col-pink hidden" id="warn_password">{{WARNING}}</small>
                     </div>
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="password" id="password" class="form-control">
+                            <input type="password" id="input_confirm_password" name="password_confirm" class="form-control">
                             <label class="form-label">Confirm Password</label>
                         </div>
+                        <small class="col-pink hidden" id="warn_confirm_password">{{WARNING}}</small>
+                    </div>
+                    
+                    <div class="form-group form-float">
+                        <div style="margin-bottom: 20px;">
+                            <img width="50%" src="https://ifastnet.com/image.php?id=CAPTCHA_ID">
+                        </div>
+                        <div class="form-line">
+                            <input type="text" id="input_captcha" name="number" class="form-control">
+                            <input type="hidden" name="id" value="CAPTCHA_ID">
+                            <label class="form-label">Captcha</label>
+                        </div>
+                        <small class="col-pink hidden" id="warn_captcha">{{WARNING}}</small>
                     </div>
 
                     <input type="checkbox" id="remember_me_2" class="filled-in">
@@ -84,43 +100,7 @@
                             <small class="col-pink hidden" id="warn_domain">{{WARNING}}</small>
                         </div>
                     </div>
-                    <div class="input-group form-float">
-                        <span class="input-group-addon">
-                            <i class="material-icons">mail</i>
-                        </span>
-                        <div class="form-line">
-                            <input id="input_email" type="email" name="email" class="form-control" placeholder="Email address">
-                        </div>
-                        <small class="col-pink hidden" id="warn_email">{{WARNING}}</small>
-                    </div>
-                    <div class="input-group form-float">
-                        <span class="input-group-addon">
-                            <i class="material-icons">lock</i>
-                        </span>
-                        <div class="form-line">
-                            <input id="input_password" type="password" name="password" class="form-control" placeholder="Password">
-                        </div>
-                        <small class="col-pink hidden" id="warn_password">{{WARNING}}</small>
-                        <div class="input-group-addon">
-                            <button onclick="toggleVisibility('input_password')" style="padding-top:0px;padding-bottom:0px" type="button" class="btn btn-sm bg-blue waves-effect">
-                                <i class="material-icons" id="input_password_icon">visibility</i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="input-group form-float">
-                        <span class="input-group-addon">
-                            <i class="material-icons">lock</i>
-                        </span>
-                        <div class="form-line">
-                            <input id="input_confirm_password" type="password" name="password_confirm" class="form-control" placeholder="Confirm password">
-                        </div>
-                        <small class="col-pink hidden" id="warn_confirm_password">{{WARNING}}</small>
-                        <div class="input-group-addon">
-                            <button onclick="toggleVisibility('input_confirm_password')" style="padding-top:0px;padding-bottom:0px" type="button" class="btn btn-sm bg-blue waves-effect">
-                                <i class="material-icons" id="input_confirm_password_icon">visibility</i>
-                            </button>
-                        </div>
-                    </div>
+                    
                     <div class="form-line">
                         <input type="hidden" name="id" value="CAPTCHA_ID">
                         <div>
