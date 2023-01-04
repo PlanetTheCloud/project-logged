@@ -5,7 +5,9 @@ return [
     'maintenance_mode' => true,
     'maintenance_key' => 'MAINTENANCE_KEY',
 
-    'cpanel_url' => null, // null for auto
+    'language' => 'en',
+    'use_https' => false,
+    'cpanel_url' => 'rf.gd',
     'domain_selection' => [
         'a.com',
         'b.com'

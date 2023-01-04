@@ -3,12 +3,12 @@
 return [
     'name' => 'Hosting Company',
     'logo' => 'HOSTING COMPANY',
+    'logo_type' => 'text',
     'slogan' => 'Host your websites for free',
     'main_website' => 'http://hosting.com',
     'favicon' => '',
     'accent_color' => 'pink',
-    'background_color' => 'cyan', // Predefined colors should be here
-    'language' => 'en',
+    'background_color' => 'default', // Predefined colors should be here
     'contact_email' => 'hello@hosting.com',
     'report_abuse_email' => 'abuse@hosting.com'
 ];
