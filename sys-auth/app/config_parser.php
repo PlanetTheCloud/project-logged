@@ -18,7 +18,7 @@ foreach ($required as $key) {
     }
 }
 $config['branding'] = $branding;
-unset($branding, $required, $key);
+unset($branding, $required);
 
 # Handle System Config
 $system = require SYSTEM . '/config/system.php';
@@ -29,6 +29,9 @@ foreach ($required as $key) {
     }
 }
 $config['system'] = $system;
+unset($system, $required);
+
+# Add timestamp
 $config['cached_on'] = time();
 
 # Save to file

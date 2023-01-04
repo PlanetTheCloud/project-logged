@@ -7,6 +7,14 @@ return [
 
     'language' => 'en',
     'use_https' => false,
+    
+    'features' => [
+        'login' => [
+            'language_selector' => true,
+            'remember_me' => true,
+        ]
+    ],
+
     'cpanel_url' => 'rf.gd',
     'domain_selection' => [
         'a.com',

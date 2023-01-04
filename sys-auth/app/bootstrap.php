@@ -57,13 +57,13 @@ if (SYSTEM_CONFIG['development_mode']) {
     require 'config_parser.php';
 }
 $config = json_decode(file_get_contents(SYSTEM . '/app/cache/config.json'), true);
-define('CONFIG', Arr::dot($config));
-define('CONFIG_RAW', $config);
-unset($config);
-if (!CONFIG) {
+if (!$config) {
     require 'config_parser.php';
     throw new Exception('Config is not initialized. If error persisted after refresh, config is malformated.');
 }
+define('CONFIG', Arr::dot($config));
+define('CONFIG_RAW', $config);
+unset($config);
 
 /**
  * Config Function
