@@ -31,7 +31,7 @@
     <?php
     $scripts = Page::getScripts();
     foreach ($scripts as $script) {
-        echo '<script src="assets/' . $script . '"></script>';
+        echo '<script src="assets/' . $script . '"></script>' . PHP_EOL;
     }
     unset($scripts);
     ?>
@@ -40,7 +40,29 @@
             $('[data-toggle="tooltip"]').tooltip({
                 container: 'body'
             });
-        })
+        });
+
+        function checkPassed(a) {
+            a.parentElement.nextElementSibling.classList.add("hidden");
+            a = a.parentElement.classList;
+            a.remove("error");
+            a.add("success");
+            a.add("focused");
+        }
+
+        function hasError(a, c) {
+            var b = a.parentElement.nextElementSibling;
+            b.innerText = c;
+            b.classList.remove("hidden");
+            b = a.parentElement.classList;
+            b.remove("success");
+            b.add("error");
+            b.add("focused");
+        }
+
+        <?php
+        echo 'var translations = ' . json_encode(Page::getTranslations()) . ';' . PHP_EOL;
+        ?>
     </script>
 </body>
 

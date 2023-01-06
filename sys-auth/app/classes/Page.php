@@ -23,6 +23,11 @@ class Page
     protected static $scripts = [];
 
     /**
+     * @var array
+     */
+    protected static $translations = [];
+
+    /**
      * Set page parameters
      * 
      * @param array $parameters
@@ -53,6 +58,17 @@ class Page
     public static function addScript(string $script)
     {
         self::$scripts[] = $script;
+    }
+
+    /**
+     * Deliver translations
+     *  
+     * @param array $keys
+     * @return void
+     */
+    public static function deliverTranslations(array $keys)
+    {
+        self::$translations = $keys;
     }
 
     /**
@@ -103,6 +119,16 @@ class Page
     public static function getScripts()
     {
         return self::$scripts;
+    }
+
+    /**
+     * Get translations
+     * 
+     * @return array
+     */
+    public static function getTranslations()
+    {
+        return Arr::only(DICTIONARY, self::$translations);
     }
 
     /**

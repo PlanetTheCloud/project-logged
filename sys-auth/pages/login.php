@@ -2,11 +2,11 @@
     <div class="msg"><?= __('Login to your account') ?></div>
     <form onsubmit="return handleSubmit();">
         <div class="form-group form-float">
+            <i class="material-icons" style="position: absolute;z-index:10;margin-top:5px;margin-left:295px;" data-toggle="tooltip" data-placement="right" title="<?= __('To locate your cpanel username, check the email we sent you after verifying your email address') ?>">help</i>
             <div class="form-line">
                 <input type="text" id="input_username" name="username" class="form-control">
                 <label class="form-label"><?= __('cPanel Username') ?></label>
             </div>
-            <i class="material-icons" style="position: absolute;margin-top:-30px;margin-left:290px;" data-toggle="tooltip" data-placement="right" title="<?= __('To locate your cpanel username, check the email we sent you after verifying your email address') ?>">help</i>
             <small class="col-pink hidden" id="warn_username">{{WARNING}}</small>
         </div>
         <div class="form-group form-float">

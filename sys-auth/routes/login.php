@@ -16,6 +16,13 @@ Page::setParameters([
     'file' => 'login.php'
 ]);
 
+# Deliver translation for Javascript
+Page::deliverTranslations([
+    'Username is not valid',
+    'Password cannot be empty',
+    'Password is too short',
+]);
+
 # Add scripts
 Page::addScript('src/login.js'); // TEMPORARY, Change to dist later
 
