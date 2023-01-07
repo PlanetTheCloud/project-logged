@@ -17,6 +17,8 @@ define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 define('SYSTEM', ROOT . '/sys-auth');
 define('PAGES', SYSTEM . '/pages');
 define('APP', SYSTEM . '/app');
+define('IS_API_REQUEST', strpos($_SERVER['REQUEST_URI'], '/api/') !== false);
+
 
 # Load classes
 foreach (glob(SYSTEM . "/app/classes/*.php") as $class) {
@@ -30,25 +32,55 @@ define('SYSTEM_CONFIG', Arr::dot(require SYSTEM . '/config/system.php'));
 # Custom Error Handler
 function loggedErrorHandler($exception)
 {
-    if (SYSTEM_CONFIG['development_mode']) {
-        echo "<b>DEVELOPMENT MODE ACTIVE</b><br><br>";
-        echo "<b>Exception:</b> " . $exception->getMessage();
-        echo "<br>File: " . $exception->getFile();
-        echo "<br>Line: " . $exception->getLine();
-        die;
+    if (IS_API_REQUEST) {
+        if (SYSTEM_CONFIG['development_mode']) {
+            echo json_encode([
+                'status' => 'error',
+                'DEVELOPMENT MODE' => true,
+                'message' => get_class($exception) . ': ' . $exception->getMessage(),
+                'data' => [
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine()
+                ]
+            ]);
+            die;
+        }
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Something went wrong, please try again later.'
+        ]);
+    } else {
+        if (SYSTEM_CONFIG['development_mode']) {
+            echo "<b>DEVELOPMENT MODE</b><br><br>";
+            echo "<b>" . get_class($exception) . ":</b> " . $exception->getMessage();
+            echo "<br>File: " . $exception->getFile();
+            echo "<br>Line: " . $exception->getLine();
+            die;
+        }
+        require PAGES . '/error.php';
     }
-    require PAGES . '/error.php';
     die;
 }
 set_exception_handler('loggedErrorHandler');
 
 # Prevents entry during maintenance
-if (SYSTEM_CONFIG['maintenance_mode']) {
-    if (!isset($_REQUEST[SYSTEM_CONFIG['maintenance_key']])) {
+if (SYSTEM_CONFIG['maintenance_mode'] && !isset($_REQUEST[SYSTEM_CONFIG['maintenance_key']])) {
+    if (IS_API_REQUEST) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'System is under maintenance. Please try again later'
+        ]);
+        die;
+    } else {
         require PAGES . '/maintenance.php';
         die;
     }
-    echo '<!-- MAINTENANCE MODE IS ACTIVE! REMEMBER TO DISABLE IT -->' . PHP_EOL;
+}
+
+# Block API requests during lockdown
+if (SYSTEM_CONFIG['lockdown_mode'] && IS_API_REQUEST) {
+    throw new Exception('System under lockdown mode');
+    die;
 }
 
 # Load configurations
@@ -97,6 +129,8 @@ function __(string $key)
 {
     // the most readable ones is __
     // Note debug messages will still be in English
+    // Any lines that is not present in the language file
+    // will be shown in English
     return DICTIONARY[$key] ?? $key;
 }
 

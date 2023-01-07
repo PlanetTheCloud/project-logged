@@ -90,12 +90,13 @@ class Page
      * 
      * @param string $key
      * @param mixed $default
+     * @param bool $raw
      * 
      * @return mixed
      */
-    public static function param(string $key, $default = null)
+    public static function param(string $key, $default = null, $raw = false)
     {
-        if ($key === 'file') {
+        if ($key === 'file' && !$raw) {
             return PAGES . '/' . self::$parameters['file'];
         }
         return self::$parameters[$key] ?? $default;

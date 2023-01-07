@@ -1,17 +1,18 @@
 <div class="body">
     <div class="msg"><?= __('Login to your account') ?></div>
-    <form onsubmit="return handleSubmit();">
+    <form method="POST" action="https://cpanel.<?= config('system.cpanel_url'); ?>/login.php" onsubmit="return handleSubmit();" >
         <div class="form-group form-float">
-            <i class="material-icons" style="position: absolute;z-index:10;margin-top:5px;margin-left:295px;" data-toggle="tooltip" data-placement="right" title="<?= __('To locate your cpanel username, check the email we sent you after verifying your email address') ?>">help</i>
+            <i class="material-icons tooltip_icon-login" data-toggle="tooltip" data-placement="right" title="<?= __('To locate your cpanel username, check the email we sent you after verifying your email address') ?>">help</i>
             <div class="form-line">
-                <input type="text" id="input_username" name="username" class="form-control">
+                <input type="text" id="i_username" name="username" class="form-control" autocomplete="username">
                 <label class="form-label"><?= __('cPanel Username') ?></label>
             </div>
             <small class="col-pink hidden" id="warn_username">{{WARNING}}</small>
         </div>
         <div class="form-group form-float">
+            <i class="material-icons tooltip_icon-login" id="i_password_icon" onclick="toggleVisibility('i_password')">visibility</i>
             <div class="form-line">
-                <input type="password" id="input_password" name="password" class="form-control">
+                <input type="password" id="i_password" name="password" class="form-control">
                 <label class="form-label"><?= __('Password') ?></label>
             </div>
             <small class="col-pink hidden" id="warn_password">{{WARNING}}</small>

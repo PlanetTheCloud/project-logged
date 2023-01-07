@@ -13,7 +13,7 @@
     <link href="assets/colors.css" rel="stylesheet">
 </head>
 
-<body class="login-page pg_bg-<?= config('branding.background_color') ?>" <?= (Page::param('file') === 'signup.php') ? ' style="max-width: 490px"' : '' ?>>
+<body class="login-page pg_bg-<?= config('branding.background_color') ?>" <?= (Page::param('file', null, true) === 'signup.php') ? ' style="max-width: 490px"' : '' ?>>
     <div class="login-box">
         <div class="logo">
             <?= (config('branding.logo_type') == 'text')
@@ -41,6 +41,14 @@
                 container: 'body'
             });
         });
+
+        function toggleVisibility(e) {
+            let x = document.getElementById(e),
+                y = document.getElementById(`${e}_icon`),
+                s = (x.type === "password");
+            (s) ? y.innerText = "visibility_off": y.innerText = "visibility";
+            (s) ? x.type = "text": x.type = "password";
+        }
 
         function checkPassed(a) {
             a.parentElement.nextElementSibling.classList.add("hidden");

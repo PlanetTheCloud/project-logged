@@ -8,7 +8,7 @@
  */
 
 # Load all the required files and functionalities
-require '../app/bootstrap.php';
+require __DIR__ . '/../app/bootstrap.php';
 
 # Set page parameters
 Page::setParameters([
