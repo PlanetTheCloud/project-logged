@@ -1,10 +1,3 @@
-function __(s) {
-    if (typeof translations[s] === 'undefined') {
-        return s;
-    }
-    return translations[s];
-}
-
 var i_username = getElement('i_username'),
     i_password = getElement('i_password'),
     i_remember = getElement('i_remember');

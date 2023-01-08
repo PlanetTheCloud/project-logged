@@ -37,11 +37,10 @@
         <div id="section_custom_domain" class="hidden">
             <div class="infobox">
                 <?= __('To use your domain with us, point it to these nameservers:') ?><br>
-                <ul>
+                <ul style="margin-bottom: 0px;">
                     <li>ns1.<?= config('system.cpanel_url') ?></li>
                     <li>ns2.<?= config('system.cpanel_url') ?></li>
                 </ul>
-                <?= __('You can always add more domains from the control panel.') ?>
             </div>
             <div class="form-group form-float">
                 <div class="form-line">
@@ -53,9 +52,8 @@
         </div>
 
         <div id="section_subdomain" class="hidden">
-            <div class="infobox">
-                <?= __('Free subdomain will be provided to you free of charge.') ?><br>
-                <?= __('You can always add more domains from the control panel.') ?>
+            <div class="infobox" id="subdomain_infobox">
+                <?= __('Choose a subdomain and extension') ?>
             </div>
             <div class="row">
                 <div class="col-sm-6" style="margin-bottom:0px">
@@ -68,36 +66,39 @@
                     </div>
                 </div>
                 <div class="col-sm-6" style="margin-bottom:0px">
-                    <select class="form-control">
+                    <select class="form-control" name="extension" id="input_extension">
                         <?php
                         $domains = config('system.domain_selection');
                         foreach ($domains as $domain) {
-                            echo '<option>.' . $domain . '</option>'.PHP_EOL;
+                            echo '<option value="' . $domain . '">.' . $domain . '</option>' . PHP_EOL;
                         }
                         unset($domains);
                         ?>
                     </select>
                 </div>
             </div>
-            <div class="infobox">
-                Your website can be accessed from <b>aaaa.domain.com</b>
-            </div>
         </div>
 
-        <div class="form-group form-float">
-            <div style="margin-bottom: 20px;">
-                <img width="50%" src="https://ifastnet.com/image.php?id=CAPTCHA_ID">
+        <div id="section_others" class="hidden">
+            <div class="form-group form-float">
+                <div style="margin-bottom: 20px;">
+                    <img width="50%" src="https://ifastnet.com/image.php?id=<?= Page::param('captcha_id') ?>">
+                </div>
+                <div class="form-line">
+                    <input type="text" id="input_captcha" name="number" class="form-control" autocomplete="off">
+                    <input type="hidden" name="id" value="<?= Page::param('captcha_id') ?>">
+                    <label class="form-label"><?= __('Captcha') ?></label>
+                </div>
+                <small class="col-pink hidden" id="warn_captcha">{{WARNING}}</small>
             </div>
-            <div class="form-line">
-                <input type="text" id="input_captcha" name="number" class="form-control">
-                <input type="hidden" name="id" value="CAPTCHA_ID" autocomplete="off">
-                <label class="form-label"><?= __('Captcha') ?></label>
-            </div>
-            <small class="col-pink hidden" id="warn_captcha">{{WARNING}}</small>
+
+            <p><?= __('By signing up, you acknowledge that you have read and agree to be bound by our <a href="/auth/read/tos">terms of service</a> and <a href="/auth/read/privacy">privacy policies</a>.') ?></p>
+            <button class="btn btn-lg btn-block bg-<?= config('branding.accent_color'); ?> waves-effect"><?= __('SIGN UP') ?></button>
         </div>
 
-        <br>
-        <button type="button" class="btn btn-primary m-t-15 waves-effect">LOGIN</button>
+        <div class="m-t-25 m-b-5 align-center">
+            <a href="/auth/login"><?= __('Sign in to your account(s)') ?></a>
+        </div>
     </form>
     <script src="assets/signup.js"></script>
 </div>

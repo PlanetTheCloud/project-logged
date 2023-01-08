@@ -36,38 +36,6 @@
     unset($scripts);
     ?>
     <script>
-        $(function() {
-            $('[data-toggle="tooltip"]').tooltip({
-                container: 'body'
-            });
-        });
-
-        function toggleVisibility(e) {
-            let x = document.getElementById(e),
-                y = document.getElementById(`${e}_icon`),
-                s = (x.type === "password");
-            (s) ? y.innerText = "visibility_off": y.innerText = "visibility";
-            (s) ? x.type = "text": x.type = "password";
-        }
-
-        function checkPassed(a) {
-            a.parentElement.nextElementSibling.classList.add("hidden");
-            a = a.parentElement.classList;
-            a.remove("error");
-            a.add("success");
-            a.add("focused");
-        }
-
-        function hasError(a, c) {
-            var b = a.parentElement.nextElementSibling;
-            b.innerText = c;
-            b.classList.remove("hidden");
-            b = a.parentElement.classList;
-            b.remove("success");
-            b.add("error");
-            b.add("focused");
-        }
-
         <?php
         echo 'var translations = ' . json_encode(Page::getTranslations()) . ';' . PHP_EOL;
         ?>

@@ -19,7 +19,6 @@ define('PAGES', SYSTEM . '/pages');
 define('APP', SYSTEM . '/app');
 define('IS_API_REQUEST', strpos($_SERVER['REQUEST_URI'], '/api/') !== false);
 
-
 # Load classes
 foreach (glob(SYSTEM . "/app/classes/*.php") as $class) {
     require $class;
@@ -142,3 +141,6 @@ session_start(array_merge([
     'gc_maxlifetime' => 7200
 ], $toMerge));
 unset($toMerge);
+
+# Bootstrap Completed!
+# Ready to handle request

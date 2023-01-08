@@ -31,15 +31,15 @@
                 ?>
             </div>
             <div class="col-xs-4">
-                <button class="btn btn-block bg-<?= config('branding.accent_color'); ?> waves-effect"><?= __('SIGN IN') ?></button>
+                <button class="btn btn-lg btn-block bg-<?= config('branding.accent_color'); ?> waves-effect"><?= __('SIGN IN') ?></button>
             </div>
         </div>
         <div class="row m-t-15 m-b--20">
             <div class="col-xs-6">
-                <a href="/auth/signup"><?= __('Register Now') ?></a>
+                <a href="/auth/signup"><?= __('Create an account') ?></a>
             </div>
             <div class="col-xs-6 align-right">
-                <a href="https://cpanel.<?= config('system.cpanel_url'); ?>/lostpassword.php"><?= __('Forgot Password?') ?></a>
+                <a href="https://cpanel.<?= config('system.cpanel_url'); ?>/lostpassword.php"><?= __('Forgot your password?') ?></a>
             </div>
         </div>
     </form>

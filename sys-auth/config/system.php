@@ -18,8 +18,7 @@ return [
 
     'cpanel_url' => 'rf.gd',
     'domain_selection' => [
-        'a.com',
-        'b.com'
+        'domain_a.com',
+        'domain_b.com'
     ], // List of domains available for selection
-    'captcha_provider' => 'byet', // Some common captcha provider
 ];

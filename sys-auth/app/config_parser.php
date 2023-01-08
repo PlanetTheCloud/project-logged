@@ -22,7 +22,7 @@ unset($branding, $required);
 
 # Handle System Config
 $system = require SYSTEM . '/config/system.php';
-$required = ['development_mode', 'maintenance_mode', 'maintenance_key', 'lockdown_mode', 'language', 'use_https', 'cpanel_url', 'domain_selection', 'captcha_provider'];
+$required = ['development_mode', 'maintenance_mode', 'maintenance_key', 'lockdown_mode', 'language', 'use_https', 'cpanel_url', 'domain_selection'];
 foreach ($required as $key) {
     if (!isset($system[$key])) {
         throw new InvalidConfigException("Missing '{$key}' field in 'system' config.");
