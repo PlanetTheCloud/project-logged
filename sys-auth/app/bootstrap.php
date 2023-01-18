@@ -44,6 +44,9 @@ function loggedErrorHandler($exception)
             ]);
             die;
         }
+
+        // IF IS VALIDATIONFAILEDEXCEPTION, RETURN MESSAGE
+
         echo json_encode([
             'status' => 'error',
             'message' => 'Something went wrong, please try again later.'
