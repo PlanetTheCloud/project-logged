@@ -28,29 +28,32 @@ unset($class);
 # Load System config
 define('SYSTEM_CONFIG', Arr::dot(require SYSTEM . '/config/system.php'));
 
+# Response for API requests
+function apiErrorResponse(string $message = null, array $data = [])
+{
+    $toMerge =  ($data !== []) ? ['details' => $data] : [];
+    if ($message === '') {
+        $message = null;
+    }
+    echo json_encode(array_merge([
+        'status' => 'error',
+        'message' => $message ?? __('Something went wrong, please try again later.')
+    ], $toMerge, ['DEVELOPMENT_MODE' => SYSTEM_CONFIG['development_mode']]));
+}
+
 # Custom Error Handler
 function loggedErrorHandler($exception)
 {
     if (IS_API_REQUEST) {
+        // merge with apiErrorResponse fn
         if (SYSTEM_CONFIG['development_mode']) {
-            echo json_encode([
-                'status' => 'error',
-                'DEVELOPMENT MODE' => true,
-                'message' => get_class($exception) . ': ' . $exception->getMessage(),
-                'data' => [
-                    'file' => $exception->getFile(),
-                    'line' => $exception->getLine()
-                ]
+            apiErrorResponse(get_class($exception) . ': ' . $exception->getMessage(), [
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine()
             ]);
             die;
         }
-
-        // IF IS VALIDATIONFAILEDEXCEPTION, RETURN MESSAGE
-
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Something went wrong, please try again later.'
-        ]);
+        apiErrorResponse();
     } else {
         if (SYSTEM_CONFIG['development_mode']) {
             echo "<b>DEVELOPMENT MODE</b><br><br>";

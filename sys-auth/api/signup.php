@@ -10,26 +10,31 @@ require __DIR__ . '/../app/bootstrap.php';
 //     die;
 // }
 
+# Validate parameters
 $required = ['username', 'email', 'password', 'password_confirm', 'id', 'number', 'token', 'action'];
 $data = $_POST;
-
-(function() use ($data, $required){
-    foreach ($required as $key => $value) {
-        if (!isset($data[$value])) {
-            throw new ValidationFailedException();
+try {
+    (function () use ($data, $required) {
+        foreach ($required as $key) {
+            if (!isset($data[$key])) {
+                throw new ValidationFailedException($key . ' ' . __('cannot be missing!'));
+            }
+            if (!is_string($data[$key])) {
+                throw new ValidationFailedException($key . ' ' . __('cannot be unexpected!'));
+            }
+            if (empty(trim($data[$key]))) {
+                throw new ValidationFailedException($key . ' ' . __('cannot be empty!'));
+            }
+            $data[$key] = htmlspecialchars($data[$key]);
         }
-        if (!is_string($data[$value])) {
-            throw new ValidationFailedException();
+        if ($data['password'] !== $data['password_confirm']) {
+            throw new ValidationFailedException(__('Confirm Password does not match!'));
         }
-        if (empty(trim($data[$value]))) {
-            throw new ValidationFailedException("{$value} cannot be empty!");
-        }
-        $data[$value] = htmlspecialchars($data[$value]);
-    }
-    if ($data['password'] !== $data['password_confirm']) {
-        throw new ValidationFailedException('Confirm Password does not match!');
-    }
-})();
+    })();
+} catch (ValidationFailedException $e) {
+    apiErrorResponse($e->getMessage());
+    die;
+}
 
 /**
  * TESTING
