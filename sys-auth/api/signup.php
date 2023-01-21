@@ -11,28 +11,40 @@ require __DIR__ . '/../app/bootstrap.php';
 // }
 
 # Validate parameters
-$required = ['username', 'email', 'password', 'password_confirm', 'id', 'number', 'token', 'action'];
+$required = ['email', 'password', 'password_confirm', 'domain_type', 'custom_domain', 'subdomain', 'extension', 'captcha_id', 'captcha_solution', '_token'];
 $data = $_POST;
 try {
     (function () use ($data, $required) {
         foreach ($required as $key) {
             if (!isset($data[$key])) {
-                throw new ValidationFailedException($key . ' ' . __('cannot be missing!'));
+                throw new ValidationFailedException(ucfirst($key) . ' ' . __('cannot be missing'), $key);
             }
             if (!is_string($data[$key])) {
-                throw new ValidationFailedException($key . ' ' . __('cannot be unexpected!'));
+                throw new ValidationFailedException(ucfirst($key) . ' ' . __('cannot be unexpected'), $key);
             }
             if (empty(trim($data[$key]))) {
-                throw new ValidationFailedException($key . ' ' . __('cannot be empty!'));
+                throw new ValidationFailedException(ucfirst($key) . ' ' . __('cannot be empty'), $key);
             }
             $data[$key] = htmlspecialchars($data[$key]);
         }
         if ($data['password'] !== $data['password_confirm']) {
-            throw new ValidationFailedException(__('Confirm Password does not match!'));
+            throw new ValidationFailedException(__('Confirm Password does not match!'), 'password_confirm');
         }
+        if (!in_array($data['domain_type'], ['subdomain', 'custom_domain'])) {
+            throw new ValidationFailedException(__('Invalid domain type given'), 'domain_type');
+        }
+        if ($data['domain_type'] === 'subdomain' && !in_array($data['extension'], config('system.domain_selection'))) {
+            throw new ValidationFailedException(__('Unable to find the given extension'), $key);
+        }
+        // domain validation
+        // tld filter
+        // captcha and CSRF checks
     })();
 } catch (ValidationFailedException $e) {
-    apiErrorResponse($e->getMessage());
+    apiErrorResponse($e->getMessage(), [
+        'type' => 'VALIDATION_FAILED',
+        'field' => $e->getField()
+    ], true);
     die;
 }
 
@@ -47,31 +59,6 @@ $data = [
     'number' => '61499',
 ];
 
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "https://ifastnet.com/register2.php");
-curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    'Content-Type: application/x-www-form-urlencoded',
-    'Referer: https://10-99.ml/'
-]);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-// SECURITY
-curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS | CURLPROTO_HTTP);
-curl_setopt($ch, CURLOPT_REDIR_PROTOCOLS, CURLPROTO_HTTPS);
-curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
-
-$result = curl_exec($ch);
-
-if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
-}
-
-curl_close($ch);
 
 echo $result;

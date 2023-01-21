@@ -29,31 +29,30 @@ unset($class);
 define('SYSTEM_CONFIG', Arr::dot(require SYSTEM . '/config/system.php'));
 
 # Response for API requests
-function apiErrorResponse(string $message = null, array $data = [])
+function apiErrorResponse(string $message = null, array $data = [], bool $merge_data = false)
 {
-    $toMerge =  ($data !== []) ? ['details' => $data] : [];
-    if ($message === '') {
-        $message = null;
+    $toMerge = ($data !== [] && ($merge_data || SYSTEM_CONFIG['development_mode'])) ? ['details' => $data] : [];
+    $message = (!empty(trim($message))) ? $message : null;
+    if (SYSTEM_CONFIG['development_mode']) {
+        $toMerge['DEVELOPMENT_MODE'] = true;
     }
     echo json_encode(array_merge([
         'status' => 'error',
         'message' => $message ?? __('Something went wrong, please try again later.')
-    ], $toMerge, ['DEVELOPMENT_MODE' => SYSTEM_CONFIG['development_mode']]));
+    ], $toMerge));
 }
 
 # Custom Error Handler
 function loggedErrorHandler($exception)
 {
     if (IS_API_REQUEST) {
-        // merge with apiErrorResponse fn
-        if (SYSTEM_CONFIG['development_mode']) {
-            apiErrorResponse(get_class($exception) . ': ' . $exception->getMessage(), [
-                'file' => $exception->getFile(),
-                'line' => $exception->getLine()
-            ]);
-            die;
-        }
-        apiErrorResponse();
+        apiErrorResponse(null, [
+            'exception' => get_class($exception),
+            'message' => $exception->getMessage(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine()
+        ]);
+        die;
     } else {
         if (SYSTEM_CONFIG['development_mode']) {
             echo "<b>DEVELOPMENT MODE</b><br><br>";

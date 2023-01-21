@@ -27,10 +27,10 @@
 
         <div class="form-group" style="margin-bottom: 10px;">
             <i class="material-icons" style="position: absolute;z-index:10;margin-top:14px;margin-left:425px;" data-toggle="tooltip" data-placement="right" data-html="true" data-template="<div class='tooltip' role='tooltip'><div class='arrow'></div><div class='tooltip-inner' style='max-width: 250px;max-height:300px;'></div></div>" title="<?= __('If you already have a domain that you want to use with us, please select \'I have my own domain\'.<br><br>If you don\'t have a domain right now, you can choose \'I want to use a free subdomain\'.<br><br>Don\'t worry, you can always add more domains (including your own domain) later on from the Control Panel.') ?>">help</i>
-            <input type="radio" name="i_domain_type" value="custom" class="with-gap radio-col-<?= config('branding.accent_color'); ?>" id="i_domain_type_own">
+            <input type="radio" name="domain_type" value="custom" class="with-gap radio-col-<?= config('branding.accent_color'); ?>" id="i_domain_type_own">
             <label for="i_domain_type_own"><?= __('I have my own domain') ?></label>
             <br>
-            <input type="radio" name="i_domain_type" value="subdomain" class="with-gap radio-col-<?= config('branding.accent_color'); ?>" id="i_domain_type_sub">
+            <input type="radio" name="domain_type" value="subdomain" class="with-gap radio-col-<?= config('branding.accent_color'); ?>" id="i_domain_type_sub">
             <label class="p-l-20" for="i_domain_type_sub"><?= __('I want to use a free subdomain') ?></label>
         </div>
 
@@ -85,13 +85,12 @@
                     <img width="50%" src="https://ifastnet.com/image.php?id=<?= Page::param('captcha_id') ?>">
                 </div>
                 <div class="form-line">
-                    <input type="text" id="input_captcha" name="number" class="form-control" autocomplete="off">
+                    <input type="text" id="input_captcha" name="captcha_solution" class="form-control" autocomplete="off">
                     <input type="hidden" name="captcha_id" value="<?= Page::param('captcha_id') ?>">
                     <label class="form-label"><?= __('Captcha') ?></label>
                 </div>
                 <small class="col-pink hidden" id="warn_captcha">{{WARNING}}</small>
             </div>
-
             <p><?= __('By signing up, you acknowledge that you have read and agree to be bound by our <a href="/auth/read/tos">terms of service</a> and <a href="/auth/read/privacy">privacy policies</a>.') ?></p>
             <button class="btn btn-lg btn-block bg-<?= config('branding.accent_color'); ?> waves-effect"><?= __('SIGN UP') ?></button>
         </div>
