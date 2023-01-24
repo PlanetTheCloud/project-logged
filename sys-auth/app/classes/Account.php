@@ -41,5 +41,15 @@ class Account
         }
 
         curl_close($ch);
+
+        return $result;
+    }
+
+    public static function parseResult($result)
+    {
+        if ($result === false) {
+            return false;
+        }
+        // string contains
     }
 }

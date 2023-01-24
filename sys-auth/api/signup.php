@@ -59,6 +59,9 @@ $data = [
     'number' => '61499',
 ];
 
-
+$account = Account::create($data);
+if($account['created'] === false) {
+    return 'error';
+}
 
 echo $result;
