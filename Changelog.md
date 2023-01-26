@@ -5,3 +5,7 @@
 
 Notes for improvements:
 - Some code can be refactored however they're just not that worth it to do
+
+Critical notes:
+- Reserve SESSION _tokens key
+- Reserve anything under /auth

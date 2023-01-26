@@ -20,10 +20,15 @@ define('APP', SYSTEM . '/app');
 define('IS_API_REQUEST', strpos($_SERVER['REQUEST_URI'], '/api/') !== false);
 
 # Load classes
-foreach (glob(SYSTEM . "/app/classes/*.php") as $class) {
+$classes = glob(SYSTEM . "/app/classes/*.php");
+foreach ($classes as $class) {
     require $class;
 }
-unset($class);
+$exception_classes = glob(SYSTEM . "/app/classes/Exceptions/*.php");
+foreach ($exception_classes as $class) {
+    require $class;
+}
+unset($classes, $exception_classes);
 
 # Load System config
 define('SYSTEM_CONFIG', Arr::dot(require SYSTEM . '/config/system.php'));

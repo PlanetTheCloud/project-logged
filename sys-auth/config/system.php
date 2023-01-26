@@ -21,4 +21,8 @@ return [
         'domain_a.com',
         'domain_b.com'
     ], // List of domains available for selection
+    'blacklisted_tld' => [
+        'tk',
+        'de'
+    ],
 ];

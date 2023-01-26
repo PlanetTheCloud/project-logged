@@ -5,7 +5,7 @@
 require __DIR__ . '/../app/bootstrap.php';
 
 // if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-//     //header("Location: /auth/signup");
+//     header("Location: /auth/signup");
 //     echo __('Taking you to our signup page... If the page doesn\'t refresh automatically, <a href="/auth/signup">click here.</a>');
 //     die;
 // }
@@ -27,18 +27,35 @@ try {
             }
             $data[$key] = htmlspecialchars($data[$key]);
         }
+
         if ($data['password'] !== $data['password_confirm']) {
             throw new ValidationFailedException(__('Confirm Password does not match!'), 'password_confirm');
         }
+
         if (!in_array($data['domain_type'], ['subdomain', 'custom_domain'])) {
             throw new ValidationFailedException(__('Invalid domain type given'), 'domain_type');
         }
+
         if ($data['domain_type'] === 'subdomain' && !in_array($data['extension'], config('system.domain_selection'))) {
             throw new ValidationFailedException(__('Unable to find the given extension'), $key);
         }
-        // domain validation
-        // tld filter
-        // captcha and CSRF checks
+
+        if ($data['domain_type'] === 'custom_domain') {
+            if (!preg_match('/^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/', $data['custom_domain'])) {
+                throw new ValidationFailedException(__('Invalid custom domain given'), 'custom_domain');
+            }
+            $tld = explode('.', $data['custom_domain']);
+            $tld = $tld[count($tld) - 1];
+            if (in_array($tld, config('system.blacklisted_tld'))) {
+                throw new ValidationFailedException(__('Sorry this TLD is not supported', 'custom_domain'));
+            }
+            unset($tld);
+        }
+        // Captcha Provider Checks here (future)
+
+        if($data['_token']){
+            
+        }
     })();
 } catch (ValidationFailedException $e) {
     apiErrorResponse($e->getMessage(), [
@@ -60,7 +77,7 @@ $data = [
 ];
 
 $account = Account::create($data);
-if($account['created'] === false) {
+if ($account['created'] === false) {
     return 'error';
 }
 
