@@ -5,18 +5,29 @@ if (!defined('APP')) {
     die(header("HTTP/1.1 403 Forbidden"));
 }
 
+/**
+ * CsrfProtect Class
+ * ---
+ * @author PlanetTheCloud (https://github.com/PlanetTheCloud)
+ * @link https://stackoverflow.com/a/31683058
+ */
 class CsrfProtect
 {
 
     /**
-     * @var int $length Length of token
+     * @var int $key_length
      */
-    private $length = 32;
+    private $key_length = 32;
 
     /**
-     * @var int $lifetime Token lifetime before expires
+     * @var string $algo
      */
-    private $lifetime = 14400;
+    private $algo = 'sha256';
+
+    /**
+     * @var string $session_key
+     */
+    private $session_key = '_csrf';
 
     /**
      * Construct the class
@@ -25,18 +36,11 @@ class CsrfProtect
      */
     function __construct()
     {
-        if (!isset($_SESSION['_tokens'])) {
-            $_SESSION['_tokens'] = [
-                '_key' => $this->newRandomToken(),
-                '_any' => $this->newRandomToken()
+        if (!isset($_SESSION[$this->session_key])) {
+            $_SESSION[$this->session_key] = [
+                '_key' => bin2hex(openssl_random_pseudo_bytes($this->key_length)),
             ];
         }
-        $session['tokens'] = [
-            'form_name' => [
-                'token' => 'ACTUAL TOKEN',
-                'expires' => 'EXPIRE'
-            ]
-        ];
     }
 
     /**
@@ -47,18 +51,12 @@ class CsrfProtect
      * 
      * @return string The token
      */
-    public function token(string $form = null)
+    public function token(string $form = 'default')
     {
-        if (!$form) {
-            return $_SESSION['_tokens']['_any'];
-        }
-        if ($form[0] == '_') {
+        if (trim($form[0]) == '_') {
             throw new CsrfProtectException('Form name cannot begin with an underscore (_)');
         }
-        if (!isset($_SESSION['_tokens'][$form])) {
-            $_SESSION['_tokens'][$form] = $this->newRandomToken();
-        }
-        return $_SESSION['_tokens'][$form];
+        return hash_hmac($this->algo, $form, $_SESSION[$this->session_key]['_key']);
     }
 
     /**
@@ -79,15 +77,5 @@ class CsrfProtect
     public function invalidate(string $form = null)
     {
         // invalidates the token
-    }
-
-    /**
-     * Generates a new random token
-     * 
-     * @return string
-     */
-    private function newRandomToken()
-    {
-        return bin2hex(openssl_random_pseudo_bytes($this->length));
     }
 }
