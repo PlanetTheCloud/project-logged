@@ -51,16 +51,20 @@ try {
             }
             unset($tld);
         }
-        // Captcha Provider Checks here (future)
-
-        if($data['_token']){
-            
+        if ($data['_token']) {
+            $protect = new CsrfProtect();
+            $protect->validate($data['_token'], 'signup');
         }
     })();
 } catch (ValidationFailedException $e) {
     apiErrorResponse($e->getMessage(), [
         'type' => 'VALIDATION_FAILED',
         'field' => $e->getField()
+    ], true);
+    die;
+} catch (CsrfProtectTokenMismatchException $e) {
+    apiErrorResponse($e->getMessage(), [
+        'type' => 'CSRF_MISMATCHED',
     ], true);
     die;
 }

@@ -32,30 +32,58 @@ class CsrfProtect
     /**
      * Construct the class
      * 
+     * @throws CsrfProtectException
+     * 
      * @return void
      */
     function __construct()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            throw new CsrfProtectException('Session not started yet');
+        }
         if (!isset($_SESSION[$this->session_key])) {
-            $_SESSION[$this->session_key] = [
-                '_key' => bin2hex(openssl_random_pseudo_bytes($this->key_length)),
-            ];
+            $this->regenerateKey();
         }
     }
 
     /**
-     * Creates a new token and bind to form
-     * OR returns an existing token
+     * Regenerate token key
+     * 
+     * @return void
+     */
+    public function regenerateKey()
+    {
+        $_SESSION[$this->session_key] = [
+            '_key' => bin2hex(openssl_random_pseudo_bytes($this->key_length)),
+        ];
+    }
+
+    /**
+     * Calculate and return token for the given form
      * 
      * @param string $form Form to bind the token to
+     * 
+     * @throws CsrfProtectException
      * 
      * @return string The token
      */
     public function token(string $form = 'default')
     {
         if (trim($form[0]) == '_') {
-            throw new CsrfProtectException('Form name cannot begin with an underscore (_)');
+            throw new CsrfProtectException('Form name cannot begin with an underscore');
         }
+        return $this->calculateToken($form);
+    }
+
+    /**
+     * Calculates the token
+     * 
+     * @param string $form
+     * 
+     * @return string
+     */
+    private function calculateToken(string $form = 'default')
+    {
         return hash_hmac($this->algo, $form, $_SESSION[$this->session_key]['_key']);
     }
 
@@ -65,17 +93,14 @@ class CsrfProtect
      * @param string $token
      * @param string $form
      * 
+     * @throws CsrfProtectTokenMismatchException
+     * 
      * @return bool
      */
-    public function validate(string $token, string $form = null)
+    public function validate(string $token, string $form = 'default')
     {
-        // if form is null then just match the token
-        // else, must use hmac
-    }
-
-
-    public function invalidate(string $form = null)
-    {
-        // invalidates the token
+        if (!hash_equals($this->calculateToken($form), $token)) {
+            throw new CsrfProtectTokenMismatchException();
+        }
     }
 }
