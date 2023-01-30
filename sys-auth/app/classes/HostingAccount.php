@@ -6,22 +6,30 @@ if (!defined('APP')) {
 }
 
 /**
- * Account Class
+ * Hosting Account Class
  * for LOGGED v2.x
  * 
  * @author     PlanetTheCloud <github.com/PlanetTheCloud>
  */
-class Account
+class HostingAccount
 {
+    /**
+     * Create hosting account
+     * 
+     * @param array $param
+     * 
+     * @return boolean|array
+     */
     public static function create(array $param)
     {
+        $referrer = ($param['domain_type'] === 'subdomain') ? $param['extension'] : config('system.cpanel_url');
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://ifastnet.com/register2.php");
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/x-www-form-urlencoded',
-            'Referer: https://10-99.ml/'
+            'Referer: https://'. $referrer .'/'
         ]);
-        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($param));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 

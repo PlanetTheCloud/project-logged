@@ -102,5 +102,6 @@ class CsrfProtect
         if (!hash_equals($this->calculateToken($form), $token)) {
             throw new CsrfProtectTokenMismatchException();
         }
+        return true;
     }
 }
