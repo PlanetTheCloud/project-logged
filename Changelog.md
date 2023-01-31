@@ -9,3 +9,4 @@ Notes for improvements:
 Critical notes:
 - Reserve SESSION _tokens key
 - Reserve anything under /auth
+- Not all error messages tell the truth. Use dev mode to spit the truth out

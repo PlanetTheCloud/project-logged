@@ -39,7 +39,7 @@ class CsrfProtect
     function __construct()
     {
         if (session_status() === PHP_SESSION_NONE) {
-            throw new CsrfProtectException('Session not started yet');
+            throw new CsrfProtectException('Session must be started first');
         }
         if (!isset($_SESSION[$this->session_key])) {
             $this->regenerateKey();
@@ -100,7 +100,7 @@ class CsrfProtect
     public function validate(string $token, string $form = 'default')
     {
         if (!hash_equals($this->calculateToken($form), $token)) {
-            throw new CsrfProtectTokenMismatchException();
+            throw new CsrfProtectException('CSRF token mismatched');
         }
         return true;
     }

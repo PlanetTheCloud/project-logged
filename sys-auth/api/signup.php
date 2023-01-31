@@ -82,19 +82,17 @@ try {
                 }
             }
             $ns = array_keys($ns);
-            if (count($ns) < 2) {
-                throw new ValidationFailedException(__('Domain\'s nameservers are not pointed properly', 'custom_domain'));
-            }
-            $valid_ns = [];
-            foreach (['ns1', 'ns2', /*'ns3', 'ns4'*/] as $n) {
-                $valid_ns[] = $n . '.' . config('system.cpanel_url');
-            }
+            $valid_ns = ['ns1.byet.org', 'ns2.byet.org', 'ns3.byet.org', 'ns4.byet.org', 'ns5.byet.org', 'ns1.' . config('system.cpanel_url'), 'ns2.' . config('system.cpanel_url')];
+            $present_ns = [];
             foreach ($ns as $r) {
-                if (!in_array($r, $valid_ns)) {
-                    throw new ValidationFailedException(__('Domain is not pointed to our servers'), 'custom_domain');
+                if (in_array($r, $valid_ns)) {
+                    $present_ns[$r]  = true;
                 }
             }
-            unset($tld, $dns, $ns, $valid_ns);
+            if (count(array_keys($present_ns)) < 2) {
+                throw new ValidationFailedException(__('Domain\'s nameservers are not pointed properly', 'custom_domain'));
+            }
+            unset($tld, $dns, $ns, $valid_ns, $present_ns);
         }
 
         // Captcha
@@ -111,29 +109,12 @@ try {
         'field' => $e->getField()
     ], true);
     die;
-} catch (CsrfProtectTokenMismatchException $e) {
+} catch (CsrfProtectException $e) {
     apiErrorResponse('CSRF token mismatched. Please refresh the page.', [
         'type' => 'CSRF_MISMATCHED',
     ], true);
     die;
 }
 
-die('done');
-
-/**
- * TESTING
- */
-$data = [
-    'email' => 'a@g.co',
-    'username' => 'awiourhpq3',
-    'password' => 'asdfasdf',
-    'PlanName' => 'Starter',
-    'number' => '61499',
-];
-
-$account = HostingAccount::create($data);
-if ($account['created'] === false) {
-    return 'error';
-}
-
-echo $result;
+$account = HostingAccount::create($param);
+die($account['raw']);
