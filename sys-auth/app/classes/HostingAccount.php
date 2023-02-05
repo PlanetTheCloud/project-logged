@@ -74,7 +74,10 @@ class HostingAccount
         if ($result === false) {
             return [
                 'created' => false,
-                'type' => 'ERROR',
+                'raw' => $result,
+                'details' => [
+                    'type' => 'ERROR',
+                ]
             ];
         }
         if (strpos($result, 'An activation email has now been sent to') !== false) {
@@ -87,17 +90,50 @@ class HostingAccount
             return [
                 'created' => false,
                 'raw' => $result,
-                'type' => 'REJECTION',
-                'field' => 'captcha_solution'
+                'details' => [
+                    'type' => 'REJECTION',
+                    'field' => 'captcha_solution'
+                    // add message field
+                ]
             ];
         }
-        // is already assigned and in use
-        // The domain name choosen
-        // Please refresh the previous page, the captcha puzzle has allready been solved
+        if (strpos($result, 'is already assigned and in use') !== false) {
+            return [
+                'created' => false,
+                'raw' => $result,
+                'details' => [
+                    'type' => 'REJECTION',
+                    'field' => 'custom_domain'
+                ]
+            ];
+        }
+        if (strpos($result, 'The domain name choosen') !== false) {
+            return [
+                'created' => false,
+                'raw' => $result,
+                'details' => [
+                    'type' => 'REJECTION',
+                    'field' => 'custom_domain'
+                    // domain not allowed or invalid
+                ]
+            ];
+        }
+        if (strpos($result, 'Please refresh the previous page, the captcha puzzle has') !== false) {
+            return [
+                'created' => false,
+                'raw' => $result,
+                'details' => [
+                    'type' => 'REJECTION',
+                    'field' => 'captcha_solution'
+                ]
+            ];
+        }
         return [
             'created' => false,
-            'type' => 'ERROR',
-            'raw' => $result
+            'raw' => $result,
+            'details' => [
+                'type' => 'ERROR',
+            ]
         ];
     }
 }
