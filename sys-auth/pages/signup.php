@@ -4,7 +4,7 @@
         <div class="form-group form-float">
             <i class="material-icons tooltip_icon-signup" data-toggle="tooltip" data-placement="right" title="<?= __('Each email address is limited to 3 accounts') ?>">info</i>
             <div class="form-line">
-                <input type="email" id="input_email" name="email" class="form-control">
+                <input type="email" id="i_email" name="email" class="form-control">
                 <label class="form-label"><?= __('Email Address') ?></label>
             </div>
             <small class="col-pink hidden" id="warn_email">{{WARNING}}</small>
@@ -12,14 +12,14 @@
 
         <div class="form-group form-float">
             <div class="form-line">
-                <input type="password" id="input_password" name="password" class="form-control">
+                <input type="password" id="i_password" name="password" class="form-control">
                 <label class="form-label"><?= __('Password') ?></label>
             </div>
             <small class="col-pink hidden" id="warn_password">{{WARNING}}</small>
         </div>
         <div class="form-group form-float">
             <div class="form-line">
-                <input type="password" id="input_password_confirm" name="password_confirm" class="form-control">
+                <input type="password" id="i_password_confirm" name="password_confirm" class="form-control">
                 <label class="form-label"><?= __('Confirm Password') ?></label>
             </div>
             <small class="col-pink hidden" id="warn_password_confirm">{{WARNING}}</small>
@@ -34,7 +34,7 @@
             <label class="p-l-20" for="i_domain_type_sub"><?= __('I want to use a free subdomain') ?></label>
         </div>
 
-        <div id="section_custom_domain" class="hidden">
+        <div id="s_custom_domain" class="hidden">
             <div class="infobox">
                 <?= __('To use your domain with us, point it to these nameservers:') ?><br>
                 <ul style="margin-bottom: 0px;">
@@ -44,14 +44,14 @@
             </div>
             <div class="form-group form-float">
                 <div class="form-line">
-                    <input type="text" id="input_custom_domain" name="custom_domain" class="form-control">
+                    <input type="text" id="i_custom_domain" name="custom_domain" class="form-control">
                     <label class="form-label"><?= __('Domain Name') ?></label>
                 </div>
                 <small class="col-pink hidden" id="warn_custom_domain">{{WARNING}}</small>
             </div>
         </div>
 
-        <div id="section_subdomain" class="hidden">
+        <div id="s_subdomain" class="hidden">
             <div class="infobox" id="infobox_subdomain">
                 <?= __('Choose a subdomain and extension') ?>
             </div>
@@ -59,14 +59,14 @@
                 <div class="col-sm-6" style="margin-bottom:0px">
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" id="input_subdomain" name="subdomain" class="form-control">
+                            <input type="text" id="i_subdomain" name="subdomain" class="form-control">
                             <label class="form-label"><?= __('Subdomain') ?></label>
                         </div>
                         <small class="col-pink hidden" id="warn_subdomain">{{WARNING}}</small>
                     </div>
                 </div>
                 <div class="col-sm-6" style="margin-bottom:0px">
-                    <select class="form-control" name="extension" id="input_extension">
+                    <select class="form-control" name="extension" id="i_extension">
                         <?php
                         $domains = config('system.domain_selection');
                         foreach ($domains as $domain) {
@@ -79,13 +79,13 @@
             </div>
         </div>
 
-        <div id="section_others" class="hidden">
+        <div id="s_others" class="hidden">
             <div class="form-group form-float">
                 <div style="margin-bottom: 20px;">
                     <img width="50%" src="https://ifastnet.com/image.php?id=<?= Page::param('captcha_id') ?>">
                 </div>
                 <div class="form-line">
-                    <input type="text" id="input_captcha" name="captcha_solution" class="form-control" autocomplete="off">
+                    <input type="text" id="i_captcha" name="captcha_solution" class="form-control" autocomplete="off">
                     <input type="hidden" name="captcha_id" value="<?= Page::param('captcha_id') ?>">
                     <label class="form-label"><?= __('Captcha') ?></label>
                 </div>
