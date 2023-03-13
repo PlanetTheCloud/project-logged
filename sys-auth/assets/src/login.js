@@ -26,7 +26,7 @@ function handleSubmit() {
     if (/^[a-zA-Z0-9]{1,6}_[0-9]{8}$/.test(i_username.value)) {
         checkPassed(i_username);
     } else {
-        hasError(i_username, __("Username is not valid"));
+        hasError(i_username, __("The username you entered is invalid."));
         submit = false;
     }
 
@@ -34,9 +34,9 @@ function handleSubmit() {
         checkPassed(i_password);
     } else {
         if (i_password.value.length == 0) {
-            hasError(i_password, __("Password cannot be empty"));
+            hasError(i_password, __("Password cannot be empty."));
         } else {
-            hasError(i_password, __("Password is too short"));
+            hasError(i_password, __("Password is too short."));
         }
         submit = false;
     }

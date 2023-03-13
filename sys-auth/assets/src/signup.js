@@ -33,15 +33,15 @@ document.querySelectorAll("input[name='domain_type']").forEach((input) => {
 function checkSubdomainValidity() {
     let subdomain = i_subdomain.value;
     if (subdomain.length < 4 || subdomain.length > 16) {
-        updateSubdomainInfo(__("Subdomain must be between 4 to 16 characters in length"));
+        updateSubdomainInfo(__("Subdomain must be between 4 to 16 characters in length."));
         return false;
     }
     if (subdomain[subdomain.length - 1] === '-') {
-        updateSubdomainInfo(__("Hypens are not allowed at the end of subdomain"));
+        updateSubdomainInfo(__("Hypens are not allowed at the end of subdomain."));
         return false;
     }
     if (!/^[A-Za-z0-9-]+$(?<!-)/.test(subdomain)) {
-        updateSubdomainInfo(__("Only alphanumeric characters and hyphens are allowed"));
+        updateSubdomainInfo(__("Only alphanumeric characters and hyphens are allowed."));
         return false;
     }
     updateSubdomainInfo();
@@ -61,6 +61,6 @@ i_subdomain.addEventListener('input', checkSubdomainValidity);
 getElement('i_extension').addEventListener('change', updateSubdomainInfo);
 
 function handleSubmit() {
-
+    
     return false;
 }

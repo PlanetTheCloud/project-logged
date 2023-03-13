@@ -9,7 +9,7 @@ if (!defined('APP')) {
  * Hosting Account Class
  * for LOGGED v2.x
  * 
- * @author     PlanetTheCloud <github.com/PlanetTheCloud>
+ * @author  PlanetTheCloud <github.com/PlanetTheCloud>
  */
 class HostingAccount
 {
@@ -74,37 +74,45 @@ class HostingAccount
         if ($result === false) {
             return [
                 'created' => false,
-                'raw' => $result,
                 'details' => [
-                    'type' => 'ERROR',
-                ]
+                    'state' => 'ERROR',
+                    'message' => __('An unknown error has occurred.'),
+                ],
+                'raw' => $result
             ];
         }
         if (strpos($result, 'An activation email has now been sent to') !== false) {
             return [
                 'created' => true,
+                'details' => [
+                    'state' => 'ACCOUNT_CREATED',
+                    'message' => __('Thank you for signing up! To activate your account, please check your email and click the activation link we\'ve sent to you. If you don\'t receive the email within a few minutes, please check your spam folder.'),
+                ],
                 'raw' => $result
             ];
         }
         if (strpos($result, 'Security Code does not match') !== false) {
             return [
                 'created' => false,
-                'raw' => $result,
                 'details' => [
-                    'type' => 'REJECTION',
-                    'field' => 'captcha_solution'
-                    // add message field
-                ]
+                    'state' => 'ERROR',
+                    'message' => __('The captcha you entered is incorrect. Please try again.'),
+                    'field' => 'captcha_solution',
+                ],
+                'raw' => $result,
             ];
         }
         if (strpos($result, 'is already assigned and in use') !== false) {
             return [
                 'created' => false,
+                'messages' => [
+                    [
+                        'state' => 'ERROR',
+                        'content' => __('The domain you entered has already been assigned to an account and cannot be used again. Please enter a different domain.'),
+                        'field' => 'custom_domain'
+                    ]
+                ],
                 'raw' => $result,
-                'details' => [
-                    'type' => 'REJECTION',
-                    'field' => 'custom_domain'
-                ]
             ];
         }
         if (strpos($result, 'The domain name choosen') !== false) {
@@ -112,7 +120,7 @@ class HostingAccount
                 'created' => false,
                 'raw' => $result,
                 'details' => [
-                    'type' => 'REJECTION',
+                    'state' => 'ERROR',
                     'field' => 'custom_domain'
                     // domain not allowed or invalid
                 ]
@@ -123,7 +131,7 @@ class HostingAccount
                 'created' => false,
                 'raw' => $result,
                 'details' => [
-                    'type' => 'REJECTION',
+                    'state' => 'ERROR',
                     'field' => 'captcha_solution'
                 ]
             ];
@@ -132,7 +140,7 @@ class HostingAccount
             'created' => false,
             'raw' => $result,
             'details' => [
-                'type' => 'ERROR',
+                'state' => 'ERROR',
             ]
         ];
     }

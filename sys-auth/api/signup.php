@@ -117,4 +117,17 @@ try {
 }
 
 $account = HostingAccount::create($param);
-die($account['raw']);
+if ($account['created']) {
+    $status = ['status' => 'success'];
+} else {
+    $status = ['status' => 'error'];
+}
+
+/**
+ * string status
+ * string state
+ * string message
+ * string field
+ */
+echo json_encode(array_merge($status, $account['details']));
+die;
