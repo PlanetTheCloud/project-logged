@@ -26,7 +26,7 @@ function handleSubmit() {
     if (/^[a-zA-Z0-9]{1,6}_[0-9]{8}$/.test(i_username.value)) {
         checkPassed(i_username);
     } else {
-        hasError(i_username, __("The username you entered is invalid."));
+        hasError(i_username, __("The username entered is invalid."));
         submit = false;
     }
 

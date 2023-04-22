@@ -76,7 +76,7 @@ class HostingAccount
                 'created' => false,
                 'details' => [
                     'state' => 'ERROR',
-                    'message' => __('An unknown error has occurred.'),
+                    'message' => __('An unknown error has occurred. Please try again.'),
                 ],
                 'raw' => $result
             ];
@@ -118,30 +118,36 @@ class HostingAccount
         if (strpos($result, 'The domain name choosen') !== false) {
             return [
                 'created' => false,
+                'messages' => [
+                    [
+                        'state' => 'ERROR',
+                        'content' => __('The domain name chosen is not allowed or invalid. Please enter a different domain.'),
+                        'field' => 'custom_domain'
+                    ]
+                ],
                 'raw' => $result,
-                'details' => [
-                    'state' => 'ERROR',
-                    'field' => 'custom_domain'
-                    // domain not allowed or invalid
-                ]
             ];
         }
         if (strpos($result, 'Please refresh the previous page, the captcha puzzle has') !== false) {
             return [
                 'created' => false,
+                'messages' => [
+                    [
+                        'state' => 'ERROR',
+                        'content' => __('There\'s an error with the captcha. Please refresh and try again.'),
+                        'field' => 'captcha_solution'
+                    ]
+                ],
                 'raw' => $result,
-                'details' => [
-                    'state' => 'ERROR',
-                    'field' => 'captcha_solution'
-                ]
             ];
         }
         return [
             'created' => false,
-            'raw' => $result,
             'details' => [
                 'state' => 'ERROR',
-            ]
+                'message' => __('An unknown error has occurred. Please try again.'),
+            ],
+            'raw' => $result
         ];
     }
 }
