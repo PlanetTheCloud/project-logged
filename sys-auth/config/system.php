@@ -11,10 +11,11 @@ return [
 
     'cpanel_url' => 'rf.gd',
     'domain_selection' => [
+        // List of domains available for selection
         'domain_a.com',
         'domain_b.com',
         'rf.gd'
-    ], // List of domains available for selection
+    ],
     'blacklisted_tld' => [
         'tk',
         'de'
