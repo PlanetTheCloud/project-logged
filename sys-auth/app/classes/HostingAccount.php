@@ -71,83 +71,73 @@ class HostingAccount
      */
     public static function parseResult($result)
     {
-        if ($result === false) {
+        $return = (function () use ($result) {
+            if ($result === false) {
+                return [
+                    'created' => false,
+                    'details' => [
+                        'state' => 'ERROR',
+                        'message' => __('An unknown error has occurred. Please try again.'),
+                    ],
+                ];
+            }
+            if (strpos($result, 'An activation email has now been sent to') !== false) {
+                return [
+                    'created' => true,
+                    'details' => [
+                        'state' => 'ACCOUNT_CREATED',
+                        'message' => __('Thank you for signing up! To activate your account, please check your email and click the activation link we\'ve sent to you. If you don\'t receive the email within a few minutes, please check your spam folder.'),
+                    ],
+                ];
+            }
+            if (strpos($result, 'Security Code does not match') !== false) {
+                return [
+                    'created' => false,
+                    'details' => [
+                        'state' => 'ERROR',
+                        'message' => __('The captcha you entered is incorrect. Please try again.'),
+                        'field' => 'captcha_solution',
+                    ],
+                ];
+            }
+            if (strpos($result, 'is already assigned and in use') !== false) {
+                return [
+                    'created' => false,
+                    'details' => [
+                        'state' => 'ERROR',
+                        'message' => __('The domain you entered has already been assigned to an account and cannot be used again. Please enter a different domain.'),
+                    ],
+                ];
+            }
+            if (strpos($result, 'The domain name choosen') !== false) {
+                return [
+                    'created' => false,
+                    'details' => [
+                        'state' => 'ERROR',
+                        'message' => __('The domain name chosen is not allowed or invalid. Please enter a different domain.'),
+                        'field' => 'custom_domain',
+                    ],
+                ];
+            }
+            if (strpos($result, 'Please refresh the previous page, the captcha puzzle has') !== false) {
+                return [
+                    'created' => false,
+                    'details' => [
+                        'state' => 'ERROR',
+                        'message' => __('There\'s an error with the captcha. Please refresh and try again.'),
+                        'field' => 'captcha_solution',
+                    ],
+                ];
+            }
             return [
                 'created' => false,
                 'details' => [
                     'state' => 'ERROR',
                     'message' => __('An unknown error has occurred. Please try again.'),
                 ],
-                'raw' => $result
             ];
-        }
-        if (strpos($result, 'An activation email has now been sent to') !== false) {
-            return [
-                'created' => true,
-                'details' => [
-                    'state' => 'ACCOUNT_CREATED',
-                    'message' => __('Thank you for signing up! To activate your account, please check your email and click the activation link we\'ve sent to you. If you don\'t receive the email within a few minutes, please check your spam folder.'),
-                ],
-                'raw' => $result
-            ];
-        }
-        if (strpos($result, 'Security Code does not match') !== false) {
-            return [
-                'created' => false,
-                'details' => [
-                    'state' => 'ERROR',
-                    'message' => __('The captcha you entered is incorrect. Please try again.'),
-                    'field' => 'captcha_solution',
-                ],
-                'raw' => $result,
-            ];
-        }
-        if (strpos($result, 'is already assigned and in use') !== false) {
-            return [
-                'created' => false,
-                'messages' => [
-                    [
-                        'state' => 'ERROR',
-                        'content' => __('The domain you entered has already been assigned to an account and cannot be used again. Please enter a different domain.'),
-                        'field' => 'custom_domain'
-                    ]
-                ],
-                'raw' => $result,
-            ];
-        }
-        if (strpos($result, 'The domain name choosen') !== false) {
-            return [
-                'created' => false,
-                'messages' => [
-                    [
-                        'state' => 'ERROR',
-                        'content' => __('The domain name chosen is not allowed or invalid. Please enter a different domain.'),
-                        'field' => 'custom_domain'
-                    ]
-                ],
-                'raw' => $result,
-            ];
-        }
-        if (strpos($result, 'Please refresh the previous page, the captcha puzzle has') !== false) {
-            return [
-                'created' => false,
-                'messages' => [
-                    [
-                        'state' => 'ERROR',
-                        'content' => __('There\'s an error with the captcha. Please refresh and try again.'),
-                        'field' => 'captcha_solution'
-                    ]
-                ],
-                'raw' => $result,
-            ];
-        }
-        return [
-            'created' => false,
-            'details' => [
-                'state' => 'ERROR',
-                'message' => __('An unknown error has occurred. Please try again.'),
-            ],
-            'raw' => $result
-        ];
+        })();
+
+        return array_merge($return, ['raw' => $result]);
     }
 }
