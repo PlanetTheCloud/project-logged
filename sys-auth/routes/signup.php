@@ -10,10 +10,14 @@
 # Load all the required files and functionalities
 require __DIR__ . '/../app/bootstrap.php';
 
+# Initialize CSRF Protection
+$csrf = new CsrfProtect();
+
 # Set page parameters
 Page::setParameters([
     'title' => 'Signup',
     'file' => 'signup.php',
+    '_token' => $csrf->token('signup'),
     'captcha_id' => md5(rand(6000, PHP_INT_MAX))
 ]);
 

@@ -1,6 +1,6 @@
 <div class="body">
     <div class="msg"><?= __('Sign up for a free account') ?></div>
-    <form method="post" onsubmit="return handleSubmit();">
+    <form id="signup_form" method="post" onsubmit="return handleSubmit();">
         <div class="form-group form-float">
             <i class="material-icons tooltip_icon-signup" data-toggle="tooltip" data-placement="right" title="<?= __('Each email address is limited to 3 accounts') ?>">info</i>
             <div class="form-line">
@@ -33,6 +33,7 @@
             <input type="radio" name="domain_type" value="subdomain" class="with-gap radio-col-<?= config('branding.accent_color'); ?>" id="i_domain_type_sub">
             <label class="p-l-20" for="i_domain_type_sub"><?= __('I want to use a free subdomain') ?></label>
         </div>
+        <small class="col-pink hidden" id="warn_domain_type">{{WARNING}}</small>
 
         <div id="s_custom_domain" class="hidden">
             <div class="infobox">
@@ -43,6 +44,7 @@
                 </ul>
             </div>
             <div class="form-group form-float">
+                <i class="material-icons tooltip_icon-signup" data-toggle="tooltip" data-placement="right" title="<?= __('Exclude the protocol (http:// or https://) and the trailing slash.') ?>">info</i>
                 <div class="form-line">
                     <input type="text" id="i_custom_domain" name="custom_domain" class="form-control">
                     <label class="form-label"><?= __('Domain Name') ?></label>
@@ -91,6 +93,7 @@
                 </div>
                 <small class="col-pink hidden" id="warn_captcha">{{WARNING}}</small>
             </div>
+            <input type="hidden" name="_token" value="<?= Page::param('_token') ?>">
             <p><?= __('By signing up, you acknowledge that you have read and agree to be bound by our <a href="/auth/read/tos">terms of service</a> and <a href="/auth/read/privacy">privacy policies</a>.') ?></p>
             <button class="btn btn-lg btn-block bg-<?= config('branding.accent_color'); ?> waves-effect"><?= __('SIGN UP') ?></button>
         </div>

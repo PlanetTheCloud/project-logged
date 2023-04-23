@@ -100,7 +100,7 @@ class HostingAccount
                     ],
                 ];
             }
-            if (strpos($result, 'is already assigned and in use') !== false) {
+            if (strpos($result, 'is already assigned and in use') !== false || strpos($result, 'in use, please try a different username') !== false) {
                 return [
                     'created' => false,
                     'details' => [
@@ -126,6 +126,16 @@ class HostingAccount
                         'state' => 'ERROR',
                         'message' => __('There\'s an error with the captcha. Please refresh and try again.'),
                         'field' => 'captcha_solution',
+                    ],
+                ];
+            }
+            if(strpos($result, 'Posting Error, #') !== false) {
+                // Possible configuration error
+                return [
+                    'created' => false,
+                    'details' => [
+                        'state' => 'ERROR',
+                        'message' => __('Something went wrong with our system. Please contact our support and provide them with this ID: HA010'),
                     ],
                 ];
             }
