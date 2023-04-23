@@ -2,9 +2,11 @@ var i_email = getElement('i_email'),
     i_password = getElement('i_password'),
     i_password_confirm = getElement('i_password_confirm'),
     i_domain_type_own = getElement('i_domain_type_own'),
+    i_domain_type_sub = getElement('i_domain_type_sub'),
     i_custom_domain = getElement('i_custom_domain'),
     i_subdomain = getElement('i_subdomain'),
-    i_domain_type_sub = getElement('i_domain_type_sub'),
+    i_extension = getElement('i_extension')
+    i_captcha_solution = getElement('captcha_solution')
     s_custom_domain = getElement('s_custom_domain'),
     s_subdomain = getElement('s_subdomain'),
     s_others = getElement('s_others');
@@ -60,7 +62,17 @@ function updateSubdomainInfo(contents = false) {
 i_subdomain.addEventListener('input', checkSubdomainValidity);
 getElement('i_extension').addEventListener('change', updateSubdomainInfo);
 
+function beforeSubmitCheck() {
+    if (i_password.length < 6 || i_password.length > 20) {
+        // Password must be between 4 to 16 characters in length
+    }
+    if (i_password !== i_password_confirm) {
+        // Password confirmation must match
+    }
+    if(i_)
+}
+
 function handleSubmit() {
-    
+
     return false;
 }
