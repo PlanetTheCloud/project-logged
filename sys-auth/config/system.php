@@ -7,9 +7,9 @@
  */
 
 return [
-    'installation_url' => 'alpha-logged.pdn',
+    'installation_url' => '',
 
-    'development_mode' => true,
+    'development_mode' => false,
     'maintenance_mode' => false,
     'maintenance_key' => 'MAINTENANCE_KEY',
     'lockdown_mode' => false,
@@ -17,11 +17,9 @@ return [
     'language' => 'en',
     'use_https' => false,
 
-    'cpanel_url' => 'rf.gd',
+    'cpanel_url' => '',
     'domain_selection' => [
-        'domain_a.com',
-        'domain_b.com',
-        'rf.gd'
+        'example.com'
     ],
     'blacklisted_tld' => [
         'tk',
