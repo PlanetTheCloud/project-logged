@@ -80,7 +80,7 @@
             ?>
         </div>
     </div>
-    <script src="assets/material.js"></script>
+    <script src="assets/dist/material.js"></script>
     <?php
     $scripts = Page::getScripts();
     foreach ($scripts as $script) {
