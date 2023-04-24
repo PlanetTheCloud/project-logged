@@ -76,7 +76,7 @@ class HostingAccount
                 return [
                     'created' => false,
                     'details' => [
-                        'state' => 'ERROR',
+                        'type' => 'ERROR',
                         'message' => __('An unknown error has occurred. Please try again.'),
                     ],
                 ];
@@ -85,7 +85,7 @@ class HostingAccount
                 return [
                     'created' => true,
                     'details' => [
-                        'state' => 'ACCOUNT_CREATED',
+                        'type' => 'ACCOUNT_CREATED',
                         'message' => __('Thank you for signing up! To activate your account, please check your email and click the activation link we\'ve sent to you. If you don\'t receive the email within a few minutes, please check your spam folder.'),
                     ],
                 ];
@@ -94,7 +94,7 @@ class HostingAccount
                 return [
                     'created' => false,
                     'details' => [
-                        'state' => 'ERROR',
+                        'type' => 'ERROR',
                         'message' => __('The captcha you entered is incorrect. Please try again.'),
                         'field' => 'captcha_solution',
                     ],
@@ -104,8 +104,9 @@ class HostingAccount
                 return [
                     'created' => false,
                     'details' => [
-                        'state' => 'ERROR',
+                        'type' => 'ERROR',
                         'message' => __('The domain you entered has already been assigned to an account and cannot be used again. Please enter a different domain.'),
+                        'field' => 'custom_domain'
                     ],
                 ];
             }
@@ -113,7 +114,7 @@ class HostingAccount
                 return [
                     'created' => false,
                     'details' => [
-                        'state' => 'ERROR',
+                        'type' => 'ERROR',
                         'message' => __('The domain name chosen is not allowed or invalid. Please enter a different domain.'),
                         'field' => 'custom_domain',
                     ],
@@ -123,7 +124,7 @@ class HostingAccount
                 return [
                     'created' => false,
                     'details' => [
-                        'state' => 'ERROR',
+                        'type' => 'ERROR',
                         'message' => __('There\'s an error with the captcha. Please refresh and try again.'),
                         'field' => 'captcha_solution',
                     ],
@@ -134,7 +135,7 @@ class HostingAccount
                 return [
                     'created' => false,
                     'details' => [
-                        'state' => 'ERROR',
+                        'type' => 'ERROR',
                         'message' => __('Something went wrong with our system. Please contact our support and provide them with this ID: HA010'),
                     ],
                 ];
@@ -142,7 +143,7 @@ class HostingAccount
             return [
                 'created' => false,
                 'details' => [
-                    'state' => 'ERROR',
+                    'type' => 'ERROR',
                     'message' => __('An unknown error has occurred. Please try again.'),
                 ],
             ];

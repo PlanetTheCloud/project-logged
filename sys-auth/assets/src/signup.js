@@ -5,11 +5,14 @@ var i_email = getElement("i_email"),
     i_domain_type_sub = getElement("i_domain_type_sub"),
     i_custom_domain = getElement("i_custom_domain"),
     i_subdomain = getElement("i_subdomain"),
-    i_extension = getElement("i_extension");
-    i_captcha = getElement("i_captcha"),
+    i_extension = getElement("i_extension"),
+    i_captcha_solution = getElement("i_captcha_solution"),
+    s_processing = getElement("s_processing"),
+    s_signup_form = getElement("s_signup_form"),
     s_custom_domain = getElement("s_custom_domain"),
     s_subdomain = getElement("s_subdomain"),
-    s_others = getElement("s_others");
+    s_others = getElement("s_others"),
+    a_response = getElement("a_response");
 (() => {
     setTimeout(() => {
         i_email.focus();
@@ -116,29 +119,70 @@ function beforeSubmitCheck() {
     }
 
     // Check Captcha
-    if (i_captcha.value.length !== 5) {
-        hasError(i_captcha, __("Please enter a captcha with 5 characters."));
+    if (i_captcha_solution.value.length !== 5) {
+        hasError(i_captcha_solution, __("Please enter a captcha with 5 characters."));
         return false;
     }
-    checkPassed(i_captcha);
+    checkPassed(i_captcha_solution);
 
     return true;
 }
 
+function showAlert(message, type = 'danger') {
+    a_response.innerText = message;
+    a_response.classList.remove("alert-success", "alert-danger", "alert-warning");
+    a_response.classList.add(`alert-${type}`);
+    a_response.classList.remove("hidden");
+}
+
+function hideAlert() {
+    a_response.classList.add("hidden");
+}
+
 function handleSubmit() {
-    if (beforeSubmitCheck()) {
-        alert('Submitting...');
+    if (!beforeSubmitCheck()) {
+        return false;
     }
 
-    var data = new FormData(document.getElementById("signup_form"));
+    // Handle show/hide sections
+    hideAlert();
+    s_signup_form.classList.add("hidden");
+    s_processing.classList.remove("hidden");
+
+    // Submit data
+    let data = new FormData(s_signup_form);
     fetch('/auth/api/signup', {
         method: "POST",
         body: data
-    }).then(res => {
-        if (res.status != 200) { throw new Error("Bad Server Response"); }
+    })
+    .then(res => {
+        if (res.status != 200) { 
+            throw new Error("Bad Server Response"); 
+        }
         return res.text();
-    }).then(res => console.log(res))
-    .catch(err => console.error(err));
-    
+    })
+    .then(res => handleResponse(JSON.parse(res)))
+    .catch(err => {
+        showAlert(`Something went wrong, please try again later.\n${err}`);
+    })
+    .finally(res => {
+        s_processing.classList.add("hidden");
+    })
     return false;
+}
+
+function handleResponse(res) {
+    if (res.status === 'error') {
+        if (typeof res.message !== 'undefined') {
+            showAlert(res.message);
+        }
+        if (typeof res.details !== 'undefined') {
+            if (typeof res.details.field !== 'undefined') {
+                hasError(getElement(`i_${res.details.field}`), res.message);
+            }
+        }
+        s_signup_form.classList.remove("hidden");
+    } else if (res.status === 'success') {
+
+    }
 }

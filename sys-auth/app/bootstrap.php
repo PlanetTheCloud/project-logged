@@ -36,7 +36,11 @@ define('SYSTEM_CONFIG', Arr::dot(require SYSTEM . '/config/system.php'));
 # Response for API requests
 function apiErrorResponse(string $message = null, array $data = [], bool $merge_data = false)
 {
-    $toMerge = ($data !== [] && ($merge_data || SYSTEM_CONFIG['development_mode'])) ? ['dev_details' => $data] : [];
+    if ($data !== [] && $merge_data) {
+        $toMerge = ['details' => $data];
+    } else if ($data !== [] && SYSTEM_CONFIG['development_mode']) {
+        $toMerge = ['dev_details' => $data];
+    }
     $message = (!empty(trim($message))) ? $message : null;
     if (SYSTEM_CONFIG['development_mode']) {
         $toMerge['DEVELOPMENT_MODE'] = true;

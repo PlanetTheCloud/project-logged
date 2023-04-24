@@ -121,18 +121,11 @@ try {
 }
 
 $account = HostingAccount::create($data);
-if ($account['created']) {
-    $status = ['status' => 'success'];
-} else {
-    $status = ['status' => 'error'];
-}
-
-/**
- * string status
- * string state
- * string message
- * string field
- */
 $toMerge = (SYSTEM_CONFIG['development_mode']) ? ['dev_raw' => $account['raw']] : [];
-echo json_encode(array_merge($status, $account['details'], $toMerge));
+$response = [
+    'status' => ($account['created']) ? 'success' : 'error',
+    'message' => $account['details']['message'],
+    'details' => Arr::only($account['details'], ['field', 'type'])
+];
+echo json_encode(array_merge($response, $toMerge));
 die;

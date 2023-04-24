@@ -57,6 +57,11 @@
 </head>
 
 <body class="login-page pg_bg-<?= config('branding.background_color') ?>" <?= (Page::param('file', null, true) === 'signup.php') ? ' style="max-width: 490px"' : '' ?>>
+    <?php if(SYSTEM_CONFIG['development_mode']) { ?>
+    <div class="alert alert-warning">
+        <b>DEVELOPMENT MODE IS ON!</b><br>Reduced performance and exposing critical information.
+    </div>
+    <?php } ?>
     <div class="overlay">
         <div class="overlay__inner">
             <div class="overlay__content"><span class="spinner"></span></div>

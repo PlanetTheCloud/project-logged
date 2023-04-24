@@ -1,6 +1,18 @@
 <div class="body">
+    <div id="a_response" class="alert alert-danger mb-3 hidden">
+        {{MESSAGE}}
+    </div>
     <div class="msg"><?= __('Sign up for a free account') ?></div>
-    <form id="signup_form" method="post" onsubmit="return handleSubmit();">
+    <div class="s_success hidden" style="text-align: center;">
+        <h2>Thank You</h2>
+    </div>
+    <div id="s_processing" class="hidden">
+        <p style="text-align:center;font-size:larger">
+            <img style="width: 25%" src="https://i.ibb.co/hF4scQC/loader.gif"><br>
+            Processing your request...
+        </p>
+    </div>
+    <form id="s_signup_form" method="post" onsubmit="return handleSubmit();">
         <div class="form-group form-float">
             <i class="material-icons tooltip_icon-signup" data-toggle="tooltip" data-placement="right" title="<?= __('Each email address is limited to 3 accounts') ?>">info</i>
             <div class="form-line">
@@ -9,7 +21,6 @@
             </div>
             <small class="col-pink hidden" id="warn_email">{{WARNING}}</small>
         </div>
-
         <div class="form-group form-float">
             <div class="form-line">
                 <input type="password" id="i_password" name="password" class="form-control">
@@ -24,7 +35,6 @@
             </div>
             <small class="col-pink hidden" id="warn_password_confirm">{{WARNING}}</small>
         </div>
-
         <div class="form-group" style="margin-bottom: 10px;">
             <i class="material-icons" style="position: absolute;z-index:10;margin-top:14px;margin-left:425px;" data-toggle="tooltip" data-placement="right" data-html="true" data-template="<div class='tooltip' role='tooltip'><div class='arrow'></div><div class='tooltip-inner' style='max-width: 250px;max-height:300px;'></div></div>" title="<?= __('If you already have a domain that you want to use with us, please select \'I have my own domain\'.<br><br>If you don\'t have a domain right now, you can choose \'I want to use a free subdomain\'.<br><br>Don\'t worry, you can always add more domains (including your own domain) later on from the Control Panel.') ?>">help</i>
             <input type="radio" name="domain_type" value="custom" class="with-gap radio-col-<?= config('branding.accent_color'); ?>" id="i_domain_type_own">
@@ -34,7 +44,6 @@
             <label class="p-l-20" for="i_domain_type_sub"><?= __('I want to use a free subdomain') ?></label>
         </div>
         <small class="col-pink hidden" id="warn_domain_type">{{WARNING}}</small>
-
         <div id="s_custom_domain" class="hidden">
             <div class="infobox">
                 <?= __('To use your domain with us, point it to these nameservers:') ?><br>
@@ -52,7 +61,6 @@
                 <small class="col-pink hidden" id="warn_custom_domain">{{WARNING}}</small>
             </div>
         </div>
-
         <div id="s_subdomain" class="hidden">
             <div class="infobox" id="infobox_subdomain">
                 <?= __('Choose a subdomain and extension') ?>
@@ -80,14 +88,13 @@
                 </div>
             </div>
         </div>
-
         <div id="s_others" class="hidden">
             <div class="form-group form-float">
                 <div style="margin-bottom: 20px;">
                     <img width="50%" src="https://ifastnet.com/image.php?id=<?= Page::param('captcha_id') ?>">
                 </div>
                 <div class="form-line">
-                    <input type="text" id="i_captcha" name="captcha_solution" class="form-control" autocomplete="off">
+                    <input type="text" id="i_captcha_solution" name="captcha_solution" class="form-control" autocomplete="off">
                     <input type="hidden" name="captcha_id" value="<?= Page::param('captcha_id') ?>">
                     <label class="form-label"><?= __('Captcha') ?></label>
                 </div>
@@ -97,7 +104,6 @@
             <p><?= __('By signing up, you acknowledge that you have read and agree to be bound by our <a href="/auth/read/tos">terms of service</a> and <a href="/auth/read/privacy">privacy policies</a>.') ?></p>
             <button class="btn btn-lg btn-block bg-<?= config('branding.accent_color'); ?> waves-effect"><?= __('SIGN UP') ?></button>
         </div>
-
         <div class="m-t-25 m-b-5 align-center">
             <a href="/auth/login"><?= __('Sign in to your account(s)') ?></a>
         </div>
