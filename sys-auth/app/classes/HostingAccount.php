@@ -82,11 +82,13 @@ class HostingAccount
                 ];
             }
             if (strpos($result, 'An activation email has now been sent to') !== false) {
+                preg_match_all('/&token=(\w+)/m', $result, $matches, PREG_SET_ORDER, 0);
                 return [
                     'created' => true,
                     'details' => [
                         'type' => 'ACCOUNT_CREATED',
                         'message' => __('Thank you for signing up! To activate your account, please check your email and click the activation link we\'ve sent to you. If you don\'t receive the email within a few minutes, please check your spam folder.'),
+                        'token' => $matches[1]
                     ],
                 ];
             }
@@ -97,6 +99,16 @@ class HostingAccount
                         'type' => 'ERROR',
                         'message' => __('The captcha you entered is incorrect. Please try again.'),
                         'field' => 'captcha_solution',
+                    ],
+                ];
+            }
+            if (strpos($result, 'Account Name is already in use') !== false) {
+                return [
+                    'created' => false,
+                    'details' => [
+                        'type' => 'ERROR',
+                        'message' => __('The subdomain chosen has been taken. Please choose a different subdomain.'),
+                        'field' => 'subdomain',
                     ],
                 ];
             }

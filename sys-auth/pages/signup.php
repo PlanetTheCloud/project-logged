@@ -1,18 +1,24 @@
 <div class="body">
-    <div id="a_response" class="alert alert-danger mb-3 hidden">
-        {{MESSAGE}}
-    </div>
+    <div id="a_response" class="alert alert-danger mb-3 hidden">{{MESSAGE}}</div>
     <div class="msg"><?= __('Sign up for a free account') ?></div>
-    <div class="s_success hidden" style="text-align: center;">
-        <h2>Thank You</h2>
+    <div id="s_success" class="" style="text-align: center; font-size:larger;">
+        <img style="width: 25%" src="assets/checkmark.gif"><br>
+        <h2><?= __('Success!') ?></h2>
+        <p><?= __('Your account has been created.') ?></p>
+        <p><?= __('To activate your account, please check your email and click the activation link we\'ve sent to you.') ?></p>
+        <p><?= __('The activation page contains your username, which you will need to log into the control panel.') ?> <a href="/auth/login" style="font-size: large;"><?= __('Click here to login.') ?></a></p>
+        <p><span class="col-pink"><?= __('If you don\'t receive the email within a few minutes, please check your spam folder.') ?></span> <a id="a_success_link" href="{{RESEND}}" style="font-size: large;" target="_blank"><?= __('Click here to resend the email.') ?></a></p>
+        <div class="m-t-25 m-b-5 align-center">
+            <a href="/"><?= __('Go back to our website') ?></a>
+        </div>
     </div>
     <div id="s_processing" class="hidden">
         <p style="text-align:center;font-size:larger">
-            <img style="width: 25%" src="https://i.ibb.co/hF4scQC/loader.gif"><br>
-            Processing your request...
+            <img style="width: 25%" src="assets/loader.gif"><br>
+            <?= __('Processing your request...') ?>
         </p>
     </div>
-    <form id="s_signup_form" method="post" onsubmit="return handleSubmit();">
+    <form id="s_signup_form" class="hidden" method="post" onsubmit="return handleSubmit();">
         <div class="form-group form-float">
             <i class="material-icons tooltip_icon-signup" data-toggle="tooltip" data-placement="right" title="<?= __('Each email address is limited to 3 accounts') ?>">info</i>
             <div class="form-line">
@@ -101,7 +107,7 @@
                 <small class="col-pink hidden" id="warn_captcha">{{WARNING}}</small>
             </div>
             <input type="hidden" name="_token" value="<?= Page::param('_token') ?>">
-            <p><?= __('By signing up, you acknowledge that you have read and agree to be bound by our <a href="/auth/read/tos">terms of service</a> and <a href="/auth/read/privacy">privacy policies</a>.') ?></p>
+            <p><?= __('By signing up, you acknowledge that you have read and agree to be bound by our') ?> <a href="/auth/tos" target="_blank"><?= __('terms of service') ?></a> <?= __('and') ?> <a href="/auth/privacy" target="_blank"><?= __('privacy policies') ?></a>.</p>
             <button class="btn btn-lg btn-block bg-<?= config('branding.accent_color'); ?> waves-effect"><?= __('SIGN UP') ?></button>
         </div>
         <div class="m-t-25 m-b-5 align-center">

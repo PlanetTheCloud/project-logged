@@ -39,7 +39,7 @@
                 <a href="/auth/signup"><?= __('Create an account') ?></a>
             </div>
             <div class="col-xs-6 align-right">
-                <a href="https://cpanel.<?= config('system.cpanel_url'); ?>/lostpassword.php"><?= __('Forgot your password?') ?></a>
+                <a href="https://cpanel.<?= config('system.cpanel_url'); ?>/lostpassword.php" target="_blank"><?= __('Forgot your password?') ?></a>
             </div>
         </div>
     </form>

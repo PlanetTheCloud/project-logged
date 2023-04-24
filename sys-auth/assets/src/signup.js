@@ -7,12 +7,14 @@ var i_email = getElement("i_email"),
     i_subdomain = getElement("i_subdomain"),
     i_extension = getElement("i_extension"),
     i_captcha_solution = getElement("i_captcha_solution"),
+    s_success = getElement("s_success"),
     s_processing = getElement("s_processing"),
     s_signup_form = getElement("s_signup_form"),
     s_custom_domain = getElement("s_custom_domain"),
     s_subdomain = getElement("s_subdomain"),
     s_others = getElement("s_others"),
-    a_response = getElement("a_response");
+    a_response = getElement("a_response"),
+    a_success_link = getElement("a_success_link");
 (() => {
     setTimeout(() => {
         i_email.focus();
@@ -85,7 +87,7 @@ function beforeSubmitCheck() {
     // Check Password and confirm password
     if (i_password.value.length < 6 || i_password.value.length > 20) {
         // What if the password is purely spaces tho..?
-        hasError(i_password, __("Password must be between 4 to 16 characters in length"));
+        hasError(i_password, __("Password must be between 6 to 20 characters in length"));
         return false;
     }
     checkPassed(i_password);
@@ -183,6 +185,7 @@ function handleResponse(res) {
         }
         s_signup_form.classList.remove("hidden");
     } else if (res.status === 'success') {
-
+        a_success_link.href = `https://ifastnet.com/resend_email.php?email=${i_email.value}&token=${res.details.token}`;
+        s_success.classList.remove("hidden");
     }
 }

@@ -1,12 +1,13 @@
-# Core
+#####################################
+#   BEGIN PROJECT LOGGED HTACCESS   #
+#   PROJECT LOGGED v2.x             #
+#####################################
 Options -MultiViews
 RewriteEngine on
-
-# Assets
 RewriteRule ^auth/assets/(.*)?$ /sys-auth/assets/$1 [NC,L]
-
-# API
 RewriteRule ^auth/api/(.*)?$ /sys-auth/api/$1.php [NC,L]
-
-# Authentication
 RewriteRule ^auth/(.*)?$ /sys-auth/routes/$1.php [NC,L]
+#####################################
+#   END PROJECT LOGGED HTACCESS     #
+#   PROJECT LOGGED v2.x             #
+#####################################

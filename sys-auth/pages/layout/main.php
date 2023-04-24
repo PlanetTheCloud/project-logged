@@ -56,7 +56,7 @@
     </style>
 </head>
 
-<body class="login-page pg_bg-<?= config('branding.background_color') ?>" <?= (Page::param('file', null, true) === 'signup.php') ? ' style="max-width: 490px"' : '' ?>>
+<body class="login-page pg_bg-<?= config('branding.background_color') ?>" <?= (in_array(Page::param('file', null, true), ['signup.php', 'privacy.php', 'tos.php'])) ? ' style="max-width: 490px"' : '' ?>>
     <?php if(SYSTEM_CONFIG['development_mode']) { ?>
     <div class="alert alert-warning">
         <b>DEVELOPMENT MODE IS ON!</b><br>Reduced performance and exposing critical information.
