@@ -1,7 +1,7 @@
 <div class="body">
     <div id="a_response" class="alert alert-danger mb-3 hidden">{{MESSAGE}}</div>
     <div class="msg"><?= __('Sign up for a free account') ?></div>
-    <div id="s_success" class="" style="text-align: center; font-size:larger;">
+    <div id="s_success" class="hidden" style="text-align: center; font-size:larger;">
         <img style="width: 25%" src="assets/checkmark.gif"><br>
         <h2><?= __('Success!') ?></h2>
         <p><?= __('Your account has been created.') ?></p>
@@ -18,7 +18,7 @@
             <?= __('Processing your request...') ?>
         </p>
     </div>
-    <form id="s_signup_form" class="hidden" method="post" onsubmit="return handleSubmit();">
+    <form id="s_signup_form" class="" method="post" onsubmit="return handleSubmit();">
         <div class="form-group form-float">
             <i class="material-icons tooltip_icon-signup" data-toggle="tooltip" data-placement="right" title="<?= __('Each email address is limited to 3 accounts') ?>">info</i>
             <div class="form-line">

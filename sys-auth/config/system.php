@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'installation_url' => 'alpha-logged.pdn',
+
     'development_mode' => true, // WARNING: This will always reload the config changes and show all error
     'maintenance_mode' => false, // WARNING: This will disable all entry
     'maintenance_key' => 'MAINTENANCE_KEY',
