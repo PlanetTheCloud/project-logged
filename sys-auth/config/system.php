@@ -1,19 +1,24 @@
 <?php
 
+/**
+ * System Configuration
+ * ---
+ * Read the documentation for explainations.
+ */
+
 return [
     'installation_url' => 'alpha-logged.pdn',
 
-    'development_mode' => true, // WARNING: This will always reload the config changes and show all error
-    'maintenance_mode' => false, // WARNING: This will disable all entry
+    'development_mode' => true,
+    'maintenance_mode' => false,
     'maintenance_key' => 'MAINTENANCE_KEY',
-    'lockdown_mode' => false, // Disables all state-changing operation
+    'lockdown_mode' => false,
 
     'language' => 'en',
     'use_https' => false,
 
     'cpanel_url' => 'rf.gd',
     'domain_selection' => [
-        // List of domains available for selection
         'domain_a.com',
         'domain_b.com',
         'rf.gd'

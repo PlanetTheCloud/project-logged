@@ -4,9 +4,6 @@ namespace ConfigParser;
 
 use InvalidConfigException;
 
-/**
- * NOTE TO SELF: Should check if the sensitive config still use default values and lock the system
- */
 $config = [];
 
 # Handle Branding Config

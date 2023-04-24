@@ -49,7 +49,7 @@ function checkSubdomainValidity() {
         updateSubdomainInfo(__("Hypens are not allowed at the end of subdomain."));
         return false;
     }
-    if (!/^[A-Za-z0-9-]+$(?<!-)/.test(subdomain)) {
+    if (!/^(?:[A-Za-z0-9]+-)*[A-Za-z0-9]+$/.test(subdomain)) {
         updateSubdomainInfo(
             __("Only alphanumeric characters and hyphens are allowed.")
         );
@@ -87,7 +87,7 @@ function beforeSubmitCheck() {
     // Check Password and confirm password
     if (i_password.value.length < 6 || i_password.value.length > 20) {
         // What if the password is purely spaces tho..?
-        hasError(i_password, __("Password must be between 6 to 20 characters in length"));
+        hasError(i_password, __("Password must be between 6 to 20 characters in length."));
         return false;
     }
     checkPassed(i_password);
@@ -100,7 +100,7 @@ function beforeSubmitCheck() {
     // Check domain OR subdomain
     let domain_type = document.querySelector(`[name="domain_type"]:checked`);
     if (!domain_type) {
-        hasError(i_domain_type_sub, "Please select an option.");
+        hasError(i_domain_type_sub, __("Please select an option."));
         return false;
     }
     checkPassed(i_domain_type_sub);
@@ -159,13 +159,13 @@ function handleSubmit() {
     })
     .then(res => {
         if (res.status != 200) { 
-            throw new Error("Bad Server Response"); 
+            throw new Error(__("Bad Server Response")); 
         }
         return res.text();
     })
     .then(res => handleResponse(JSON.parse(res)))
     .catch(err => {
-        showAlert(`Something went wrong, please try again later.\n${err}`);
+        showAlert(`${__("Something went wrong, please try again later.")}\n${err}`);
     })
     .finally(res => {
         s_processing.classList.add("hidden");

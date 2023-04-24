@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Branding Configuration
+ * ---
+ * Read the documentation for explainations.
+ */
+
 return [
     'name' => 'Hosting Company',
     'logo' => 'HOSTING COMPANY',
@@ -8,7 +14,7 @@ return [
     'main_website' => 'http://hosting.com',
     'favicon' => '',
     'accent_color' => 'blue',
-    'background_color' => 'default', // Predefined colors should be here
+    'background_color' => 'default',
     'contact_email' => 'hello@hosting.com',
     'report_abuse_email' => 'abuse@hosting.com'
 ];

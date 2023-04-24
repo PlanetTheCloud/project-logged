@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Bootstrap the application
+ * Project LOGGED v2.0
+ * Bootstrap File
  * ---
  * No modification is needed.
  * Read the documentation.
@@ -33,7 +34,7 @@ unset($classes, $exception_classes);
 # Load System config
 define('SYSTEM_CONFIG', Arr::dot(require SYSTEM . '/config/system.php'));
 
-# Response for API requests
+# Response function for API requests
 function apiErrorResponse(string $message = null, array $data = [], bool $merge_data = false)
 {
     if ($data !== [] && $merge_data) {
@@ -140,10 +141,6 @@ function config(string $key, $default = null)
 define('DICTIONARY', json_decode(file_get_contents(SYSTEM . '/language/' . config('system.language') . '.lang.json'), true));
 function __(string $key)
 {
-    // the most readable ones is __
-    // Note debug messages will still be in English
-    // Any lines that is not present in the language file
-    // will be shown in English
     return DICTIONARY[$key] ?? $key;
 }
 

@@ -143,7 +143,6 @@ class HostingAccount
                 ];
             }
             if(strpos($result, 'Posting Error, #') !== false) {
-                // Possible configuration error
                 return [
                     'created' => false,
                     'details' => [
