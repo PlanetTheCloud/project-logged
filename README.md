@@ -6,7 +6,7 @@ A free and open-sourced authentication template created. Created by [PlanetCloud
 - New multisite system
 - Translation support
 - Easy background customization
-- ReCaptcha Support
+- ReCaptcha Support (Unstable)
 - Customize confirm email page/after submit
 
 # Discord
