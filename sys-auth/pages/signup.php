@@ -97,13 +97,27 @@
         <div id="s_others" class="hidden">
             <div class="form-group form-float">
                 <div style="margin-bottom: 20px;">
+                <?php if (!config("system.features.signup.recaptcha")) {
+                    // if reCapthca is disabled, we will use a simple number captcha
+                    ?>
                     <img width="50%" src="https://ifastnet.com/image.php?id=<?= Page::param('captcha_id') ?>">
-                </div>
-                <div class="form-line">
+                    <div class="form-line">
                     <input type="text" id="i_captcha_solution" name="captcha_solution" class="form-control" autocomplete="off">
                     <input type="hidden" name="captcha_id" value="<?= Page::param('captcha_id') ?>">
                     <label class="form-label"><?= __('Captcha') ?></label>
                 </div>
+                 <?php }  else { 
+                     // if reCaptcha Enabled. Original Captcha will automatically filled. 
+                    ?>
+                    
+                  
+                    <input type="hidden" id="i_captcha_solution" value="DE8D3" name="captcha_solution" class="form-control" autocomplete="off">
+                    <input type="hidden" name="captcha_id" value="1">
+                    <label hidden class="form-label"><?= __('Captcha') ?></label>
+                </div>
+                    <?php } ?>
+                </div>
+             
                 <small class="col-pink hidden" id="warn_captcha">{{WARNING}}</small>
                 <?php
                  if (config('system.features.signup.recaptcha')) {
