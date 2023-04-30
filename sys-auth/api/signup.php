@@ -1,7 +1,7 @@
 <?php
 
 require __DIR__ . '/../app/bootstrap.php';
-$sysConfig = include "../config/system.php";
+
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: /auth/signup");
@@ -18,7 +18,7 @@ try {
             throw new ValidationFailedException(__("Captcha is Required"), "captcha_required");
         }
         $rcCurl = curl_init();
-        curl_setopt($rcCurl, CURLOPT_POST, "POST", 1);
+        curl_setopt($rcCurl, CURLOPT_POST, "POST");
         curl_setopt($rcCurl, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
         curl_setopt($rcCurl, CURLOPT_POSTFIELDS, http_build_query([
             "secret" => config("system.features.signup.recaptcha_secret"),
