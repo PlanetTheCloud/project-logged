@@ -33,9 +33,9 @@ return [
             'remember_me' => true,
         ],
         'signup' => [
-            'recaptcha' => true,
-            'recaptcha_key_secret' => "6LfT8cslAAAAALlTeboXIk4vIFH4sel-VDKkFNm1",
-            'recaptcha_key_public' => "6LfT8cslAAAAABUyGXxxJyJEv1Ixms6mazpXKapu",
+            'recaptcha' => false,
+            'recaptcha_key_secret' => "",
+            'recaptcha_key_public' => "",
         ]
     ],
 ];
