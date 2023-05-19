@@ -52,8 +52,18 @@ function apiErrorResponse(string $message = null, array $data = [], bool $merge_
     ], $toMerge));
 }
 
+# Escalate warnings
+function loggedErrorHandler($severity, $message, $file, $line) {
+    if (!(error_reporting() & $severity)) {
+        // This error code is not included in error_reporting
+        return;
+    }
+    throw new ErrorException($message, 0, $severity, $file, $line);
+}
+set_error_handler("loggedErrorHandler");
+
 # Custom Error Handler
-function loggedErrorHandler($exception)
+function loggedExceptionHandler($exception)
 {
     if (IS_API_REQUEST) {
         apiErrorResponse(null, [
@@ -75,7 +85,7 @@ function loggedErrorHandler($exception)
     }
     die;
 }
-set_exception_handler('loggedErrorHandler');
+set_exception_handler('loggedExceptionHandler');
 
 # Prevents entry during maintenance
 if (SYSTEM_CONFIG['maintenance_mode'] && !isset($_REQUEST[SYSTEM_CONFIG['maintenance_key']])) {

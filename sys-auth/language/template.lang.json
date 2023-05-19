@@ -72,6 +72,6 @@
     "Domain not registered, or not propagated yet. Please check your input and try again later.": "",
     "The domain\\'s nameservers are not pointed properly. Please update the domain\\'s DNS settings and try again.": "",
     "The captcha solution you entered is incorrect. Please try again.": "",
-    "CSRF token mismatched. Please refresh the page and try again.": "",
+    "CSRF token mismatched. Please refresh the page and try again.": ""
 }
 
