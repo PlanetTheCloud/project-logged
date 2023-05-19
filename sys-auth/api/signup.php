@@ -4,7 +4,7 @@ require __DIR__ . '/../app/bootstrap.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: /auth/signup");
-    echo __('Taking you to our signup page... If the page doesn\'t refresh automatically, <a href="/auth/signup">click here.</a>');
+    echo __('Taking you to our signup page... If the page doesn\'t refresh automatically,') . ' <a href="/auth/signup">' . __('click here.') . '</a>';
     die;
 }
 
@@ -114,7 +114,7 @@ try {
     ], true);
     die;
 } catch (CsrfProtectException $e) {
-    apiErrorResponse('CSRF token mismatched. Please refresh the page and try again.', [
+    apiErrorResponse(__('CSRF token mismatched. Please refresh the page and try again.'), [
         'type' => 'CSRF_MISMATCHED',
     ], true);
     die;

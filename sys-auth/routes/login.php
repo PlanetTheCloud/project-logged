@@ -18,9 +18,9 @@ Page::setParameters([
 
 # Deliver translation for Javascript
 Page::deliverTranslations([
-    'Username is not valid',
-    'Password cannot be empty',
-    'Password is too short',
+    'The username entered is invalid.',
+    'Password cannot be empty.',
+    'Password is too short.',
 ]);
 
 # Add scripts
