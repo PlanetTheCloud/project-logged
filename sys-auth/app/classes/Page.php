@@ -80,7 +80,7 @@ class Page
     {
         return array_merge([
             'title' => 'Something went wrong',
-            'page' => 'error.php',
+            'file' => 'error.php',
             'layout' => 'main.php'
         ], self::$parameters);
     }
