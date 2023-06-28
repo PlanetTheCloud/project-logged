@@ -50,19 +50,18 @@
 <p>Sites must not contain scripts that attempt to access privileged server resources, or other sites on the same server</p>
 <p>Examples of not allowed script and website types include (but are not limited to):</p>
 <ol>
-    <li>Pornographic/adult content</li>
-    <li>Proxy scripts</li>
-    <li>Chat scripts</li>
-    <li>Bitcoin / cryptocurrency faucet sites</li>
-    <li>File sharing / file storage scripts</li>
-    <li>Autolike scripts</li>
-    <li>Hacking scripts / PHP shell scripts</li>
-    <li>Phishing</li>
-    <li>Mass mail scripts</li>
-    <li>Website scraping/crawling/downloading scripts</li>
-    <li>Torrents</li>
-    <li>Warez</li>
-    <li>Cracked/pirated content of any kind</li>
+    <li>Content of an adult nature or explicit material</li>
+    <li>Scripts that facilitate proxy usage</li>
+    <li>Scripts designed for online chat functionality</li>
+    <li>Websites related to Bitcoin or other cryptocurrencies' faucets</li>
+    <li>Scripts intended for file sharing or file storage purposes</li>
+    <li>Scripts that automate liking actions on websites</li>
+    <li>Scripts associated with hacking activities or PHP shell scripts</li>
+    <li>Websites involved in phishing activities</li>
+    <li>Scripts designed for mass email sending</li>
+    <li>Scripts used for website scraping, crawling, or downloading data</li>
+    <li>Websites promoting torrents or torrenting services</li>
+    <li>Websites offering or distributing unauthorized software or cracked/pirated content</li>
 </ol><br />
 <h4>11. USAGE OF DISK SPACE TERMS</h4>
 <p>{$c} offers large web space and bandwidth with hosting accounts. By this, we mean space for legitimate web site content and bandwidth for visitors to view it. All files on a domain must be part of the active website and linked to the site. Sites should not contain any backups, downloads, or other non-web based content. We will treat all password protected archive (e.g. zip and rar) files as unacceptable. Multimedia content such as audio and video is acceptable provided it is streamed to the user, links to HTTP download of this content is not acceptable.</p>
