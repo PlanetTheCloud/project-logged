@@ -8,10 +8,10 @@
     "Forgot your password?": "忘記密碼了？",
     "Language": "語言",
     "Remember username": "記住用戶名",
-
+    
     "Sign up for a free account": "免費註冊一個帳號",
     "Success!": "成功！",
-    "Your account has been created.": "你的用戶名已經被別人創建",
+    "Your account has been created.": "你的帳號已成功創建",
     "To activate your account, please check your email and click the activation link we\\'ve sent to you.": "要激活您的賬戶，請檢查您的電子郵件並點擊我們發給您的激活鏈接",
     "The activation page contains your username, which you will need to log into the control panel.": "激活頁面包含你的用戶名，你將需要這個用戶名來登錄到控製面板",
     "Click here to login.": "點擊這裏登錄",
@@ -37,11 +37,9 @@
     "privacy policies": "隱私政策",
     "SIGN UP": "註冊",
     "Sign in to your account(s)": "登錄您的賬戶",
-
     "The username entered is invalid.": "輸入的用戶名是無效的",
     "Password cannot be empty.": "密碼不能為空",
     "Password is too short.": "密碼太短",
-
     "Subdomain must be between 4 to 16 characters in length.": "子域的長度必須在4至16個字符之間。",
     "Hypens are not allowed at the end of subdomain.": "在子域的末尾不允許使用連字符。",
     "Only alphanumeric characters and hyphens are allowed.": "只允許使用字母、數字、字符和連字符。",
@@ -55,7 +53,6 @@
     "Please enter a captcha with 5 characters.": "請輸入5個字符的驗證碼。",
     "Bad Server Response": "錯誤的服務器響應",
     "Something went wrong, please try again later.": "出錯了，請稍後再試。",
-
     "Taking you to our signup page... If the page doesn\\'t refresh automatically,": "帶您到我們的註冊頁面... 如果該頁面不能自動刷新，",
     "click here.": "點擊這裏",
     "cannot be missing": "不能缺少",
