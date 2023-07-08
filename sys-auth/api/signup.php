@@ -125,7 +125,7 @@ $toMerge = (SYSTEM_CONFIG['development_mode']) ? ['dev_raw' => $account['raw']] 
 $response = [
     'status' => ($account['created']) ? 'success' : 'error',
     'message' => $account['details']['message'],
-    'details' => Arr::only($account['details'], ['field', 'type'])
+    'details' => Arr::only($account['details'], ['field', 'type', 'token'])
 ];
 echo json_encode(array_merge($response, $toMerge));
 die;
