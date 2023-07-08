@@ -6,8 +6,8 @@
         <h2><?= __('Success!') ?></h2>
         <p><?= __('Your account has been created.') ?></p>
         <p><?= __('To activate your account, please check your email and click the activation link we\'ve sent to you.') ?></p>
-        <p><?= __('The activation page contains your username, which you will need to log into the control panel.') ?> <a href="/auth/login" style="font-size: large;"><?= __('Click here to login.') ?></a></p>
-        <p><span class="col-pink"><?= __('If you don\'t receive the email within a few minutes, please check your spam folder.') ?></span> <a id="a_success_link" href="{{RESEND}}" style="font-size: large;" target="_blank"><?= __('Click here to resend the email.') ?></a></p>
+        <p><?= __('The activation page contains your username, which you will need to log into the control panel.') ?> <a href="/auth/login" style="font-size: inherit;"><?= __('Click here to login.') ?></a></p>
+        <p><span class="col-pink"><?= __('If you don\'t receive the email within a few minutes, please check your spam folder.') ?></span> <a id="a_success_link" href="{{RESEND}}" style="font-size: inherit;" target="_blank"><?= __('Click here to resend the email.') ?></a></p>
         <div class="m-t-25 m-b-5 align-center">
             <a href="/"><?= __('Go back to our website') ?></a>
         </div>

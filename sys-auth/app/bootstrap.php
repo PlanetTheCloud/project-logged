@@ -42,7 +42,7 @@ function apiErrorResponse(string $message = null, array $data = [], bool $merge_
     } else if ($data !== [] && SYSTEM_CONFIG['development_mode']) {
         $toMerge = ['dev_details' => $data];
     }
-    $message = (!empty(trim($message))) ? $message : null;
+    $message = (!empty($message)) ? $message : null;
     if (SYSTEM_CONFIG['development_mode']) {
         $toMerge['DEVELOPMENT_MODE'] = true;
     }

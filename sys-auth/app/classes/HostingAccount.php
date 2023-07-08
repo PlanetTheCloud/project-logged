@@ -83,12 +83,20 @@ class HostingAccount
             }
             if (strpos($result, 'An activation email has now been sent to') !== false) {
                 preg_match_all('/&token=(\w+)/m', $result, $matches, PREG_SET_ORDER, 0);
+                if (!isset($matches[0][1])) {
+                    file_put_contents(
+                        APP . '/cache/logs.txt',
+                        'Fail to find the token in response. Raw: ' . $result . ' Parsed: ' . json_encode($matches) . PHP_EOL,
+                        FILE_APPEND
+                    );
+                    $matches[0][1] = 'error_please_contact_support_to_resend_email';
+                }
                 return [
                     'created' => true,
                     'details' => [
                         'type' => 'ACCOUNT_CREATED',
                         'message' => __('Thank you for signing up! To activate your account, please check your email and click the activation link we\'ve sent to you. If you don\'t receive the email within a few minutes, please check your spam folder.'),
-                        'token' => $matches[1]
+                        'token' => $matches[0][1]
                     ],
                 ];
             }
@@ -142,7 +150,7 @@ class HostingAccount
                     ],
                 ];
             }
-            if(strpos($result, 'Posting Error, #') !== false) {
+            if (strpos($result, 'Posting Error, #') !== false) {
                 return [
                     'created' => false,
                     'details' => [
