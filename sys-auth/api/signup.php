@@ -64,6 +64,10 @@ try {
             }
         }
         if ($data['domain_type'] === 'custom') {
+            if (!config('system.features.signup.use_own_domain', false)) {
+                throw new ValidationFailedException(__('Signups using custom domains are currently disabled. Please use a free subdomain and try again.'), 'custom_domain');
+            }
+
             $data['custom_domain'] = strtolower($data['custom_domain']);
             if (!preg_match('/^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/', $data['custom_domain'])) {
                 throw new ValidationFailedException(__('The custom domain you provided is invalid. Please enter a valid custom domain and try again.'), 'custom_domain');

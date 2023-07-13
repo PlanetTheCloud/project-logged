@@ -31,6 +31,9 @@ return [
         'login' => [
             'language_selector' => true,
             'remember_me' => true,
+        ],
+        'signup' => [
+            'use_own_domain' => false,
         ]
     ],
 ];
