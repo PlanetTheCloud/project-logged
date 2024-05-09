@@ -23,7 +23,7 @@
             <?= __('Processing your request...') ?>
         </p>
     </div>
-    <form id="s_signup_form" class="" method="post" onsubmit="return handleSubmit();">
+    <form id="s_signup_form" class="" method="post" onsubmit="return handleInitialSubmit();">
         <div class="form-group form-float">
             <i class="material-icons tooltip_icon-signup" data-toggle="tooltip" data-placement="right" title="<?= __('Each email address is limited to 3 accounts') ?>">info</i>
             <div class="form-line">

@@ -124,12 +124,17 @@ try {
     die;
 }
 
-$account = HostingAccount::create($data);
-$toMerge = (SYSTEM_CONFIG['development_mode']) ? ['dev_raw' => $account['raw']] : [];
-$response = [
-    'status' => ($account['created']) ? 'success' : 'error',
-    'message' => $account['details']['message'],
-    'details' => Arr::only($account['details'], ['field', 'type', 'token'])
-];
-echo json_encode(array_merge($response, $toMerge));
+// Deprecated per v2.2 we have switched to submitting via JS
+// ---
+// $account = HostingAccount::create($data);
+// $toMerge = (SYSTEM_CONFIG['development_mode']) ? ['dev_raw' => $account['raw']] : [];
+// $response = [
+//     'status' => ($account['created']) ? 'success' : 'error',
+//     'message' => $account['details']['message'],
+//     'details' => Arr::only($account['details'], ['field', 'type', 'token'])
+// ];
+// echo json_encode(array_merge($response, $toMerge));
+
+$params = HostingAccount::getAccountCreationParamters($data);
+echo json_encode($params);
 die;

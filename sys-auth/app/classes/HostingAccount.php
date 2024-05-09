@@ -13,10 +13,13 @@ if (!defined('APP')) {
  */
 class HostingAccount
 {
+
+
     /**
+     * DEPRECATION NOTICE: Per v2.2 the IP address must match when the form is submitted.
      * Create hosting account
      * 
-     * @param array $param
+     * @param array $data
      * 
      * @throws HostingAccountException
      * 
@@ -63,6 +66,25 @@ class HostingAccount
     }
 
     /**
+     * Return parameters to submit to iFastNet for account creation
+     * 
+     * @param array $data
+     * 
+     * @return array
+     */
+    public static function getAccountCreationParamters(array $data)
+    {
+        $toMerge = ($data['domain_type'] === 'subdomain') ? ['username' => $data['subdomain']] : ['domain_name' => $data['custom_domain']];
+        return array_merge([
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'PlanName' => config('system.default_plan', 'Starter'),
+            'id' => $data['captcha_id'],
+            'number' => $data['captcha_solution'],
+        ], $toMerge);
+    }
+
+    /**
      * Parse account creation result
      * 
      * @param mixed $result
@@ -85,7 +107,7 @@ class HostingAccount
                 preg_match_all('/&token=(\w+)/m', $result, $matches, PREG_SET_ORDER, 0);
                 if (!isset($matches[0][1])) {
                     file_put_contents(
-                        APP . '/cache/logs.txt',
+                        APP . '/logs/missing_tokens.txt',
                         'Fail to find the token in response. Raw: ' . $result . ' Parsed: ' . json_encode($matches) . PHP_EOL,
                         FILE_APPEND
                     );

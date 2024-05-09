@@ -141,7 +141,7 @@ function hideAlert() {
     a_response.classList.add("hidden");
 }
 
-function handleSubmit() {
+function handleInitialSubmit() {
     if (!beforeSubmitCheck()) {
         return false;
     }
@@ -173,19 +173,44 @@ function handleSubmit() {
     return false;
 }
 
+async function handleAccountCreation() {
+    await fetch('https://ifastnet.com/register2.php', {
+        method: "POST",
+        body: data
+    })
+    .then(res => {
+        if (res.status != 200) { 
+            throw new Error(__("Bad Server Response")); 
+        }
+        return res.text();
+    })
+    .then(res => handleResponse(JSON.parse(res)))
+    .catch(err => {
+        showAlert(`${__("Something went wrong, please try again later.")}\n${err}`);
+    })
+    .finally(res => {
+        s_processing.classList.add("hidden");
+    })
+    return false;
+}
+
 function handleResponse(res) {
     if (res.status === 'error') {
-        if (typeof res.message !== 'undefined') {
-            showAlert(res.message);
-        }
-        if (typeof res.details !== 'undefined') {
-            if (typeof res.details.field !== 'undefined') {
-                hasError(getElement(`i_${res.details.field}`), res.message);
-            }
-        }
-        s_signup_form.classList.remove("hidden");
+        handleErrorFromServer(res);
     } else if (res.status === 'success') {
         a_success_link.href = `https://ifastnet.com/resend_email.php?email=${i_email.value}&token=${res.details.token}`;
         s_success.classList.remove("hidden");
     }
+}
+
+function handleErrorFromServer(res) {
+    if (typeof res.message !== 'undefined') {
+        showAlert(res.message);
+    }
+    if (typeof res.details !== 'undefined') {
+        if (typeof res.details.field !== 'undefined') {
+            hasError(getElement(`i_${res.details.field}`), res.message);
+        }
+    }
+    s_signup_form.classList.remove("hidden");
 }
