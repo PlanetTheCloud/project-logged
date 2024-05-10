@@ -33,7 +33,7 @@ class Page
      * @param array $parameters
      * @return void
      */
-    public static function setParameters(array $parameters)
+    public static function setParameters(array $parameters): void
     {
         self::$parameters = $parameters;
     }
@@ -44,7 +44,7 @@ class Page
      * @param array $message
      * @return void
      */
-    public static function addMessage(array $message)
+    public static function addMessage(array $message): void
     {
         self::$messages[] = $message;
     }
@@ -55,7 +55,7 @@ class Page
      * @param string $script
      * @return void
      */
-    public static function addScript(string $script)
+    public static function addScript(string $script): void
     {
         self::$scripts[] = $script;
     }
@@ -66,7 +66,7 @@ class Page
      * @param array $keys
      * @return void
      */
-    public static function deliverTranslations(array $keys)
+    public static function deliverTranslations(array $keys): void
     {
         self::$translations = $keys;
     }
@@ -76,7 +76,7 @@ class Page
      * 
      * @return array
      */
-    public static function getParameters()
+    public static function getParameters(): array
     {
         return array_merge([
             'title' => 'Something went wrong',
@@ -94,7 +94,7 @@ class Page
      * 
      * @return mixed
      */
-    public static function param(string $key, $default = null, $raw = false)
+    public static function param(string $key, $default = null, $raw = false): mixed
     {
         if ($key === 'file' && !$raw) {
             return PAGES . '/' . self::$parameters['file'];
@@ -107,7 +107,7 @@ class Page
      * 
      * @return array
      */
-    public static function getMessage()
+    public static function getMessage(): array
     {
         return self::$messages;
     }
@@ -117,7 +117,7 @@ class Page
      * 
      * @return array
      */
-    public static function getScripts()
+    public static function getScripts(): array
     {
         return self::$scripts;
     }
@@ -127,7 +127,7 @@ class Page
      * 
      * @return array
      */
-    public static function getTranslations()
+    public static function getTranslations(): array
     {
         return Arr::only(DICTIONARY, self::$translations);
     }
@@ -137,7 +137,7 @@ class Page
      * 
      * @return void
      */
-    public static function render()
+    public static function render(): void
     {
         $parameters = self::getParameters();
         self::$parameters = $parameters;

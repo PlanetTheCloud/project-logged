@@ -21,7 +21,7 @@ class Arr
      * @param  string  $prepend
      * @return array
      */
-    public static function dot($array, $prepend = '')
+    public static function dot($array, $prepend = ''): array
     {
         $results = [];
 
@@ -43,8 +43,25 @@ class Arr
      * @param  array|string  $keys
      * @return array
      */
-    public static function only($array, $keys)
+    public static function only(array $array, $keys): array
     {
         return array_intersect_key($array, array_flip((array) $keys));
+    }
+
+    /**
+     * Encode an array into a string
+     * semicolon-separated, key:value pair.
+     *
+     * @param array $array
+     * @return string
+     */
+    public static function encode(array $array): string
+    {
+        ksort($array);
+        $result = '';
+        foreach ($array as $key => $value) {
+            $result .= $key . ":" . $value . ";";
+        }
+        return rtrim($result, ";");
     }
 }

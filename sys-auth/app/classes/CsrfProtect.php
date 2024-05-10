@@ -51,7 +51,7 @@ class CsrfProtect
      * 
      * @return void
      */
-    public function regenerateKey()
+    public function regenerateKey(): void
     {
         $_SESSION[$this->session_key] = [
             '_key' => bin2hex(openssl_random_pseudo_bytes($this->key_length)),
@@ -67,7 +67,7 @@ class CsrfProtect
      * 
      * @return string The token
      */
-    public function token(string $form = 'default')
+    public function token(string $form = 'default'): string
     {
         if (trim($form[0]) == '_') {
             throw new CsrfProtectException('Form name cannot begin with an underscore');
@@ -82,7 +82,7 @@ class CsrfProtect
      * 
      * @return string
      */
-    private function calculateToken(string $form = 'default')
+    private function calculateToken(string $form = 'default'): string
     {
         return hash_hmac($this->algo, $form, $_SESSION[$this->session_key]['_key']);
     }
@@ -97,7 +97,7 @@ class CsrfProtect
      * 
      * @return bool
      */
-    public function validate(string $token, string $form = 'default')
+    public function validate(string $token, string $form = 'default'): bool
     {
         if (!hash_equals($this->calculateToken($form), $token)) {
             throw new CsrfProtectException('CSRF token mismatched');
