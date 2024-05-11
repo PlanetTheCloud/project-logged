@@ -14,7 +14,6 @@ if (!defined('APP')) {
 class HostingAccount
 {
 
-
     /**
      * DEPRECATION NOTICE: Per v2.2 the IP address must match when the form is submitted.
      * Create hosting account

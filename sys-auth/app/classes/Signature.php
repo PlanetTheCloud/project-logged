@@ -17,13 +17,13 @@ class Signature
     /**
      * Create a signature
      *
-     * @param string $algo
      * @param mixed $data
      * @param string $key
+     * @param string $algo
      * 
      * @return string
      */
-    public static function create(string $algo = 'sha256', $data, string $key): string
+    public static function create($data, string $key, string $algo = 'sha256'): string
     {
         if (is_array($data)) {
             $data = Arr::encode($data);
@@ -36,6 +36,8 @@ class Signature
      *
      * @param string $known
      * @param string $againts
+     * 
+     * @throws InvalidSignatureException
      * 
      * @return bool
      */

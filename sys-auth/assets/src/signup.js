@@ -173,7 +173,7 @@ function handleInitialSubmit() {
     return false;
 }
 
-async function handleAccountCreation() {
+async function handleAccountCreation(params) {
     await fetch('https://ifastnet.com/register2.php', {
         method: "POST",
         body: data

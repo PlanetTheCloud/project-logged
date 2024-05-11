@@ -116,12 +116,10 @@ try {
         'type' => 'VALIDATION_FAILED',
         'field' => $e->getField(),
     ], true);
-    die;
 } catch (CsrfProtectException $e) {
     apiErrorResponse(__('CSRF token mismatched. Please refresh the page and try again.'), [
         'type' => 'CSRF_MISMATCHED',
     ], true);
-    die;
 }
 
 // Deprecated per v2.2 we have switched to submitting via JS
@@ -135,6 +133,14 @@ try {
 // ];
 // echo json_encode(array_merge($response, $toMerge));
 
+$protect = new CsrfProtect();
 $params = HostingAccount::getAccountCreationParamters($data);
-echo json_encode($params);
+
+$referrer = ($data['domain_type'] === 'subdomain') ? $data['extension'] : config('system.cpanel_url');
+
+echo json_encode([
+    'params' => $params,
+    'token' => $protect->token('signup_check'),
+    'timestamp' => time(),
+]);
 die;

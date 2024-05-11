@@ -42,9 +42,9 @@ define('SYSTEM_CONFIG', Arr::dot(require SYSTEM . '/config/system.php'));
  * @param array $data
  * @param bool $merge_data
  * 
- * @return void
+ * @return never
  */
-function apiErrorResponse(string $message = null, array $data = [], bool $merge_data = false): void
+function apiErrorResponse(string $message = null, array $data = [], bool $merge_data = false): never
 {
     if ($data !== [] && $merge_data) {
         $toMerge = ['details' => $data];
@@ -59,6 +59,7 @@ function apiErrorResponse(string $message = null, array $data = [], bool $merge_
         'status' => 'error',
         'message' => $message ?? __('Something went wrong, please try again later.')
     ], $toMerge));
+    die;
 }
 
 # Escalate warnings
@@ -89,9 +90,9 @@ set_error_handler("loggedErrorHandler");
  * 
  * @param Exception $exception
  * 
- * @return void
+ * @return never
  */
-function loggedExceptionHandler($exception)
+function loggedExceptionHandler($exception): never
 {
     if (IS_API_REQUEST) {
         apiErrorResponse(null, [
@@ -100,7 +101,6 @@ function loggedExceptionHandler($exception)
             'file' => $exception->getFile(),
             'line' => $exception->getLine()
         ]);
-        die;
     } else {
         if (SYSTEM_CONFIG['development_mode']) {
             echo "<b>DEVELOPMENT MODE</b><br><br>";
