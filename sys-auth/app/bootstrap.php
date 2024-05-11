@@ -35,7 +35,16 @@ unset($classes, $exception_classes);
 define('SYSTEM_CONFIG', Arr::dot(require SYSTEM . '/config/system.php'));
 
 # Response function for API requests
-function apiErrorResponse(string $message = null, array $data = [], bool $merge_data = false)
+/**
+ * Return JSON Error Response
+ * 
+ * @param string $message
+ * @param array $data
+ * @param bool $merge_data
+ * 
+ * @return void
+ */
+function apiErrorResponse(string $message = null, array $data = [], bool $merge_data = false): void
 {
     if ($data !== [] && $merge_data) {
         $toMerge = ['details' => $data];
@@ -53,7 +62,18 @@ function apiErrorResponse(string $message = null, array $data = [], bool $merge_
 }
 
 # Escalate warnings
-function loggedErrorHandler($severity, $message, $file, $line) {
+/**
+ * Handles and escalate error if necessary
+ * 
+ * @param int $severity
+ * @param string $message
+ * @param string $file
+ * @param int $line
+ * 
+ * @return void
+ */
+function loggedErrorHandler(int $severity, string $message, string $file, int $line): void
+{
     if (!(error_reporting() & $severity)) {
         // This error code is not included in error_reporting
         return;
@@ -63,6 +83,14 @@ function loggedErrorHandler($severity, $message, $file, $line) {
 set_error_handler("loggedErrorHandler");
 
 # Custom Error Handler
+/**
+ * Handles exception and returns response based
+ * on the request type.
+ * 
+ * @param Exception $exception
+ * 
+ * @return void
+ */
 function loggedExceptionHandler($exception)
 {
     if (IS_API_REQUEST) {
@@ -129,7 +157,7 @@ unset($config);
  * 
  * @return mixed
  */
-function config(string $key, $default = null)
+function config(string $key, $default = null): mixed
 {
     if (isset(CONFIG[$key])) {
         return CONFIG[$key];
@@ -149,7 +177,14 @@ function config(string $key, $default = null)
 
 # Load Language
 define('DICTIONARY', json_decode(file_get_contents(SYSTEM . '/language/' . config('system.language') . '.lang.json'), true));
-function __(string $key)
+/**
+ * Translate the given string into configured language
+ * 
+ * @param string $key
+ * 
+ * @return string
+ */
+function __(string $key): string
 {
     return DICTIONARY[$key] ?? $key;
 }
