@@ -9,6 +9,9 @@
 return [
     'installation_url' => '',
 
+    'allow_external_request' => true,
+    'stub_mode' => false, // Only accepts signup request and redirects back the rest
+
     'development_mode' => false,
     'maintenance_mode' => false,
     'maintenance_key' => 'MAINTENANCE_KEY',

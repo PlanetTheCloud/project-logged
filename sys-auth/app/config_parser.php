@@ -28,6 +28,9 @@ foreach ($required as $key) {
 $config['system'] = $system;
 unset($system, $required);
 
+# Handle Network Config
+
+
 # Add timestamp
 $config['cached_on'] = time();
 
