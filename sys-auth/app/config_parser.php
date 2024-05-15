@@ -25,16 +25,24 @@ unset($branding, $required);
 
 # Handle System Config
 $system = require SYSTEM . '/config/system.php';
-$required = ['installation_url', 'allow_external_request', 'stub_mode', 'development_mode', 'maintenance_mode', 'maintenance_key', 'lockdown_mode', 'language', 'use_https', 'cpanel_url', 'domain_selection', 'blacklisted_tld', 'default_plan', 'features'];
+$required = ['installation_url', 'development_mode', 'maintenance_mode', 'maintenance_key', 'lockdown_mode', 'language', 'use_https', 'cpanel_url', 'domain_selection', 'blacklisted_tld', 'default_plan', 'features'];
 checkRequiredParameters($system, $required, 'system');
+if (!isset($system['stub_mode'])) {
+    // To ensure compatibility with LOGGED v2.1 config
+    $system['stub_mode'] = false;
+}
 $config['system'] = $system;
 unset($system, $required);
 
 # Handle Network Config
 $network = require SYSTEM . '/config/network.php';
-$required = ['main_website', 'credentials'];
+$required = ['main_auth', 'credentials'];
 checkRequiredParameters($network, $required, 'network');
-$config['network'] = Arr::only($network, ['main_website']);
+$config['network'] = Arr::only($network, ['main_auth']);
+foreach ($network['credentials'] as $credential) {
+    checkRequiredParameters($credential, ['protocol', 'domain', 'private_key'], 'network.credentials');
+}
+unset($network, $required);
 
 # Add timestamp
 $config['cached_on'] = time();

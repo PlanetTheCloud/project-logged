@@ -198,5 +198,18 @@ session_start(array_merge([
 ], $toMerge));
 unset($toMerge);
 
+# Add hook to check for stub mode
+Page::addBeforeRenderHook(function(array $parameters) {
+    if (!config('system.stub_mode', false)) {
+        return;
+    }
+
+    $allowed_on_stub = ['signup.php'];
+    if (!in_array($parameters['file'], $allowed_on_stub)) {
+        header("Location: " . config('network.main_auth.full_url') . '/auth/login');
+        die;
+    }
+});
+
 # Bootstrap Completed!
 # Ready to handle request

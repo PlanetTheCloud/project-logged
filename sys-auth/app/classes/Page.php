@@ -28,6 +28,11 @@ class Page
     protected static $translations = [];
 
     /**
+     * @var array
+     */
+    protected static $beforeRenderHooks = [];
+
+    /**
      * Set page parameters
      * 
      * @param array $parameters
@@ -133,6 +138,18 @@ class Page
     }
 
     /**
+     * Add before render hook
+     * 
+     * @param callback $hook
+     * 
+     * @return void
+     */
+    public static function addBeforeRenderHook(callable $hook): void
+    {
+        self::$beforeRenderHooks[] = $hook;
+    }
+
+    /**
      * Render the page
      * 
      * @return void
@@ -141,6 +158,11 @@ class Page
     {
         $parameters = self::getParameters();
         self::$parameters = $parameters;
+
+        foreach (self::$beforeRenderHooks as $hook) {
+            call_user_func($hook, $parameters);
+        }
+
         $file = PAGES . '/layout/' . $parameters['layout'];
         $content = self::param('file');
         if (!file_exists($file) || !file_exists($content)) {

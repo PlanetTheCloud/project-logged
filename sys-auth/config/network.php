@@ -7,8 +7,8 @@
  */
 
 return [
-    'main_website' => [
-        'full_url' => 'https://main.com'
+    'main_auth' => [
+        'full_url' => 'https://main.com' // No trailing slash
     ],
     'credentials' => [
         // Please read the documentation!
