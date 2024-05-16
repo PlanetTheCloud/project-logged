@@ -39,10 +39,18 @@ $network = require SYSTEM . '/config/network.php';
 $required = ['main_auth', 'credentials'];
 checkRequiredParameters($network, $required, 'network');
 $config['network'] = Arr::only($network, ['main_auth']);
+// Ensure all selectable domains have their matching credentials
+$domains = [];
 foreach ($network['credentials'] as $credential) {
     checkRequiredParameters($credential, ['protocol', 'domain', 'private_key'], 'network.credentials');
+    $domains[] = $credential['domain'];
 }
-unset($network, $required);
+foreach ($config['system']['domain_selection'] as $domain) {
+    if (!in_array($domain, $domains)) {
+        throw new InvalidConfigException("Domain in selectable domains must have credentials attached");
+    }
+}
+unset($network, $required, $domains);
 
 # Add timestamp
 $config['cached_on'] = time();

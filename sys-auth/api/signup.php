@@ -138,6 +138,8 @@ $params = HostingAccount::getAccountCreationParamters($data);
 
 $referrer = ($data['domain_type'] === 'subdomain') ? $data['extension'] : config('system.cpanel_url');
 
+// Determine if we need to forward the request 
+
 echo json_encode([
     'params' => $params,
     'token' => $protect->token('signup_check'),
