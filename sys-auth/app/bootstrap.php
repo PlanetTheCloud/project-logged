@@ -206,7 +206,9 @@ Page::addBeforeRenderHook(function(array $parameters) {
 
     $allowed_on_stub = ['signup.php'];
     if (!in_array($parameters['file'], $allowed_on_stub)) {
-        header("Location: " . config('network.main_auth.full_url') . '/auth/login');
+        $location = config('network.main_auth.full_url') . '/auth/login';
+        header("Location: " . $location);
+        echo 'Taking you to the main login page... <a href="'. $location .'">Click here if nothing happens.</a>';
         die;
     }
 });

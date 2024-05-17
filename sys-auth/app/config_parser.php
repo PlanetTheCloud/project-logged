@@ -5,7 +5,18 @@ namespace ConfigParser;
 use Arr;
 use InvalidConfigException;
 
-function checkRequiredParameters(array $config, array $required, string $name)
+/**
+ * Check required parameters and throw error if not set
+ * 
+ * @throws InvalidConfigException
+ * 
+ * @param array $config
+ * @param array $required
+ * @param string $name
+ * 
+ * @return void
+ */
+function checkRequiredParameters(array $config, array $required, string $name): void
 {
     foreach ($required as $key) {
         if (!isset($config[$key])) {
@@ -46,8 +57,8 @@ foreach ($network['credentials'] as $credential) {
     $domains[] = $credential['domain'];
 }
 foreach ($config['system']['domain_selection'] as $domain) {
-    if (!in_array($domain, $domains)) {
-        throw new InvalidConfigException("Domain in selectable domains must have credentials attached");
+    if (!in_array($domain, $domains) && $domain !== $config['system']['installation_url']) {
+        throw new InvalidConfigException("External domain {$domain} in Domain Selection (in 'system' config) does not have associated credentials in 'network' config.");
     }
 }
 unset($network, $required, $domains);

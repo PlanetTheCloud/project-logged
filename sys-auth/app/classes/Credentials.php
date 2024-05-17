@@ -13,10 +13,37 @@ if (!defined('APP')) {
  */
 class Credentials
 {
+    /**
+     * @var array
+     */
     protected static $credentials = [];
 
-    public static function getPrivateKey() {
+    /**
+     * Load all credentials
+     * 
+     * @return void
+     */
+    public static function initialize(): void
+    {
+        $network = require SYSTEM . '/config/network.php';
+        foreach ($network['credentials'] as $credential) {
+            self::$credentials[$credential['domain']] = $credential;
+        }
+    }
 
+    /**
+     * Get private key for a given domain
+     * 
+     * @param string $domain
+     * 
+     * @return string
+     */
+    public static function getPrivateKey(string $domain): ?string
+    {
+        if (!self::$credentials) {
+            self::initialize();
+        }
+        return self::$credentials[$domain]['private_key'] ?? null;
     }
 
 }

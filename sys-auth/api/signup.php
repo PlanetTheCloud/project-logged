@@ -133,12 +133,16 @@ try {
 // ];
 // echo json_encode(array_merge($response, $toMerge));
 
+var_dump($data);
+die;
+
 $protect = new CsrfProtect();
 $params = HostingAccount::getAccountCreationParamters($data);
 
 $referrer = ($data['domain_type'] === 'subdomain') ? $data['extension'] : config('system.cpanel_url');
 
 // Determine if we need to forward the request 
+
 
 echo json_encode([
     'params' => $params,

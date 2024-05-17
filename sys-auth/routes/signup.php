@@ -40,7 +40,7 @@ Page::deliverTranslations([
 ]);
 
 # Add scripts
-Page::addScript('dist/signup.js');
+Page::addScript('src/signup.js');
 
 # Display the page
 Page::render();
