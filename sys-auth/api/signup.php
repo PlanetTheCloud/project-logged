@@ -133,6 +133,12 @@ try {
 // ];
 // echo json_encode(array_merge($response, $toMerge));
 
+// It is known that Custom Domain is no longer supported, but we will
+// be implementing it later, prio finishing 2.5 first
+if ($data['extension'] == config('system.installation_url')) {
+
+}
+
 var_dump($data);
 die;
 

@@ -40,6 +40,7 @@ Page::deliverTranslations([
 ]);
 
 # Add scripts
+// TODO: Revert back to DIST
 Page::addScript('src/signup.js');
 
 # Display the page
