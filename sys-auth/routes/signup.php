@@ -13,6 +13,9 @@ require __DIR__ . '/../app/bootstrap.php';
 # Initialize CSRF Protection
 $csrf = new CsrfProtect();
 
+# Set referrer policy
+header("Referrer-Policy: origin");
+
 # Set page parameters
 Page::setParameters([
     'title' => 'Signup',

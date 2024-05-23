@@ -2,6 +2,9 @@
     // Optimizations for the form state in case the use own domain feature is disabled.
     // Automatically selects the free subdomain option and keeps the element hidden.
     $useOwnDomainBool = (config('system.features.signup.use_own_domain', false));
+
+    // When stub mode is enabled, signup form shall never be shown.
+    $stubModeEnabled = (config('system.stub_mode', false));
 ?>
 <div class="body">
     <div id="a_response" class="alert alert-danger mb-3 hidden">{{MESSAGE}}</div>
@@ -17,13 +20,13 @@
             <a href="/"><?= __('Go back to our website') ?></a>
         </div>
     </div>
-    <div id="s_processing" class="hidden">
+    <div id="s_processing" class="<?= (!$stubModeEnabled) ? 'hidden' : '' ?>">
         <p style="text-align:center;font-size:larger">
             <img style="width: 25%" src="assets/loader.gif"><br>
             <?= __('Processing your request...') ?>
         </p>
     </div>
-    <form id="s_signup_form" class="" method="post" onsubmit="return handleInitialSubmit();">
+    <form id="s_signup_form" class="<?= ($stubModeEnabled) ? 'hidden' : '' ?>" method="post" onsubmit="return handleInitialSubmit();">
         <div class="form-group form-float">
             <i class="material-icons tooltip_icon-signup" data-toggle="tooltip" data-placement="right" title="<?= __('Each email address is limited to 3 accounts') ?>">info</i>
             <div class="form-line">
