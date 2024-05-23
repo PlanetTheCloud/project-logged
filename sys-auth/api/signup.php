@@ -122,37 +122,27 @@ try {
     ], true);
 }
 
-// Deprecated per v2.2 we have switched to submitting via JS
-// ---
-// $account = HostingAccount::create($data);
-// $toMerge = (SYSTEM_CONFIG['development_mode']) ? ['dev_raw' => $account['raw']] : [];
-// $response = [
-//     'status' => ($account['created']) ? 'success' : 'error',
-//     'message' => $account['details']['message'],
-//     'details' => Arr::only($account['details'], ['field', 'type', 'token'])
-// ];
-// echo json_encode(array_merge($response, $toMerge));
+// This endpoint only returns the parameters to submit to iFastNet
 
 // It is known that Custom Domain is no longer supported, but we will
 // be implementing it later, prio finishing 2.5 first
-if ($data['extension'] == config('system.installation_url')) {
-
-}
-
-var_dump($data);
-die;
-
-$protect = new CsrfProtect();
 $params = HostingAccount::getAccountCreationParamters($data);
-
-$referrer = ($data['domain_type'] === 'subdomain') ? $data['extension'] : config('system.cpanel_url');
-
-// Determine if we need to forward the request 
-
-
-echo json_encode([
-    'params' => $params,
-    'token' => $protect->token('signup_check'),
-    'timestamp' => time(),
-]);
-die;
+if ($data['extension'] !== config('system.installation_url')) {
+    $credentials = Credentials::getPrivateKey($data['extension']);
+    $expires = time() + 120;
+    echo json_encode([
+        'params' => $params,
+        'expires' => $expires,
+        'signature' => $expires,
+        'timestamp' => time(),
+    ]);
+    die;
+} else {
+    $protect = new CsrfProtect();
+    echo json_encode([
+        'params' => $params,
+        'token' => $protect->token('signup_check'),
+        'timestamp' => time(),
+    ]);
+    die;
+}

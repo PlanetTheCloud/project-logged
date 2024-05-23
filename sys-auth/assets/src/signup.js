@@ -1,4 +1,5 @@
-var i_email = getElement("i_email"),
+// Define all common elements and focus on email after 300ms
+let i_email = getElement("i_email"),
     i_password = getElement("i_password"),
     i_password_confirm = getElement("i_password_confirm"),
     i_domain_type_own = getElement("i_domain_type_own"),
@@ -21,6 +22,7 @@ var i_email = getElement("i_email"),
     }, 300);
 })();
 
+// Handles domain type view changes
 function updateDomainTypeView(e) {
     s_others.classList.remove("hidden");
     if (e.target.id == "i_domain_type_own") {
@@ -37,12 +39,11 @@ document.querySelectorAll("input[name='domain_type']").forEach((input) => {
     input.addEventListener("change", updateDomainTypeView);
 });
 
+// Handles when the subdomain input field value changes
 function checkSubdomainValidity() {
     let subdomain = i_subdomain.value;
     if (subdomain.length < 4 || subdomain.length > 16) {
-        updateSubdomainInfo(
-            __("Subdomain must be between 4 to 16 characters in length.")
-        );
+        updateSubdomainInfo(__("Subdomain must be between 4 to 16 characters in length."));
         return false;
     }
     if (subdomain[subdomain.length - 1] === "-") {
@@ -50,9 +51,7 @@ function checkSubdomainValidity() {
         return false;
     }
     if (!/^(?:[A-Za-z0-9]+-)*[A-Za-z0-9]+$/.test(subdomain)) {
-        updateSubdomainInfo(
-            __("Only alphanumeric characters and hyphens are allowed.")
-        );
+        updateSubdomainInfo(__("Only alphanumeric characters and hyphens are allowed."));
         return false;
     }
     updateSubdomainInfo();
@@ -60,21 +59,19 @@ function checkSubdomainValidity() {
 }
 function updateSubdomainInfo(contents = false) {
     if (contents && typeof contents === "string") {
-        getElement(
-            "infobox_subdomain"
-        ).innerHTML = `<span style="color:red;">${contents}</span>`;
+        getElement("infobox_subdomain").innerHTML = `<span style="color:red;">${contents}</span>`;
         return;
     }
     let subdomain = i_subdomain.value;
     getElement("infobox_subdomain").innerHTML =
         subdomain !== ""
-            ? `${__("Your website will be available at")} <b>${subdomain}.${getElement("i_extension").value
-            }</b>`
+            ? `${__("Your website will be available at")} <b>${subdomain}.${getElement("i_extension").value}</b>`
             : __("Choose a subdomain and extension");
 }
 i_subdomain.addEventListener("input", checkSubdomainValidity);
 getElement("i_extension").addEventListener("change", updateSubdomainInfo);
 
+// Checks the parameters bool true if the data is valid
 function beforeSubmitCheck() {
     // Check Email
     if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(String(i_email.value).toLowerCase())) {
@@ -130,23 +127,24 @@ function beforeSubmitCheck() {
     return true;
 }
 
+// Show and hides alert messages
 function showAlert(message, type = 'danger') {
     a_response.innerText = message;
     a_response.classList.remove("alert-success", "alert-danger", "alert-warning");
     a_response.classList.add(`alert-${type}`);
     a_response.classList.remove("hidden");
 }
-
 function hideAlert() {
     a_response.classList.add("hidden");
 }
 
+// Handles initial submit, this is only called by the FORM
 function handleInitialSubmit() {
     if (!beforeSubmitCheck()) {
         return false;
     }
 
-    // Handle show/hide sections
+    // Handle section visibilities
     hideAlert();
     s_signup_form.classList.add("hidden");
     s_processing.classList.remove("hidden");
@@ -198,15 +196,14 @@ function handleResponse(res) {
     if (res.status === 'error') {
         handleErrorFromServer(res);
     } else if (res.status === 'success') {
+        // TODO: Now handle submit response to iFastNet
         a_success_link.href = `https://ifastnet.com/resend_email.php?email=${i_email.value}&token=${res.details.token}`;
         s_success.classList.remove("hidden");
     }
 }
 
 function handleErrorFromServer(res) {
-    if (typeof res.message !== 'undefined') {
-        showAlert(res.message);
-    }
+    showAlert((typeof res.message !== 'undefined') ? res.message : __("Something went wrong, please try again later."));
     if (typeof res.details !== 'undefined') {
         if (typeof res.details.field !== 'undefined') {
             hasError(getElement(`i_${res.details.field}`), res.message);

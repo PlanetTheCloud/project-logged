@@ -8,3 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die;
 }
 
+$account = HostingAccount::parseResult($data);
+$toMerge = (config('system.development_mode', false)) ? ['dev_raw' => $account['raw']] : [];
+$response = [
+    'status' => ($account['created']) ? 'success' : 'error',
+    'message' => $account['details']['message'],
+    'details' => Arr::only($account['details'], ['field', 'type', 'token'])
+];
+echo json_encode(array_merge($response, $toMerge));

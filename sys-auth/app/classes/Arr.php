@@ -55,7 +55,7 @@ class Arr
      * @param array $array
      * @return string
      */
-    public static function encode(array $array): string
+    public static function encodeToString(array $array): string
     {
         ksort($array);
         $result = '';
