@@ -136,7 +136,6 @@ if ($data['extension'] !== config('system.installation_url')) {
         'signature' => $expires,
         'timestamp' => time(),
     ]);
-    die;
 } else {
     $protect = new CsrfProtect();
     echo json_encode([
@@ -144,5 +143,5 @@ if ($data['extension'] !== config('system.installation_url')) {
         'token' => $protect->token('signup_check'),
         'timestamp' => time(),
     ]);
-    die;
 }
+die;

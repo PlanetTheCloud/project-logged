@@ -138,7 +138,7 @@ function hideAlert() {
     a_response.classList.add("hidden");
 }
 
-// Handles initial submit, this is only called by the FORM
+// Handles initial form submission
 function handleInitialSubmit() {
     if (!beforeSubmitCheck()) {
         return false;
@@ -161,7 +161,11 @@ function handleInitialSubmit() {
         }
         return res.text();
     })
-    .then(res => handleResponse(JSON.parse(res)))
+    .then(res => {
+        if (res.status == 'error') {
+            return handleErrorFromServer(res);
+        }
+    })
     .catch(err => {
         showAlert(`${__("Something went wrong, please try again later.")}\n${err}`);
     })
@@ -169,6 +173,28 @@ function handleInitialSubmit() {
         s_processing.classList.add("hidden");
     })
     return false;
+}
+
+function handleErrorFromServer(res) {
+    showAlert((typeof res.message !== 'undefined') ? res.message : __("Something went wrong, please try again later."));
+    if (typeof res.details !== 'undefined') {
+        if (typeof res.details.field !== 'undefined') {
+            hasError(getElement(`i_${res.details.field}`), res.message);
+        }
+    }
+    s_signup_form.classList.remove("hidden");
+}
+
+// All server response passes through this
+function handleResponse(res) {
+    if (res.status === 'error') {
+        handleErrorFromServer(res);
+    } else if (res.status === 'success') {
+        // Check if we have to go to external.
+        // TODO: Now handle submit response to iFastNet
+        a_success_link.href = `https://ifastnet.com/resend_email.php?email=${i_email.value}&token=${res.details.token}`;
+        s_success.classList.remove("hidden");
+    }
 }
 
 async function handleAccountCreation(params) {
@@ -190,24 +216,4 @@ async function handleAccountCreation(params) {
         s_processing.classList.add("hidden");
     })
     return false;
-}
-
-function handleResponse(res) {
-    if (res.status === 'error') {
-        handleErrorFromServer(res);
-    } else if (res.status === 'success') {
-        // TODO: Now handle submit response to iFastNet
-        a_success_link.href = `https://ifastnet.com/resend_email.php?email=${i_email.value}&token=${res.details.token}`;
-        s_success.classList.remove("hidden");
-    }
-}
-
-function handleErrorFromServer(res) {
-    showAlert((typeof res.message !== 'undefined') ? res.message : __("Something went wrong, please try again later."));
-    if (typeof res.details !== 'undefined') {
-        if (typeof res.details.field !== 'undefined') {
-            hasError(getElement(`i_${res.details.field}`), res.message);
-        }
-    }
-    s_signup_form.classList.remove("hidden");
 }
