@@ -3,8 +3,26 @@
     // Automatically selects the free subdomain option and keeps the element hidden.
     $useOwnDomainBool = (config('system.features.signup.use_own_domain', false));
 
-    // When stub mode is enabled, signup form shall never be shown.
+    // When stub mode is enabled, signup form shall not be shown.
     $stubModeEnabled = (config('system.stub_mode', false));
+    
+    // Handle request when stub mode is enabled
+    (function() use ($stubModeEnabled) {
+        if (!$stubModeEnabled) {
+            return;
+        }
+        // TODO: Validate the request
+        $required = [];
+        foreach ($required as $key) {
+            if (!isset($_POST[$key])) {
+                throw new ValidationFailedException(ucfirst($key) . ' ' . __('cannot be missing'), $key);
+            }
+            if (!is_string($_POST[$key])) {
+                throw new ValidationFailedException(ucfirst($key) . ' ' . __('cannot be unexpected'), $key);
+            }
+            $_POST[$key] = htmlspecialchars($_POST[$key]);
+        }
+    })();
 ?>
 <div class="body">
     <div id="a_response" class="alert alert-danger mb-3 hidden">{{MESSAGE}}</div>

@@ -1,5 +1,7 @@
 <?php
 
+// This endpoint only returns the parameters to submit to iFastNet
+
 require __DIR__ . '/../app/bootstrap.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -122,26 +124,25 @@ try {
     ], true);
 }
 
-// This endpoint only returns the parameters to submit to iFastNet
-
 // It is known that Custom Domain is no longer supported, but we will
 // be implementing it later, prio finishing 2.5 first
 $params = HostingAccount::getAccountCreationParamters($data);
+
 if ($data['extension'] !== config('system.installation_url')) {
-    $credentials = Credentials::getPrivateKey($data['extension']);
-    $expires = time() + 120;
-    echo json_encode([
+    $credentials = Credentials::getDetails($data['extension']);
+    $response = [
         'params' => $params,
-        'expires' => $expires,
-        'signature' => $expires,
         'timestamp' => time(),
-    ]);
+    ];
+    echo json_encode(array_merge($response, [
+        'contact' => $credentials['protocol'] . $credentials['domain'] . '/auth/signup',
+        'signature' => Credentials::createSignature($data['extension'], $response)
+    ]));
 } else {
     $protect = new CsrfProtect();
     echo json_encode([
         'params' => $params,
         'token' => $protect->token('signup_check'),
-        'timestamp' => time(),
     ]);
 }
 die;

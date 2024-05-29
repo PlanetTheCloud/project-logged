@@ -137,8 +137,7 @@ if (SYSTEM_CONFIG['lockdown_mode'] && IS_API_REQUEST) {
 
 # Load configurations
 if (SYSTEM_CONFIG['development_mode']) {
-    // Always reparse the config
-    require 'config_parser.php';
+    require 'config_parser.php'; // Always reparse the config
 }
 $config = json_decode(file_get_contents(SYSTEM . '/app/cache/config.json'), true);
 if (!$config) {
@@ -199,6 +198,17 @@ session_start(array_merge([
 unset($toMerge);
 
 # Add hook to check for stub mode
+/**
+ * Redirects back to the main login page
+ * 
+ * @return never
+ */
+function stubModeRedirectToMain(): never {
+    $location = config('network.main_auth.full_url') . '/auth/login';
+    header("Location: " . $location);
+    echo 'Taking you to the main login page... <a href="'. $location .'">Click here if nothing happens.</a>';
+    die;
+}
 Page::addBeforeRenderHook(function(array $parameters) {
     if (!config('system.stub_mode', false)) {
         return;
@@ -206,10 +216,7 @@ Page::addBeforeRenderHook(function(array $parameters) {
 
     $allowed_on_stub = ['signup.php'];
     if (!in_array($parameters['file'], $allowed_on_stub)) {
-        $location = config('network.main_auth.full_url') . '/auth/login';
-        header("Location: " . $location);
-        echo 'Taking you to the main login page... <a href="'. $location .'">Click here if nothing happens.</a>';
-        die;
+        stubModeRedirectToMain();
     }
 });
 

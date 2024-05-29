@@ -10,8 +10,9 @@ return [
     'main_auth' => [
         'full_url' => 'http://hosting.com' // No trailing slash
     ],
+    'signature_lifetime' => 120, // In seconds
     'credentials' => [
-        // Please read the documentation!
+        // Please read the docs!
         [
             'protocol' => 'https://',
             'domain' => 'example.com',
