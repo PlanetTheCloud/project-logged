@@ -6,9 +6,9 @@
     // When stub mode is enabled, signup form shall not be shown.
     $stubModeEnabled = (config('system.stub_mode', false));
     
-    // Handle request when stub mode is enabled
-    (function() use ($stubModeEnabled) {
-        if (!$stubModeEnabled) {
+    // Handle external signup request
+    (function() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             return;
         }
         // TODO: Validate the request
@@ -119,6 +119,8 @@
                         }
                         unset($domains);
                         ?>
+                        <!-- TODO: TEMPORARY REMEMBER TO REMOVE -->
+                        <option value="test">test</option>
                     </select>
                 </div>
             </div>

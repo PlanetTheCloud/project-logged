@@ -165,6 +165,13 @@ function handleInitialSubmit() {
         if (res.status == 'error') {
             return handleErrorFromServer(res);
         }
+        if (res.status == 'success' && typeof res.token !== 'undefined') {
+            // Token is the CSRF token, we may want to make this more explicit
+            handleAccountCreation(res.params);
+        }
+        if (res.status == 'success' && typeof res.contact !== 'undefined') {
+            // Create invisible form and submit to external
+        }
     })
     .catch(err => {
         showAlert(`${__("Something went wrong, please try again later.")}\n${err}`);
@@ -175,6 +182,7 @@ function handleInitialSubmit() {
     return false;
 }
 
+// Handles error with field error.
 function handleErrorFromServer(res) {
     showAlert((typeof res.message !== 'undefined') ? res.message : __("Something went wrong, please try again later."));
     if (typeof res.details !== 'undefined') {
@@ -216,4 +224,8 @@ async function handleAccountCreation(params) {
         s_processing.classList.add("hidden");
     })
     return false;
+}
+
+function createInvisibleFormAndSubmit(data) {
+    // TODO
 }
