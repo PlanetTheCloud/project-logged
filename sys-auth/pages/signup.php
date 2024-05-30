@@ -119,8 +119,8 @@
                         }
                         unset($domains);
                         ?>
-                        <!-- TODO: TEMPORARY REMEMBER TO REMOVE -->
-                        <option value="test">test</option>
+                        <option value="test1">test1</option>
+                        <option value="test2">test2</option>
                     </select>
                 </div>
             </div>

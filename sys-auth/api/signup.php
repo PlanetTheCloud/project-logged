@@ -124,6 +124,9 @@ try {
     ], true);
 }
 
+// TODO
+die(json_encode($data));
+
 // It is known that Custom Domain is no longer supported, but we will
 // be implementing it later, prio finishing 2.5 first
 $params = HostingAccount::getAccountCreationParamters($data);

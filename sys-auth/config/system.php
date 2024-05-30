@@ -9,7 +9,7 @@
 return [
     'installation_url' => '',
 
-    'stub_mode' => true,
+    'stub_mode' => false,
 
     'development_mode' => true,
     'maintenance_mode' => false,
