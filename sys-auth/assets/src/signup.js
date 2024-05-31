@@ -139,7 +139,7 @@ function hideAlert() {
 }
 
 // Handles initial form submission
-function handleInitialSubmit() {
+async function handleInitialSubmit() {
     if (!beforeSubmitCheck()) {
         return false;
     }
@@ -150,36 +150,104 @@ function handleInitialSubmit() {
     s_processing.classList.remove("hidden");
 
     // Submit data
-    let data = new FormData(s_signup_form);
-    fetch('/auth/api/signup', {
-        method: "POST",
-        body: data
-    })
-    .then(res => {
+    try {
+        let data = new FormData(s_signup_form);
+        let res = await fetch('/auth/api/signup', {
+            method: "POST",
+            body: data
+        });
+
         if (res.status != 200) { 
             throw new Error(__("Bad Server Response")); 
         }
-        return res.text();
-    })
-    .then(res => {
-        if (res.status == 'error') {
-            return handleErrorFromServer(res);
+        let response = await res.json();
+
+        if (response.status === 'error') {
+            return handleErrorFromServer(response);
         }
-        if (res.status == 'success' && typeof res.token !== 'undefined') {
-            // Token is the CSRF token, we may want to make this more explicit
-            handleAccountCreation(res.params);
+        if (response.token) {
+            // We're on the right domain to submit
+            await handleAccountCreation(response.params, response.token);
         }
-        if (res.status == 'success' && typeof res.contact !== 'undefined') {
-            // Create invisible form and submit to external
+        if (response.contact) {
+            submitToExternalForm(response.contact, response.params, response.originals, response.timestamp, response.signature);
         }
-    })
-    .catch(err => {
+    } catch (err) {
         showAlert(`${__("Something went wrong, please try again later.")}\n${err}`);
-    })
-    .finally(res => {
+    } finally {
         s_processing.classList.add("hidden");
-    })
+    }
+
     return false;
+}
+
+async function handleAccountCreation(params, token) {
+    let formData = new FormData();
+    for (let key in params) {
+        formData.append(key, params[key]);
+    }
+
+    try {
+        let res = await fetch('https://ifastnet.com/register2.php', {
+            method: "POST",
+            body: formData
+        });
+
+        let responseText = await res.text();
+        await checkAccountCreationResult(responseText, token);
+    } catch (err) {
+        showAlert(`${__("Something went wrong with account creation, please try again later.")}\n${err}`);
+        s_signup_form.classList.remove("hidden");
+        s_processing.classList.add("hidden");
+    }
+}
+
+function submitToExternalForm(target, params, originals, timestamp, signature) {
+    let form = document.createElement('form');
+    form.method = 'POST';
+    form.action = target;
+
+    appendHiddenInput(form, 'params', params);
+    appendHiddenInput(form, 'originals', originals);
+    appendHiddenInput(form, 'timestamp', timestamp);
+    appendHiddenInput(form, 'signature', signature);
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+function appendHiddenInput(form, name, value) {
+    let input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = value;
+    form.appendChild(input);
+}
+
+async function checkAccountCreationResult(response, token) {
+    let formData = new FormData();
+    formData.append("response", response);
+    formData.append("_token", token);
+
+    try {
+        let res = await fetch('/auth/api/check_signup', {
+            method: "POST",
+            body: formData
+        });
+
+        let response = await res.json();
+
+        if (response.status === 'success') {
+            a_success_link.href = `https://ifastnet.com/resend_email.php?email=${i_email.value}&token=${response.details.token}`;
+            s_success.classList.remove("hidden");
+        } else {
+            handleErrorFromServer(response);
+        }
+    } catch (err) {
+        showAlert(`${__("Something went wrong while checking account creation.")}\n${err}`);
+        s_signup_form.classList.remove("hidden");
+        s_processing.classList.add("hidden");
+    }
 }
 
 // Handles error with field error.
@@ -191,41 +259,4 @@ function handleErrorFromServer(res) {
         }
     }
     s_signup_form.classList.remove("hidden");
-}
-
-// All server response passes through this
-function handleResponse(res) {
-    if (res.status === 'error') {
-        handleErrorFromServer(res);
-    } else if (res.status === 'success') {
-        // Check if we have to go to external.
-        // TODO: Now handle submit response to iFastNet
-        a_success_link.href = `https://ifastnet.com/resend_email.php?email=${i_email.value}&token=${res.details.token}`;
-        s_success.classList.remove("hidden");
-    }
-}
-
-async function handleAccountCreation(params) {
-    await fetch('https://ifastnet.com/register2.php', {
-        method: "POST",
-        body: data
-    })
-    .then(res => {
-        if (res.status != 200) { 
-            throw new Error(__("Bad Server Response")); 
-        }
-        return res.text();
-    })
-    .then(res => handleResponse(JSON.parse(res)))
-    .catch(err => {
-        showAlert(`${__("Something went wrong, please try again later.")}\n${err}`);
-    })
-    .finally(res => {
-        s_processing.classList.add("hidden");
-    })
-    return false;
-}
-
-function createInvisibleFormAndSubmit(data) {
-    // TODO
 }

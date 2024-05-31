@@ -39,12 +39,14 @@ Page::deliverTranslations([
     "Please enter a valid subdomain name.",
     "Please enter a captcha with 5 characters.",
     "Something went wrong, please try again later.",
+    "Something went wrong with account creation, please try again later.",
     "Bad Server Response"
 ]);
 
 # Add scripts
 // TODO: Revert back to DIST
 Page::addScript('src/signup.js');
+Page::addScript('dist/data2form.min.js');
 
 # Display the page
 Page::render();

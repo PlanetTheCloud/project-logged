@@ -124,9 +124,6 @@ try {
     ], true);
 }
 
-// TODO
-die(json_encode($data));
-
 // It is known that Custom Domain is no longer supported, but we will
 // be implementing it later, prio finishing 2.5 first
 $params = HostingAccount::getAccountCreationParamters($data);
@@ -134,7 +131,11 @@ $params = HostingAccount::getAccountCreationParamters($data);
 if ($data['extension'] !== config('system.installation_url')) {
     $credentials = Credentials::getDetails($data['extension']);
     $response = [
-        'params' => $params,
+        'params' => json_encode($params),
+        'originals' => json_encode(Arr::only(
+            $data, 
+            ['email', 'password', 'password_confirm', 'domain_type', 'custom_domain', 'subdomain', 'extension', 'captcha_id', 'captcha_solution']
+        )),
         'timestamp' => time(),
     ];
     echo json_encode(array_merge($response, [
