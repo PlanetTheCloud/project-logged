@@ -3,16 +3,27 @@
     // Automatically selects the free subdomain option and keeps the element hidden.
     $useOwnDomainBool = (config('system.features.signup.use_own_domain', false));
 
-    // When stub mode is enabled, signup form shall not be shown.
+    // When stub mode is enabled, we only accept external signup request.
+    // Even when stub mode is disabled we can still accept external signup request.
+    // If there's no signup request we will redirect the user back to main site.
+    // If there's signup request we will validate it:
+    //      - If signature mismatched, we redirect the user back to main site.
+    //      - We do not validate the original field, since it's signed from the main.
+    //      - If there's error from iFastNet side, we will render the originals and mark the erronious
+    //          field as if it's submitted from here. Then if the user wish to correct the input, 
+    //          the user can do it from the stub.
     $stubModeEnabled = (config('system.stub_mode', false));
     
-    // Handle external signup request
-    (function() {
+    // Handle external signup request and check stub mode
+    (function() use ($stubModeEnabled) {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            if ($stubModeEnabled) {
+                stubModeRedirectToMain();
+            }
             return;
         }
-        // TODO: Validate the request
-        $required = [];
+        
+        $required = ['params', 'originals', 'timestamp', 'signature'];
         foreach ($required as $key) {
             if (!isset($_POST[$key])) {
                 throw new ValidationFailedException(ucfirst($key) . ' ' . __('cannot be missing'), $key);
@@ -22,6 +33,8 @@
             }
             $_POST[$key] = htmlspecialchars($_POST[$key]);
         }
+
+        // Credentials::verifySignature()
     })();
 ?>
 <div class="body">
